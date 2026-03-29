@@ -1,0 +1,14 @@
+.rowList { display: flex; flex-direction: column; gap: 0; padding: 0; }
+
+.row {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.row:last-child { border-bottom: none; }
+
+.rowLabel { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+.rowDesc  { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+.dangerCard { border-color: rgba(248,113,113,0.2) !important; }

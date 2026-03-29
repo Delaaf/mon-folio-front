@@ -1,0 +1,54 @@
+.statsRow {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 12px;
+}
+
+.catCard {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 14px;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  cursor: pointer; transition: all 0.22s;
+}
+.catCard:hover { border-color: var(--border-hover); }
+
+.catIcon  { font-size: 22px; }
+.catLabel { font-size: 12px; font-weight: 600; color: var(--text-primary); text-align: center; }
+.catCount { font-size: 11px; color: var(--text-muted); }
+
+.toolbar {
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+}
+
+.skillsGrid {
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 14px;
+}
+
+@media (max-width: 640px) { .skillsGrid { grid-template-columns: 1fr; } }
+
+.skillCard {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 18px;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: border-color 0.25s;
+}
+.skillCard:hover { border-color: var(--border-hover); }
+
+.skillTop {
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.skillName { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+
+.skillMeta {
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.skillCat   { font-size: 11.5px; color: var(--text-secondary); }
+.skillLevel {
+  font-family: var(--font-display); font-size: 13px;
+  font-weight: 700; color: var(--accent);
+}
+
+.actionBtn  { color: var(--text-secondary) !important; }
+.actionBtn:hover  { color: var(--accent) !important; }
+.actionBtnD { color: var(--text-secondary) !important; }
+.actionBtnD:hover { color: #f87171 !important; }

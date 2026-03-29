@@ -1,0 +1,112 @@
+.page {
+  position: relative;
+  min-height: calc(100vh - 68px);
+  overflow: hidden;
+}
+
+.bgGlow {
+  position: absolute;
+  top: -80px; left: -80px;
+  width: 440px; height: 440px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139,92,246,0.07) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+
+.inner {
+  position: relative; z-index: 1;
+  max-width: 900px; margin: 0 auto;
+  padding: 60px 48px 80px;
+  display: flex; flex-direction: column; gap: 44px;
+}
+
+.header { display: flex; flex-direction: column; gap: 10px; }
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 800; letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.accent { color: var(--accent); }
+
+.subtitle {
+  font-size: 15px; color: var(--text-secondary); line-height: 1.65;
+}
+
+/* Layout */
+.layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Tabs sidebar */
+.tabs {
+  display: flex; flex-direction: column; gap: 4px;
+  position: sticky; top: 80px;
+}
+
+.tab {
+  position: relative;
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 16px; border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 14px; font-weight: 500;
+  cursor: pointer; text-align: left;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
+  overflow: hidden;
+}
+
+.tab:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); }
+
+.tab.tabActive {
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+  background: rgba(79,142,255,0.07);
+}
+
+.tabIcon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+
+.tabIndicator {
+  position: absolute; inset: 0; border-radius: var(--radius-sm);
+  background: rgba(79,142,255,0.08); z-index: -1;
+}
+
+/* Panel */
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 28px 30px 32px;
+}
+
+.panelHeader {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panelIcon { font-size: 22px; }
+
+.panelTitle {
+  font-family: var(--font-display);
+  font-size: 19px; font-weight: 700; letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.skillList { display: flex; flex-direction: column; gap: 18px; }
+
+/* Responsive */
+@media (max-width: 680px) {
+  .layout { grid-template-columns: 1fr; }
+  .tabs { flex-direction: row; flex-wrap: wrap; position: static; }
+  .tab  { padding: 7px 14px; font-size: 13px; }
+  .inner { padding: 36px 20px 48px; }
+}

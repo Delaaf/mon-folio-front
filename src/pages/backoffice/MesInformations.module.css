@@ -1,0 +1,44 @@
+.avatarSection {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.avatarWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar {
+  border: 3px solid rgba(79,142,255,0.3) !important;
+}
+
+.avatarEdit {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-card);
+  background: var(--accent);
+  color: #fff;
+  font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.avatarEdit:hover { background: #6aa3ff; }
+
+.avatarName {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 700;
+  color: var(--text-primary);
+}
+
+.avatarRole {
+  font-size: 13px; color: var(--accent); margin-top: 2px;
+}
+
+.avatarHint {
+  font-size: 12px; color: var(--text-muted); margin-top: 8px; line-height: 1.5;
+}

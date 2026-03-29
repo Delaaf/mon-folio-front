@@ -1,0 +1,50 @@
+.presetGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 640px) { .presetGrid { grid-template-columns: repeat(3,1fr); } }
+
+.presetCard {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  background: transparent; border: 1px solid var(--border); border-radius: 10px;
+  padding: 12px 8px; cursor: pointer; transition: all 0.22s;
+}
+
+.presetCard:hover { border-color: var(--border-hover); }
+.presetActive     { border-color: var(--accent) !important; background: var(--accent-glow); }
+
+.presetPreview {
+  width: 48px; height: 48px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+.presetDot { width: 16px; height: 16px; border-radius: 50%; }
+
+.presetName { font-size: 11px; color: var(--text-secondary); font-weight: 500; text-align: center; }
+
+.colorRow {
+  display: flex; align-items: center; gap: 12px;
+}
+
+.colorPreview {
+  width: 36px; height: 36px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
+
+.toggleList { display: flex; flex-direction: column; gap: 0; }
+
+.toggleRow {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.toggleRow:last-child { border-bottom: none; }
+
+.toggleLabel {
+  font-size: 14px; color: var(--text-primary); font-weight: 500;
+}

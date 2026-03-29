@@ -1,0 +1,127 @@
+.thumbnail {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emoji {
+  font-size: 76px;
+  user-select: none;
+}
+
+.content {
+  padding: 28px 28px 32px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.category {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 18px;
+}
+
+.desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.72;
+  margin-bottom: 14px;
+}
+
+/* Metrics */
+.metrics {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin: 20px 0 24px;
+}
+
+.metric {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 12px;
+  border-right: 1px solid var(--border);
+}
+
+.metric:last-child {
+  border-right: none;
+}
+
+.metricValue {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.metricLabel {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btnPrimary {
+  flex: 1;
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  height: 42px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+.btnPrimary:hover {
+  background: #6aa3ff !important;
+  transform: translateY(-1px) !important;
+}
+
+.btnSecondary {
+  flex: 1;
+  background: rgba(255,255,255,0.04) !important;
+  border-color: var(--border) !important;
+  color: var(--text-primary) !important;
+  height: 42px !important;
+  font-size: 14px !important;
+}
+
+.btnSecondary:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}

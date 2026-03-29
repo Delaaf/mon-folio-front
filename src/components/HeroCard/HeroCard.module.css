@@ -1,0 +1,175 @@
+.wrap {
+  flex-shrink: 0;
+  width: 420px;
+}
+
+/* Main card */
+.card {
+  position: relative;
+  background: #0e0e18;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  overflow: hidden;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Top-right corner glow */
+.glowTop {
+  position: absolute;
+  top: -80px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79, 142, 255, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── ORB ── */
+.orbWrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orb {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Rounded square outer shape */
+.orbRing1,
+.orbRing2,
+.orbRing3 {
+  position: absolute;
+  border-radius: 28px;
+  border: 1.5px solid;
+}
+
+.orbRing1 {
+  inset: 0;
+  border-color: rgba(79, 142, 255, 0.35);
+  background: rgba(10, 20, 40, 0.6);
+  animation: rotateRing 8s linear infinite;
+}
+
+.orbRing2 {
+  inset: 16px;
+  border-color: rgba(79, 142, 255, 0.25);
+  background: rgba(10, 20, 40, 0.4);
+  animation: rotateRing 6s linear infinite reverse;
+}
+
+.orbRing3 {
+  inset: 32px;
+  border-color: rgba(79, 142, 255, 0.15);
+  background: rgba(8, 14, 30, 0.5);
+}
+
+@keyframes rotateRing {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+
+/* Inner glowing ring (the teal circle) */
+.orbCore {
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 3px solid #00e5ff;
+  box-shadow:
+    0 0 12px rgba(0, 229, 255, 0.7),
+    0 0 28px rgba(0, 229, 255, 0.35),
+    inset 0 0 12px rgba(0, 229, 255, 0.2);
+  animation: coreGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes coreGlow {
+  from { box-shadow: 0 0 10px rgba(0,229,255,0.6), 0 0 24px rgba(0,229,255,0.3), inset 0 0 10px rgba(0,229,255,0.15); }
+  to   { box-shadow: 0 0 20px rgba(0,229,255,0.9), 0 0 48px rgba(0,229,255,0.5), inset 0 0 20px rgba(0,229,255,0.35); }
+}
+
+/* ── IDENTITY CARD ── */
+.identityCard {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: rgba(15, 15, 26, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4f8eff 0%, #8b5cf6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatarInitials {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.avatarOnline {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #4ade80;
+  border: 2px solid #0f0f1a;
+}
+
+.identityText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.identityName {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.identityRole {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .wrap { width: 100%; max-width: 420px; margin: 0 auto; }
+  .card { height: 320px; }
+}
