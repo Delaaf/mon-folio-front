@@ -29,13 +29,13 @@ const AboutPage = () => {
     }
     load()
   }, [])
-
+console.log(profile)
   // Use API data or fall back to static
-  const name     = profile?.profile_data?.name     ?? ABOUT.name
-  const role     = profile?.profile_data?.role_title ?? ABOUT.role
-  const location = profile?.profile_data?.location  ?? ABOUT.location
-  const bio      = profile?.profile_data?.bio        ?? ABOUT.bio?.[0] ?? ''
-  const avatar   = profile?.profile_data?.avatar    ?? null
+  const name     = profile?.name     ?? ABOUT.name
+  const role     = profile?.role_title ?? ABOUT.role
+  const location = profile?.location  ?? ABOUT.location
+  const bio      = profile?.bio        ?? ABOUT.bio?.[0] ?? ''
+  const avatar   = profile?.avatar    ?? null
 
   if (loading) return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
@@ -76,13 +76,12 @@ const AboutPage = () => {
         </motion.div>
 
         <motion.div className={styles.section} {...fadeUp(0.18)}>
-          <h2 className={styles.sectionTitle}>About Me</h2>
+          <h2 className={styles.sectionTitle}>A propos de moi</h2>
           {bio && <p className={styles.bio}>{bio}</p>}
-          {ABOUT.bio?.slice(1).map((p, i) => <p key={i} className={styles.bio}>{p}</p>)}
         </motion.div>
 
         <motion.div className={styles.section} {...fadeUp(0.26)}>
-          <h2 className={styles.sectionTitle}>Experience</h2>
+          <h2 className={styles.sectionTitle}>Experiences</h2>
           <div className={styles.timeline}>
             {ABOUT.timeline.map((item, i) => (
               <div key={i} className={styles.timelineItem}>

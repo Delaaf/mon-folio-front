@@ -1,17 +1,17 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { CATEGORIES } from '../../data/projects'
 import styles from './FilterBar.module.css'
 
 /**
  * FilterBar — groupe de boutons pour filtrer les projets par catégorie
- * @param {string}   active   — catégorie actuellement sélectionnée
- * @param {Function} onChange — callback(category: string)
+ * @param {string}   active      — catégorie actuellement sélectionnée
+ * @param {Function} onChange    — callback(category: string)
+ * @param {string[]} categories  — liste des catégories à afficher
  */
-const FilterBar = ({ active, onChange }) => {
+const FilterBar = ({ active, onChange, categories }) => {
   return (
     <div className={styles.bar} role="group" aria-label="Filtrer les projets">
-      {CATEGORIES.map((cat) => (
+      {categories.map((cat) => (
         <button
           key={cat}
           className={`${styles.btn} ${active === cat ? styles.active : ''}`}

@@ -84,6 +84,24 @@
   color: var(--text-muted);
 }
 
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.categoryBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.categoryTitle {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
 /* Responsive */
 @media (max-width: 960px) {
   .grid { grid-template-columns: repeat(2, 1fr); }

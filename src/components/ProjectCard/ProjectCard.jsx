@@ -14,6 +14,15 @@ import styles from './ProjectCard.module.css'
  */
 const ProjectCard = ({ project, index = 0, onView}) => {
 
+const truncateWords = (text, maxWords = 10) => {
+  if (!text) return ''
+
+  const words = text.split(' ')
+  if (words.length <= maxWords) return text
+
+  return words.slice(0, maxWords).join(' ') + '...'
+}
+
   return (
     <motion.article
       className={styles.card}
@@ -36,7 +45,7 @@ const ProjectCard = ({ project, index = 0, onView}) => {
 
         {/* Hover overlay */}
         <div className={styles.overlay}>
-          <span className={styles.overlayText}>View Case Study →</span>
+          <span className={styles.overlayText}>Découvrir le projet →</span>
         </div>
       </div>
 
@@ -53,7 +62,9 @@ const ProjectCard = ({ project, index = 0, onView}) => {
         <h3 className={styles.title}>{project.title}</h3>
 
         {/* Description */}
-        <p className={styles.desc}>{project.description}</p>
+       <p className={styles.desc}>
+  {truncateWords(project.description, 12)}
+</p>
 
         {/* Actions */}
         <div className={styles.actions}>
@@ -63,7 +74,7 @@ const ProjectCard = ({ project, index = 0, onView}) => {
             onClick={() => onView(project)}
             block
           >
-            View Case Study
+            Découvrir
           </Button>
 
           <div className={styles.iconBtns}>

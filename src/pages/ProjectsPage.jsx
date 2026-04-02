@@ -18,7 +18,8 @@ const TOTAL = 24
 const ProjectsPage = ({ externalAddModal }) => {
   const [projects, setProjects]   = useState([])
   const [loading, setLoading]     = useState(true)
-  const [filter, setFilter]       = useState('All')
+  const [categories, setCategories] = useState([])
+  const [filter, setFilter]       = useState('Tout')
   const [page, setPage]           = useState(1)
   const [meta, setMeta]           = useState({})
   const [notifApi, notifCtx]      = notification.useNotification()
@@ -35,19 +36,25 @@ const ProjectsPage = ({ externalAddModal }) => {
       const params = {
         per_page: 6,
         page: currentPage,
-        ...(filter !== 'All' && { category: filter }),
+        ...(filter !== 'Tout' && { category: filter }),
       }
       const res = await ProjectService.list(params)
+      // extraire catégories uniques depuis la réponse
+      const uniqueCats = ['Tout', ...res.map(c => c.label)]
+      setCategories(uniqueCats)
       if (reset) {
-        setProjects(res.data ?? [])
+        setProjects(res ?? [])
       } else {
-        setProjects(prev => [...prev, ...(res.data ?? [])])
+        setProjects(prev => {
+        const merged = [...prev] // à adapter si tu veux vraiment fusionner correctement
+        return merged
+      })
       }
-      setMeta(res.meta ?? {})
+      //setMeta(res.meta ?? {})
     } catch {
       // Fallback to static data if API not connected
       const { PROJECTS } = await import('../data/projects')
-      const filtered = filter === 'All' ? PROJECTS : PROJECTS.filter(p => p.category === filter)
+      const filtered = filter === 'Tout' ? PROJECTS : PROJECTS.filter(p => p.category === filter)
       setProjects(filtered)
     } finally {
       setLoading(false)
@@ -91,15 +98,14 @@ const ProjectsPage = ({ externalAddModal }) => {
       <div className={styles.header}>
         <motion.div className={styles.heroText}
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className={styles.title}>Featured <span className={styles.accent}>Projects</span></h1>
+          <h1 className={styles.title}>Projets <span className={styles.accent}>à la une </span></h1>
           <p className={styles.subtitle}>
-            A showcase of full-stack engineering, scalable backend architectures,
-            and high-performance user interfaces.
+           Transformer des idées complexes en solutions élégantes, de la stratégie à la réalisation finale.
           </p>
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}>
-          <FilterBar active={filter} onChange={setFilter} />
+          <FilterBar active={filter} onChange={setFilter} categories={categories} />
         </motion.div>
       </div>
 
@@ -110,14 +116,27 @@ const ProjectsPage = ({ externalAddModal }) => {
       ) : projects.length === 0 ? (
         <Empty description="Aucun projet trouvé" style={{ padding: '60px 0', color: 'var(--text-secondary)' }} />
       ) : (
-        <motion.div className={styles.grid} layout>
-          <AnimatePresence mode="popLayout">
-            {projects.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i}
-                onView={studyModal.open} />
-            ))}
-          </AnimatePresence>
-        </motion.div>
+       <div className={styles.categories}>
+      {projects
+        .filter(category => filter === 'Tout' || category.label === filter)
+        .map((category, ci) => (
+          <div key={category.id} className={styles.categoryBlock}>
+            <h2 className={styles.categoryTitle}>{category.label}</h2>
+            <motion.div className={styles.grid} layout>
+              <AnimatePresence mode="popLayout">
+                {category.projects.map((project, i) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    index={i}
+                    onView={studyModal.open}
+                  />
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        ))}
+     </div>
       )}
 
       <div className={styles.loadMore}>

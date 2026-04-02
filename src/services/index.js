@@ -7,7 +7,7 @@ export const ProjectService = {
   /** GET /api/projects — liste paginée (backoffice) */
   async list(params = {}) {
     const { data } = await api.get('/projects', { params })
-    return data
+    return data.data
   },
 
   /** POST /api/projects */

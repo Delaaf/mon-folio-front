@@ -21,7 +21,7 @@ export default function GestionProjets() {
   const [notifApi, notifCtx]  = notification.useNotification()
 
   const { data: response, loading, execute: fetchProjects } = useApi(ProjectService.list, { showErrorNotif: true })
-  const projects = response?.data ?? []
+  const projects = response/*?.data ?? []*/
 
   useEffect(() => { fetchProjects({ search }) }, [search])
 
