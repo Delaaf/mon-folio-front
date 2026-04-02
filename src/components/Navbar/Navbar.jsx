@@ -1,13 +1,27 @@
 import React from 'react'
-import { NavLink } from "react-router-dom";
-import { Button, Avatar, Tooltip, Dropdown  } from 'antd'
-import { CodeOutlined, PlusOutlined, UserOutlined, SettingOutlined, LogoutOutlined, EditOutlined, ProjectOutlined, PoweroffOutlined, ToolOutlined, GoogleOutlined, ManOutlined } from '@ant-design/icons'
+import { NavLink } from 'react-router-dom'
+import { Button, Avatar, Dropdown } from 'antd'
+import {
+  CodeOutlined,
+  UserOutlined,
+  SettingOutlined,
+  LogoutOutlined,
+  EditOutlined,
+  ProjectOutlined,
+  GoogleOutlined,
+  ManOutlined,
+  BarsOutlined,
+} from '@ant-design/icons'
 import { motion } from 'framer-motion'
+import { useAuth } from '../../contexts/AuthContext'
 import styles from './Navbar.module.css'
 
-
-
-const NAV_LINKS = ["Accueil", 'Projects', 'Resume', 'About', 'Contact']
+const NAV_LINKS = [
+  { label: 'Accueil', path: '/' },
+  { label: 'Projets', path: '/projets' },
+  { label: 'A propos', path: '/a-propos' }, 
+  { label: 'Contact', path: '/contact' },
+]
 
 /**
  * Navbar — barre de navigation sticky
@@ -15,63 +29,55 @@ const NAV_LINKS = ["Accueil", 'Projects', 'Resume', 'About', 'Contact']
  * @param {Function} onAddProject — ouvre la modale de création
  */
 const Navbar = ({ activePage = 'Projects', onAddProject }) => {
-
-  const handleLogout= ()=>{
-    console.log("Déconnexion"); 
-  }
+  const { user, logout } = useAuth()
 
   const menuItems = [
-  {
-    key: "infos",
-    label: <NavLink to="/mes-informations">Mes informations</NavLink>,
-    icon: <UserOutlined />,
-  },
-  {
-    key: "portfolio",
-    label: <NavLink to="/modifier-mon-portfolio">Modifier mon portfolio</NavLink>,
-    icon: <EditOutlined />,
-  },
-  {
-    type: "divider",
-  },
-  {
-    key: "projets",
-    label:<NavLink to="/gerer-mes-projets">Gérer mes projets</NavLink>,
-    icon: <ProjectOutlined />,
-  },
-   {
-    key: "competences",
-    label: <NavLink to="/gerer-mes-competences">Gérer mes compétences</NavLink>,
-    icon: <ManOutlined />,
-  },
-   {
-    key: "apropos",
-    label: <NavLink to="/gerer-autres">Gérer autres</NavLink>,
-    icon: <EditOutlined />,
-  },
-  {
-    type: "divider",
-  },
-   {
-    key: "parametres",
-    label: <NavLink to="/parametres-du-compte">Paramètres du compte</NavLink>,
-    icon: <SettingOutlined />,
-  },
-  {
-    type: "divider",
-  },
-   {
-    key: "aide",
-    label: <NavLink to="/aide-et-support">Aide & support</NavLink>,
-    icon: <GoogleOutlined />,
-  },
-   {
-    key: "deconnexion",
-    label: <span onClick={handleLogout}>Déconnexion</span>,
-    icon: <LogoutOutlined />,
-    danger:true
-  },
-];
+    {
+      key: 'infos',
+      label: <NavLink to="/mes-informations">Mes informations</NavLink>,
+      icon: <UserOutlined />,
+    },
+    {
+      key: 'portfolio',
+      label: <NavLink to="/modifier-mon-portfolio">Modifier mon portfolio</NavLink>,
+      icon: <EditOutlined />,
+    },
+    { type: 'divider' },
+    {
+      key: 'projets',
+      label: <NavLink to="/gerer-mes-projets">Gérer mes projets</NavLink>,
+      icon: <ProjectOutlined />,
+    },
+    {
+      key: 'competences',
+      label: <NavLink to="/gerer-mes-competences">Gérer mes compétences</NavLink>,
+      icon: <ManOutlined />,
+    },
+    {
+      key: 'apropos',
+      label: <NavLink to="/gerer-autres">Gérer autres</NavLink>,
+      icon: <BarsOutlined />,
+    },
+    { type: 'divider' },
+    {
+      key: 'parametres',
+      label: <NavLink to="/parametres-du-compte">Paramètres du compte</NavLink>,
+      icon: <SettingOutlined />,
+    },
+    { type: 'divider' },
+    {
+      key: 'aide',
+      label: <NavLink to="/aide-et-support">Aide & support</NavLink>,
+      icon: <GoogleOutlined />,
+    },
+    {
+      key: 'deconnexion',
+      label: <span onClick={logout}>Déconnexion</span>,
+      icon: <LogoutOutlined />,
+      danger: true,
+    },
+  ]
+
   return (
     <motion.nav
       className={styles.navbar}
@@ -90,22 +96,21 @@ const Navbar = ({ activePage = 'Projects', onAddProject }) => {
       {/* Nav links */}
       <ul className={styles.links}>
         {NAV_LINKS.map((link) => (
-          <li key={link}>
-             <NavLink
-         to={link === "Accueil" ? "/" : `/${link.toLowerCase()}`}
-         className={({ isActive }) =>
-           `${styles.link} ${isActive ? styles.active : ""}`
-         }
-       >
-         {link}
-       </NavLink>
-          </li>
-        ))}
+  <li key={link.path}>
+        <NavLink
+          to={link.path}
+          className={({ isActive }) =>
+            `${styles.link} ${isActive ? styles.active : ''}`
+          }
+        >
+          {link.label}
+        </NavLink>
+  </li>
+    ))}
       </ul>
 
       {/* Right actions */}
       <div className={styles.right}>
-
         <Button
           type="primary"
           className={styles.btnHire}
@@ -117,14 +122,14 @@ const Navbar = ({ activePage = 'Projects', onAddProject }) => {
         <Dropdown
           menu={{ items: menuItems }}
           placement="bottomRight"
-          trigger={["click"]}
+          trigger={['click']}
         >
-        <Avatar
-          className={styles.avatar}
-          src="https://i.pravatar.cc/150?img=3"
-          style={{ cursor: "pointer" }}
-        />
-      </Dropdown>
+          <Avatar
+            className={styles.avatar}
+            src={user?.avatar ?? 'https://i.pravatar.cc/150?img=3'}
+            style={{ cursor: 'pointer' }}
+          />
+        </Dropdown>
       </div>
     </motion.nav>
   )

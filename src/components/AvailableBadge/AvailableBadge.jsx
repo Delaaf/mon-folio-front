@@ -5,7 +5,7 @@ import styles from './AvailableBadge.module.css'
 /**
  * AvailableBadge — indicateur de disponibilité animé (point vert pulsant)
  */
-const AvailableBadge = ({ label = 'Available for projects' }) => (
+const AvailableBadge = ({ label = 'Disponible pour vos projets' }) => (
   <motion.div
     className={styles.badge}
     initial={{ opacity: 0, y: -8 }}

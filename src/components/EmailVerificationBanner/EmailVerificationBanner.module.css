@@ -1,0 +1,77 @@
+.banner {
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.12) 0%, rgba(245, 158, 11, 0.06) 100%);
+  border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+  overflow: hidden;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.icon {
+  color: #f59e0b;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.text {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  flex: 1;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.btnResend {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #f59e0b;
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  font-family: var(--font-body);
+}
+
+.btnResend:hover:not(:disabled) {
+  background: rgba(245, 158, 11, 0.25);
+  transform: translateY(-1px);
+}
+
+.btnResend:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.btnClose {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.btnClose:hover { color: var(--text-secondary); }
+
+@media (max-width: 600px) {
+  .inner { flex-wrap: wrap; }
+  .text  { flex: 0 0 100%; order: -1; }
+}

@@ -20,7 +20,7 @@ const TechStack = () => (
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay: 0.6 }}
   >
-    <span className={styles.sectionLabel}>Tech Stack</span>
+    <span className={styles.sectionLabel}>Stack Technique</span>
     <div className={styles.items}>
       {TECH_STACK.map(({ label }) => (
         <div key={label} className={styles.item}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect} from 'react'
 import {
   Button, Modal, Form, Input, Select, Slider,
   notification, Popconfirm, Progress, Space, Tooltip,
@@ -10,13 +10,10 @@ import {
 import { motion } from 'framer-motion'
 import s from './backoffice.module.css'
 import ls from './GestionCompetences.module.css'
-import { SKILL_CATEGORIES } from '../../data/skills'
+import {SkillService} from '../../services/index'
 
 const { Option } = Select
 
-const ALL_SKILLS = SKILL_CATEGORIES.flatMap(cat =>
-  cat.skills.map(sk => ({ ...sk, id: `${cat.id}-${sk.name}`, category: cat.label, catIcon: cat.icon }))
-)
 
 const fadeUp = (d = 0) => ({
   initial: { opacity: 0, y: 18 },
@@ -25,7 +22,10 @@ const fadeUp = (d = 0) => ({
 })
 
 export default function GestionCompetences() {
-  const [skills, setSkills]    = useState(ALL_SKILLS)
+  const [skills, setSkills]    = useState([])
+  const [categories, setCategories] = useState([])
+  const [catModal, setCatModal] = useState(false)
+  const [catForm] = Form.useForm()
   const [search, setSearch]    = useState('')
   const [catFilter, setCat]    = useState('Tous')
   const [modal, setModal]      = useState(false)
@@ -33,10 +33,29 @@ export default function GestionCompetences() {
   const [form]                 = Form.useForm()
   const [notifApi, notifCtx]   = notification.useNotification()
 
+
+  const fetchCategories = async () => {
+  try {
+    const res = await SkillService.list()
+    setSkills(res)
+    console.log('RES =', res)
+    
+    // extraire catégories uniques
+    const uniqueCats = [...new Set(res.map(s => s.label))]
+    setCategories(uniqueCats)
+  } catch (err) {
+    console.error(err)
+  }
+}
+useEffect(() => {
+  fetchCategories()
+}, [])
+console.log("cateeeegories ==>", categories)
+
   const cats = ['Tous', ...new Set(skills.map(s => s.category))]
 
   const filtered = skills.filter(sk => {
-    const matchSearch = sk.name.toLowerCase().includes(search.toLowerCase())
+   const matchSearch = (sk.name || '').toLowerCase().includes(search.toLowerCase())
     const matchCat    = catFilter === 'Tous' || sk.category === catFilter
     return matchSearch && matchCat
   })
@@ -44,7 +63,7 @@ export default function GestionCompetences() {
   const openCreate = () => { setEditing(null); form.resetFields(); setModal(true) }
   const openEdit   = (sk) => { setEditing(sk); form.setFieldsValue(sk); setModal(true) }
 
-  const handleSave = async () => {
+  const handleSkillCreate = async () => {
     try {
       const vals = await form.validateFields()
       if (editing) {
@@ -58,12 +77,34 @@ export default function GestionCompetences() {
     } catch {}
   }
 
-  const handleDelete = (id) => {
+  const handleSkillDelete = (id) => {
     setSkills(prev => prev.filter(sk => sk.id !== id))
     notifApi.success({ message: 'Compétence supprimée', placement: 'bottomRight' })
   }
 
-  const avgLevel = Math.round(skills.reduce((a, s) => a + s.level, 0) / skills.length)
+  const handleCategoryCreate = async () => {
+  try {
+    const values = await catForm.validateFields()
+
+    const res = await SkillService.createCategory({
+      label: values.name,
+    })
+
+    setCategories(prev => [...prev, res.label])
+
+    notifApi.success({
+      message: 'Catégorie ajoutée !',
+      placement: 'bottomRight',
+    })
+
+    setCatModal(false)
+    catForm.resetFields()
+  } catch (err) {
+    console.log(err.response?.data) // 🔥 debug utile
+  }
+}
+
+  const avgLevel = skills.length? Math.round(skills.reduce((a, s) => a + s.level, 0) / skills.length): 0
 
   return (
     <div className={s.page}>
@@ -78,17 +119,13 @@ export default function GestionCompetences() {
             <p className={s.pageSubtitle}>{skills.length} compétences · Niveau moyen {avgLevel}%</p>
           </div>
           <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>Nouvelle compétence</Button>
+          <Button icon={<PlusOutlined />} onClick={() => setCatModal(true)}> Nouvelle catégorie</Button>
         </motion.div>
 
         {/* Stats */}
         <motion.div className={ls.statsRow} {...fadeUp(0.07)}>
-          {SKILL_CATEGORIES.map(cat => (
-            <div key={cat.id} className={ls.catCard} onClick={() => setCat(catFilter === cat.label ? 'Tous' : cat.label)}
-              style={{ borderColor: catFilter === cat.label ? 'var(--accent)' : undefined }}>
-              <span className={ls.catIcon}>{cat.icon}</span>
-              <span className={ls.catLabel}>{cat.label}</span>
-              <span className={ls.catCount}>{cat.skills.length} skills</span>
-            </div>
+          {categories.filter(c => c).map(c => (
+          <Option key={c} value={c}>{c}</Option>
           ))}
         </motion.div>
 
@@ -116,7 +153,7 @@ export default function GestionCompetences() {
                     <Button type="text" size="small" icon={<EditOutlined />} className={ls.actionBtn} onClick={() => openEdit(sk)} />
                   </Tooltip>
                   <Popconfirm title="Supprimer ?" okText="Oui" cancelText="Non" okButtonProps={{ danger: true }}
-                    onConfirm={() => handleDelete(sk.id)}>
+                    onConfirm={() => handleSkillDelete(sk.id)}>
                     <Tooltip title="Supprimer">
                       <Button type="text" size="small" icon={<DeleteOutlined />} className={ls.actionBtnD} />
                     </Tooltip>
@@ -127,17 +164,21 @@ export default function GestionCompetences() {
                 <span className={ls.skillCat}>{sk.catIcon} {sk.category}</span>
                 <span className={ls.skillLevel}>{sk.level}%</span>
               </div>
-              <Progress percent={sk.level} showInfo={false} size="small"
-                strokeColor={sk.color || 'var(--accent)'}
-                trailColor="rgba(255,255,255,0.07)" />
+              <Progress
+                 percent={sk.level}
+                 showInfo={false}
+                 size="small"
+                 strokeColor={sk.color || 'var(--accent)'}
+                 railColor="rgba(255,255,255,0.07)" // ✅
+              />
             </motion.div>
           ))}
         </motion.div>
 
       </div>
 
-      {/* Modal */}
-      <Modal open={modal} onCancel={() => setModal(false)} onOk={handleSave}
+      {/* Competence Modal */}
+      <Modal open={modal} onCancel={() => setModal(false)} onOk={handleSkillCreate}
         title={<span style={{ fontFamily: 'var(--font-display)', fontWeight: 700 }}>
           {editing ? '✏️ Modifier la compétence' : '⭐ Nouvelle compétence'}
         </span>}
@@ -149,7 +190,9 @@ export default function GestionCompetences() {
           </Form.Item>
           <Form.Item name="category" label="Catégorie" rules={[{ required: true }]}>
             <Select placeholder="Sélectionner">
-              {SKILL_CATEGORIES.map(c => <Option key={c.id} value={c.label}>{c.icon} {c.label}</Option>)}
+              {categories.filter(c => c).map(c => (
+             <Option key={c} value={c}>{c}</Option>
+              ))}
             </Select>
           </Form.Item>
           <Form.Item name="level" label="Niveau de maîtrise" rules={[{ required: true }]}>
@@ -157,6 +200,25 @@ export default function GestionCompetences() {
           </Form.Item>
           <Form.Item name="color" label="Couleur (hex)">
             <Input placeholder="#4f8eff" />
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      {/*Category modal */}
+
+            <Modal
+        open={catModal}
+        onCancel={() => setCatModal(false)}
+        onOk={handleCategoryCreate}
+        title="Nouvelle catégorie"
+      >
+        <Form form={catForm} layout="vertical">
+          <Form.Item
+            name="name"
+            label="Nom de la catégorie"
+            rules={[{ required: true }]}
+          >
+            <Input placeholder="Ex: Mobile, IA..." />
           </Form.Item>
         </Form>
       </Modal>

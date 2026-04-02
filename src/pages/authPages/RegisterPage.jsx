@@ -1,49 +1,57 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Form, Input, Button, Checkbox, Divider, notification, Progress } from 'antd'
+import { Form, Input, Button, Divider, Checkbox, notification } from 'antd'
 import {
-  MailOutlined, LockOutlined, UserOutlined, GithubOutlined,
-  GoogleOutlined, EyeInvisibleOutlined, EyeTwoTone,
+  MailOutlined, LockOutlined, UserOutlined,
+  GithubOutlined, GoogleOutlined,
+  EyeInvisibleOutlined, EyeTwoTone,
   CheckCircleFilled, CloseCircleFilled,
 } from '@ant-design/icons'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useAuth } from '../../contexts/AuthContext'
 import styles from './AuthPages.module.css'
 
-/* ── Password strength checker ── */
+/* ── Password strength ─────────────────────────── */
 const getStrength = (pwd) => {
   if (!pwd) return { score: 0, label: '', color: '' }
   let score = 0
-  if (pwd.length >= 8)            score++
-  if (/[A-Z]/.test(pwd))          score++
-  if (/[0-9]/.test(pwd))          score++
-  if (/[^A-Za-z0-9]/.test(pwd))   score++
+  if (pwd.length >= 8)           score++
+  if (/[A-Z]/.test(pwd))         score++
+  if (/[0-9]/.test(pwd))         score++
+  if (/[^A-Za-z0-9]/.test(pwd))  score++
   const map = [
-    { label: '',          color: '' },
-    { label: 'Faible',    color: '#f87171' },
-    { label: 'Moyen',     color: '#f59e0b' },
-    { label: 'Bon',       color: '#60a5fa' },
-    { label: 'Fort',      color: '#4ade80' },
+    { label: '', color: '' },
+    { label: 'Faible',  color: '#f87171' },
+    { label: 'Moyen',   color: '#f59e0b' },
+    { label: 'Bon',     color: '#60a5fa' },
+    { label: 'Fort',    color: '#4ade80' },
   ]
   return { score, ...map[score] }
 }
 
 const RULES = [
-  { test: p => p.length >= 8,           label: '8 caractères minimum'        },
-  { test: p => /[A-Z]/.test(p),         label: 'Une majuscule'               },
-  { test: p => /[0-9]/.test(p),         label: 'Un chiffre'                  },
-  { test: p => /[^A-Za-z0-9]/.test(p),  label: 'Un caractère spécial'        },
+  { test: p => p.length >= 8,          label: '8 caractères minimum'  },
+  { test: p => /[A-Z]/.test(p),        label: 'Une majuscule'         },
+  { test: p => /[0-9]/.test(p),        label: 'Un chiffre'            },
+  { test: p => /[^A-Za-z0-9]/.test(p), label: 'Un caractère spécial'  },
 ]
 
 const STEPS = ['Compte', 'Profil', 'Confirmation']
 
 export default function RegisterPage() {
-  const navigate              = useNavigate()
-  const [form]                = Form.useForm()
-  const [step, setStep]       = useState(0)
-  const [password, setPass]   = useState('')
-  const [loading, setLoad]    = useState(false)
-  const [notifApi, ctx]       = notification.useNotification()
-  const strength              = getStrength(password)
+  const { register, loginWithGoogle, loginWithGithub } = useAuth()
+  const navigate           = useNavigate()
+  const [form]             = Form.useForm()
+  const [step, setStep]    = useState(0)
+  const [password, setPass] = useState('')
+  const [loading, setLoad] = useState(false)
+  const [notifApi, ctx]    = notification.useNotification()
+  const strength           = getStrength(password)
+
+  /* live preview values */
+  const prenom   = Form.useWatch('prenom',   form) ?? ''
+  const nom      = Form.useWatch('nom',      form) ?? ''
+  const username = Form.useWatch('username', form) ?? ''
 
   const nextStep = async () => {
     try {
@@ -58,30 +66,46 @@ export default function RegisterPage() {
   const handleSubmit = async () => {
     try {
       await form.validateFields(['terms'])
+      const vals = form.getFieldsValue(true)
       setLoad(true)
-      await new Promise(r => setTimeout(r, 1200))
-      setLoad(false)
-      notifApi.success({
-        message: 'Compte créé avec succès 🎉',
-        description: 'Vérifiez votre email pour activer votre compte.',
-        placement: 'bottomRight',
-        duration: 4,
+      await register({
+        prenom:   vals.prenom,
+        nom:      vals.nom,
+        email:    vals.email,
+        password: vals.password,
+        confirm:  vals.confirm,
+        username: vals.username,
+        role:     vals.role,
       })
-      setTimeout(() => navigate('/login'), 1000)
-    } catch {}
+      // AuthContext redirige automatiquement vers '/'
+    } catch (err) {
+      const msg = err.response?.data?.message ?? 'Erreur lors de la création du compte.'
+      const errors = err.response?.data?.errors ?? {}
+      // Afficher les erreurs de validation sur les champs
+      if (Object.keys(errors).length) {
+        const fields = Object.entries(errors).map(([name, messages]) => ({
+          name, errors: messages,
+        }))
+        form.setFields(fields)
+        // Revenir à l'étape qui contient le champ en erreur
+        if (errors.email || errors.password) setStep(0)
+        else if (errors.username) setStep(1)
+      }
+      notifApi.error({ message: msg, placement: 'bottomRight', duration: 4 })
+    } finally {
+      setLoad(false)
+    }
   }
 
+  /* ── Render ── */
   return (
     <div className={styles.authRoot}>
       {ctx}
 
-      {/* ── Left panel ── */}
-      <motion.aside
-        className={styles.panel}
-        initial={{ opacity: 0, x: -40 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      >
+      {/* Left panel */}
+      <motion.aside className={styles.panel}
+        initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
         <div className={styles.panelGlow1} />
         <div className={styles.panelGlow2} />
         <div className={styles.panelGrid}  />
@@ -91,7 +115,7 @@ export default function RegisterPage() {
           <span>MonFolio</span>
         </Link>
 
-        {/* Steps indicator */}
+        {/* Steps */}
         <div className={styles.stepsWrap}>
           <p className={styles.stepsLabel}>Étape {step + 1} sur {STEPS.length}</p>
           <div className={styles.stepsBar}>
@@ -106,76 +130,51 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        {/* Panel hero */}
+        {/* Hero */}
         <div className={styles.panelHero}>
-          <motion.h2
-            key={step}
-            className={styles.panelTitle}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-          >
+          <motion.h2 key={step} className={styles.panelTitle}
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}>
             {step === 0 && <>Créez votre<br /><span className={styles.panelAccent}>compte gratuit.</span></>}
             {step === 1 && <>Complétez votre<br /><span className={styles.panelAccent}>profil.</span></>}
             {step === 2 && <>Presque<br /><span className={styles.panelAccent}>terminé !</span></>}
           </motion.h2>
-          <motion.p
-            key={`sub-${step}`}
-            className={styles.panelSub}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-          >
+          <p className={styles.panelSub}>
             {step === 0 && 'Entrez vos identifiants pour créer votre espace.'}
             {step === 1 && 'Dites-nous comment vous appeler sur votre portfolio.'}
             {step === 2 && 'Acceptez les conditions et lancez-vous !'}
-          </motion.p>
+          </p>
         </div>
 
-        {/* Preview card */}
-        <motion.div
-          className={styles.previewCard}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-        >
-          <div className={styles.previewDots}>
-            <span /><span /><span />
-          </div>
+        {/* Live preview card */}
+        <motion.div className={styles.previewCard}
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}>
+          <div className={styles.previewDots}><span /><span /><span /></div>
           <div className={styles.previewBody}>
-            <div className={styles.previewAva}>
-              {form.getFieldValue('prenom')?.[0]?.toUpperCase() || 'A'}
-            </div>
+            <div className={styles.previewAva}>{prenom?.[0]?.toUpperCase() || 'A'}</div>
             <div>
-              <div className={styles.previewName}>
-                {(form.getFieldValue('prenom') || 'Prénom') + ' ' + (form.getFieldValue('nom') || 'Nom')}
-              </div>
-              <div className={styles.previewHandle}>
-                @{form.getFieldValue('username') || 'monportfolio'}
-              </div>
+              <div className={styles.previewName}>{prenom || 'Prénom'} {nom || 'Nom'}</div>
+              <div className={styles.previewHandle}>@{username || 'monportfolio'}</div>
             </div>
           </div>
           <div className={styles.previewUrl}>
-            monfolio.dev/<span>{form.getFieldValue('username') || 'monportfolio'}</span>
+            monfolio.dev/<span>{username || 'monportfolio'}</span>
           </div>
         </motion.div>
       </motion.aside>
 
-      {/* ── Right panel (form) ── */}
-      <motion.main
-        className={styles.formSide}
-        initial={{ opacity: 0, x: 40 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      >
+      {/* Right — form */}
+      <motion.main className={styles.formSide}
+        initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
         <div className={styles.formBox}>
 
-          {/* Header */}
           <div className={styles.formHeader}>
             <h1 className={styles.formTitle}>
-              {step === 0 && 'Créer un compte ✨'}
-              {step === 1 && 'Votre profil 👤'}
-              {step === 2 && 'Finalisation 🎯'}
+              {step === 0 && 'Créer un compte '}
+              {step === 1 && 'Votre profil '}
+              {step === 2 && 'Finalisation '}
             </h1>
             <p className={styles.formSubtitle}>
               {step === 0 && 'Gratuit, sans carte bancaire requise.'}
@@ -184,19 +183,15 @@ export default function RegisterPage() {
             </p>
           </div>
 
-          {/* OAuth (step 0 only) */}
+          {/* OAuth — step 0 only */}
           {step === 0 && (
             <>
               <div className={styles.oauthRow}>
-                <button className={styles.oauthBtn}
-                  onClick={() => notifApi.info({ message: 'OAuth Google (demo)', placement: 'bottomRight' })}>
-                  <GoogleOutlined className={styles.oauthIcon} />
-                  <span>Google</span>
+                <button className={styles.oauthBtn} onClick={loginWithGoogle}>
+                  <GoogleOutlined className={styles.oauthIcon} /><span>Google</span>
                 </button>
-                <button className={styles.oauthBtn}
-                  onClick={() => notifApi.info({ message: 'OAuth GitHub (demo)', placement: 'bottomRight' })}>
-                  <GithubOutlined className={styles.oauthIcon} />
-                  <span>GitHub</span>
+                <button className={styles.oauthBtn} onClick={loginWithGithub}>
+                  <GithubOutlined className={styles.oauthIcon} /><span>GitHub</span>
                 </button>
               </div>
               <Divider className={styles.divider}>
@@ -208,11 +203,12 @@ export default function RegisterPage() {
           <Form form={form} layout="vertical" requiredMark={false} className={styles.form}>
             <AnimatePresence mode="wait">
 
-              {/* ── Step 0 : Compte ── */}
+              {/* Step 0 — Compte */}
               {step === 0 && (
-                <motion.div key="step0"
+                <motion.div key="s0"
                   initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
+                  exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }}>
+
                   <Form.Item name="email" label="Adresse email"
                     rules={[{ required: true, message: 'Email requis' }, { type: 'email', message: 'Email invalide' }]}>
                     <Input prefix={<MailOutlined className={styles.inputIcon} />}
@@ -224,8 +220,7 @@ export default function RegisterPage() {
                     <Input.Password
                       prefix={<LockOutlined className={styles.inputIcon} />}
                       placeholder="Créez un mot de passe fort"
-                      size="large"
-                      className={styles.input}
+                      size="large" className={styles.input}
                       onChange={e => setPass(e.target.value)}
                       iconRender={v => v ? <EyeTwoTone /> : <EyeInvisibleOutlined />}
                     />
@@ -275,48 +270,50 @@ export default function RegisterPage() {
                 </motion.div>
               )}
 
-              {/* ── Step 1 : Profil ── */}
+              {/* Step 1 — Profil */}
               {step === 1 && (
-                <motion.div key="step1"
+                <motion.div key="s1"
                   initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
+                  exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }}>
+
                   <div className={styles.twoCol}>
-                    <Form.Item name="prenom" label="Prénom"
-                      rules={[{ required: true, message: 'Requis' }]}>
+                    <Form.Item name="prenom" label="Prénom" rules={[{ required: true, message: 'Requis' }]}>
                       <Input prefix={<UserOutlined className={styles.inputIcon} />}
                         placeholder="Alex" size="large" className={styles.input} />
                     </Form.Item>
-                    <Form.Item name="nom" label="Nom"
-                      rules={[{ required: true, message: 'Requis' }]}>
+                    <Form.Item name="nom" label="Nom" rules={[{ required: true, message: 'Requis' }]}>
                       <Input prefix={<UserOutlined className={styles.inputIcon} />}
                         placeholder="Rivera" size="large" className={styles.input} />
                     </Form.Item>
                   </div>
 
-                  <Form.Item name="username" label="Nom d'utilisateur / URL du portfolio"
-                    rules={[{ required: true, message: 'Requis' },
-                      { pattern: /^[a-z0-9-]+$/, message: 'Minuscules, chiffres et tirets uniquement' }]}
+                  <Form.Item name="username" label="Nom d'utilisateur / URL portfolio"
+                    rules={[
+                      { required: true, message: 'Requis' },
+                      { pattern: /^[a-z0-9-]+$/, message: 'Minuscules, chiffres et tirets uniquement' },
+                    ]}
                     extra={
                       <span className={styles.urlPreview}>
-                        🌐 monfolio.dev/<strong>{form.getFieldValue('username') || '...'}</strong>
+                        🌐 monfolio.dev/<strong>{username || '...'}</strong>
                       </span>
                     }>
-                    <Input prefix={<span className={styles.atPrefix}>@</span>}
+                    <Input
+                      prefix={<span className={styles.atPrefix}>@</span>}
                       placeholder="alexrivera" size="large" className={styles.input}
-                      onChange={() => form.validateFields(['username'])} />
+                    />
                   </Form.Item>
 
-                  <Form.Item name="role" label="Titre professionnel">
+                  <Form.Item name="role" label="Titre professionnel (optionnel)">
                     <Input placeholder="Ex: Full-Stack Developer" size="large" className={styles.input} />
                   </Form.Item>
                 </motion.div>
               )}
 
-              {/* ── Step 2 : Confirmation ── */}
+              {/* Step 2 — Confirmation */}
               {step === 2 && (
-                <motion.div key="step2"
+                <motion.div key="s2"
                   initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
+                  exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }}>
 
                   {/* Récap */}
                   <div className={styles.recap}>
@@ -326,23 +323,21 @@ export default function RegisterPage() {
                     </div>
                     <div className={styles.recapRow}>
                       <span className={styles.recapKey}>Nom</span>
-                      <span className={styles.recapVal}>{(form.getFieldValue('prenom') || '') + ' ' + (form.getFieldValue('nom') || '') || '—'}</span>
+                      <span className={styles.recapVal}>{prenom} {nom}</span>
                     </div>
                     <div className={styles.recapRow}>
                       <span className={styles.recapKey}>URL portfolio</span>
                       <span className={styles.recapVal} style={{ color: 'var(--accent)' }}>
-                        monfolio.dev/{form.getFieldValue('username') || '—'}
+                        monfolio.dev/{username || '—'}
                       </span>
                     </div>
                   </div>
 
                   <Form.Item name="terms" valuePropName="checked"
-                    rules={[{ validator: (_, v) => v ? Promise.resolve() : Promise.reject("Requis") }]}>
+                    rules={[{ validator: (_, v) => v ? Promise.resolve() : Promise.reject('Requis') }]}>
                     <Checkbox className={styles.checkbox}>
-                      J'accepte les{' '}
-                      <a href="#" className={styles.switchLink}>Conditions d'utilisation</a>
-                      {' '}et la{' '}
-                      <a href="#" className={styles.switchLink}>Politique de confidentialité</a>
+                      J'accepte les <a href="#" className={styles.switchLink}>Conditions d'utilisation</a>
+                      {' '}et la <a href="#" className={styles.switchLink}>Politique de confidentialité</a>
                     </Checkbox>
                   </Form.Item>
 
@@ -355,7 +350,7 @@ export default function RegisterPage() {
               )}
             </AnimatePresence>
 
-            {/* Navigation buttons */}
+            {/* Navigation */}
             <div className={styles.btnNav}>
               {step > 0 && (
                 <Button size="large" className={styles.btnBack} onClick={() => setStep(s => s - 1)}>
@@ -370,7 +365,7 @@ export default function RegisterPage() {
               ) : (
                 <Button type="primary" size="large" loading={loading}
                   className={styles.btnSubmit} onClick={handleSubmit} style={{ flex: 1 }}>
-                  {loading ? 'Création en cours...' : '🚀 Créer mon portfolio'}
+                  {loading ? 'Création en cours...' : ' Créer mon portfolio'}
                 </Button>
               )}
             </div>
@@ -378,7 +373,7 @@ export default function RegisterPage() {
 
           <p className={styles.switchText}>
             Déjà un compte ?{' '}
-            <Link to="/login" className={styles.switchLink}>Se connecter →</Link>
+            <Link to="/connexion" className={styles.switchLink}>Se connecter →</Link>
           </p>
         </div>
       </motion.main>

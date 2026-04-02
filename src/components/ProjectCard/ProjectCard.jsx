@@ -12,7 +12,8 @@ import styles from './ProjectCard.module.css'
  * @param {Function} onView    — ouvre la modale Case Study
  * @param {Function} onEdit    — ouvre la modale d'édition
  */
-const ProjectCard = ({ project, index = 0, onView, onEdit }) => {
+const ProjectCard = ({ project, index = 0, onView}) => {
+
   return (
     <motion.article
       className={styles.card}
@@ -88,14 +89,6 @@ const ProjectCard = ({ project, index = 0, onView, onEdit }) => {
                 />
               </Tooltip>
             )}
-            <Tooltip title="Modifier">
-              <Button
-                type="text"
-                icon={<EditOutlined />}
-                onClick={() => onEdit(project)}
-                className={styles.iconBtn}
-              />
-            </Tooltip>
           </div>
         </div>
       </div>

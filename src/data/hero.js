@@ -1,12 +1,12 @@
 export const HERO = {
   name: 'Alex Rivera',
   role: 'Lead Full-Stack Developer',
-  badge: 'Available for projects',
-  headline: ['Building digital', 'experiences', 'that scale.'],
+  badge: 'Disponible pour vos projets',
+  headline: ['Concevoir des', 'experiences', 'numériques évolutives'],
   accentLine: 1, // index du mot en accent
   description:
-    'Full-stack developer specializing in building exceptional digital experiences. Currently focused on building accessible, human-centered products for the modern web.',
-  cta: { primary: 'View My Work', secondary: 'Contact Me' },
+    "Développeur full-stack spécialisé dans la création d'expériences numériques d'exception. Je me concentre actuellement sur le développement de produits accessibles et centrés sur l'humain pour le web moderne.",
+  cta: { primary: 'Voir mon travail', secondary: 'Me contacter' },
 }
 
 export const TECH_STACK = [
