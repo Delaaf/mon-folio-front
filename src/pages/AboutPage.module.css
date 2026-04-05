@@ -198,6 +198,113 @@
   line-height: 1.65;
 }
 
+/*updated after adding skills, lannguages...etc*/
+
+/* SKILLS */
+.skillCategory {
+  margin-bottom: 24px;
+}
+
+.skillCategoryTitle {
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.skillItem {
+  margin-bottom: 10px;
+}
+
+.skillBar {
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.skillProgress {
+  height: 100%;
+  background: #4f8eff;
+  border-radius: 4px;
+}
+
+/* LANGUAGES */
+.languageItem {
+  margin-bottom: 16px;
+}
+
+.languageHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.languageBar {
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.languageProgress {
+  height: 100%;
+  background: #22c55e;
+}
+
+/* CERTIFICATIONS */
+.certifications {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.certCard {
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: 0.3s;
+}
+
+.certCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(79,142,255,0.4);
+}
+
+.certHeader {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.certIcon {
+  font-size: 22px;
+}
+
+.certName {
+  font-weight: 600;
+}
+
+.certOrg {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.certFooter {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.certYear {
+  opacity: 0.6;
+}
+
+.certLink {
+  color: #4f8eff;
+  text-decoration: none;
+}
+
 /* Responsive */
 @media (max-width: 640px) {
   .inner { padding: 36px 20px 48px; }

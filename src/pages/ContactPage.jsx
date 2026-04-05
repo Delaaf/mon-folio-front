@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
 import { motion } from 'framer-motion'
 import { Form, Input, Button, notification } from 'antd'
 import { GithubOutlined, TwitterOutlined, LinkedinOutlined, MailOutlined, SendOutlined, EnvironmentOutlined } from '@ant-design/icons'
-import api from '../services/api'
+import { ProfileService } from '../services/index'
 import styles from './ContactPage.module.css'
 
 const { TextArea } = Input
@@ -10,12 +10,6 @@ const { TextArea } = Input
 // Le username du portfolio — à adapter selon ton config
 const PORTFOLIO_USERNAME = 'alexrivera'
 
-const SOCIAL = [
-  { icon: <GithubOutlined />,   label: 'GitHub',   url: 'https://github.com',   handle: '@alexrivera' },
-  { icon: <TwitterOutlined />,  label: 'Twitter',  url: 'https://twitter.com',  handle: '@alexrivera' },
-  { icon: <LinkedinOutlined />, label: 'LinkedIn', url: 'https://linkedin.com', handle: 'in/alexrivera' },
-  { icon: <MailOutlined />,     label: 'Email',    url: 'mailto:hello@alex.dev',handle: 'hello@alex.dev' },
-]
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 },
@@ -26,11 +20,53 @@ const ContactPage = () => {
   const [form]            = Form.useForm()
   const [loading, setLoad] = useState(false)
   const [notifApi, ctx]   = notification.useNotification()
+  const [profile, setProfile] = useState(null)
+
+  useEffect(() => {
+  const fetchProfile = async () => {
+    try {
+      const res = await ProfileService.get()
+      setProfile(res)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  fetchProfile()
+}, [])
+
+const socials = [
+  {
+    icon: <GithubOutlined />,
+    label: 'GitHub',
+    url: profile?.github_url,
+    handle: profile?.github_url?.replace('https://github.com/', '@')
+  },
+  {
+    icon: <TwitterOutlined />,
+    label: 'Twitter',
+    url: profile?.twitter_url,
+    handle: profile?.twitter_url?.split('/').pop()
+  },
+  {
+    icon: <LinkedinOutlined />,
+    label: 'LinkedIn',
+    url: profile?.linkedin_url,
+    handle: profile?.linkedin_url?.split('/').pop()
+  },
+  {
+    icon: <MailOutlined />,
+    label: 'Email',
+    url: `mailto:${profile?.email}`,
+    handle: profile?.email
+  }
+].filter(s => s.url)
+
 
   const handleSubmit = async (values) => {
     setLoad(true)
     try {
-      await api.post(`/public/${PORTFOLIO_USERNAME}/contact`, values)
+      await api.post(`/public/${profile.username}/contact`, values)
       form.resetFields()
       notifApi.success({
         message: 'Message envoyé ! 🎉',
@@ -96,14 +132,14 @@ const ContactPage = () => {
             <div className={styles.locationCard}>
               <EnvironmentOutlined className={styles.locIcon} />
               <div>
-                <div className={styles.locTitle}>San Francisco, CA</div>
+                <div className={styles.locTitle}> {profile?.location || 'Location non définie'}</div>
                 <div className={styles.locSub}>Open to remote worldwide</div>
               </div>
             </div>
             <div className={styles.socialSection}>
               <div className={styles.socialLabel}>Find me online</div>
               <div className={styles.socialList}>
-                {SOCIAL.map(({ icon, label, url, handle }) => (
+                {socials.map(({ icon, label, url, handle }) => (
                   <a key={label} href={url} target="_blank" rel="noopener noreferrer" className={styles.socialItem}>
                     <span className={styles.socialIcon}>{icon}</span>
                     <div>
