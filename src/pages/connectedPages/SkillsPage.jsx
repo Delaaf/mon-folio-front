@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Spin, Empty } from 'antd'
-import SkillBar from '../components/SkillBar'
-import { SkillService } from '../services/index'
-import { SKILL_CATEGORIES } from '../data/skills'
+import SkillBar from '../../components/SkillBar'
+import { SkillService } from '../../services/index'
+import { SKILL_CATEGORIES } from '../../data/skills'
 import styles from './SkillsPage.module.css'
 
 const fadeUp = (delay = 0) => ({

@@ -4,10 +4,10 @@ import { Button } from 'antd'
 import { ArrowRightOutlined, MailOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 
-import AvailableBadge from '../components/AvailableBadge'
-import HeroCard       from '../components/HeroCard'
-import TechStack      from '../components/TechStack'
-import { HERO }       from '../data/hero'
+import AvailableBadge from '../../components/AvailableBadge'
+import HeroCard       from '../../components/HeroCard'
+import TechStack      from '../../components/TechStack'
+import { HERO }       from '../../data/hero'
 import styles from './HomePage.module.css'
 
 const containerVariants = {

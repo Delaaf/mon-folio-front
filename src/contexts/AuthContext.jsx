@@ -43,7 +43,7 @@ export function AuthProvider({ children }) {
       description: 'Vérifiez votre email pour activer votre compte.',
       placement: 'bottomRight',
     })
-    navigate('/')
+    //navigate('/dashboard')
     return result
   }, [navigate, notifApi])
 
@@ -55,7 +55,7 @@ export function AuthProvider({ children }) {
       placement: 'bottomRight',
       duration: 3,
     })
-    navigate('/')
+    //navigate('/dashboard')
     return result
   }, [navigate, notifApi])
 

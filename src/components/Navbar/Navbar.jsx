@@ -11,6 +11,7 @@ import {
   GoogleOutlined,
   ManOutlined,
   BarsOutlined,
+  DashboardOutlined
 } from '@ant-design/icons'
 import { motion } from 'framer-motion'
 import { useAuth } from '../../contexts/AuthContext'
@@ -31,14 +32,26 @@ const NAV_LINKS = [
 const Navbar = ({ activePage = 'Projects', onAddProject }) => {
   const { user, logout } = useAuth()
 
-  const menuItems = [
+   const menuItems = [
+    {
+      key: 'dashboard',
+      label: <NavLink to="/dashboard">Tableau de bord</NavLink>,
+      icon: <DashboardOutlined />,
+    },
+    { type: 'divider' },
+    {
+      key: 'portfolio',
+      label: <NavLink to={`/portfolio/${user?.username}`}>Voir mon portfolio</NavLink>,
+      icon: <EditOutlined />,
+    },
+    { type: 'divider' },
     {
       key: 'infos',
       label: <NavLink to="/mes-informations">Mes informations</NavLink>,
       icon: <UserOutlined />,
     },
     {
-      key: 'portfolio',
+      key: 'portfolioEdit',
       label: <NavLink to="/modifier-mon-portfolio">Modifier mon portfolio</NavLink>,
       icon: <EditOutlined />,
     },
@@ -78,6 +91,7 @@ const Navbar = ({ activePage = 'Projects', onAddProject }) => {
     },
   ]
 
+  
   return (
     <motion.nav
       className={styles.navbar}
@@ -116,7 +130,7 @@ const Navbar = ({ activePage = 'Projects', onAddProject }) => {
           className={styles.btnHire}
           href="mailto:hello@devportfolio.com"
         >
-          Hire Me
+          Me recruter
         </Button>
 
         <Dropdown

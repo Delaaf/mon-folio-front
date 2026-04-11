@@ -67,7 +67,7 @@ export const ProfileService = {
     const { data } = await api.get('/profile/stats')
     return data.data
   },
-
+  
   /** POST /api/profile/avatar */
   async uploadAvatar(file) {
     const form = new FormData()
@@ -82,6 +82,11 @@ export const ProfileService = {
   async deleteAvatar() {
     await api.delete('/profile/avatar')
   },
+
+  async publicProfile(username, params = {}) {
+    const { data } = await api.get(`/public/${username}/`)
+    return data
+  }
 }
 
 /**

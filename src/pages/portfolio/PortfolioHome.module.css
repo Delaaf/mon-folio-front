@@ -1,0 +1,86 @@
+.page { position: relative; overflow: hidden; }
+
+.bgGlow1 { position: absolute; top: -120px; left: -80px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(79,142,255,0.08) 0%, transparent 70%); pointer-events: none; z-index: 0; }
+.bgGlow2 { position: absolute; bottom: -80px; right: 80px; width: 380px; height: 380px; border-radius: 50%; background: radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%); pointer-events: none; z-index: 0; }
+.bgGrid  { position: absolute; inset: 0; pointer-events: none; z-index: 0; background-image: linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px); background-size: 60px 60px; -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 50%,black,transparent); }
+
+/* Hero */
+.hero { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 52px; padding: 72px 48px 56px; max-width: 1100px; margin: 0 auto; }
+
+.heroLeft { flex: 1; max-width: 520px; display: flex; flex-direction: column; gap: 0; }
+
+/* Badge */
+.badge { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px; border-radius: 999px; border: 1px solid rgba(79,142,255,.3); background: rgba(79,142,255,.07); width: fit-content; margin-bottom: 20px; }
+.badgeDot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; position: relative; }
+.badgeDot::after { content: ''; position: absolute; inset: -3px; border-radius: 50%; border: 1.5px solid #4ade80; opacity: 0; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0% { opacity: .7; transform: scale(1); } 100% { opacity: 0; transform: scale(2.2); } }
+.badgeTxt { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: .07em; text-transform: uppercase; }
+
+/* Headline */
+.headline { font-family: var(--font-display); font-weight: 800; font-size: clamp(32px, 4.5vw, 54px); line-height: 1.06; letter-spacing: -.035em; color: var(--text-primary); margin: 0 0 18px; }
+.accent   { color: var(--accent); }
+
+.desc { font-size: 15px; color: var(--text-secondary); line-height: 1.72; margin: 0 0 28px; max-width: 440px; }
+
+/* CTA */
+.cta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.btnPrimary  { background: var(--accent); color: #fff; border: none; padding: 11px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all .25s; }
+.btnPrimary:hover  { background: #6aa3ff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(79,142,255,.4); }
+.btnSecondary { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); color: var(--text-primary); padding: 11px 20px; border-radius: 8px; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all .25s; }
+.btnSecondary:hover { border-color: rgba(79,142,255,.4); color: var(--accent); }
+
+/* Meta */
+.meta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+.metaItem { display: flex; align-items: center; gap: 5px; font-size: 13px; color: var(--text-secondary); }
+
+/* Social */
+.social { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+.socialBtn { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; font-size: 16px; text-decoration: none; transition: all .2s; }
+.socialBtn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); transform: translateY(-2px); }
+
+/* Tech */
+.techWrap { padding-top: 28px; border-top: 1px solid var(--border); }
+.techLabel { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+.techItems { display: flex; gap: 7px; flex-wrap: wrap; }
+.techTag { font-size: 12px; font-weight: 500; padding: 3px 11px; border-radius: 999px; border: 1px solid; background: transparent; opacity: 0.85; }
+
+/* Avatar card */
+.heroRight { flex-shrink: 0; width: 380px; }
+.avatarCard { position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; height: 360px; display: flex; align-items: center; justify-content: center; }
+.glowTop { position: absolute; top: -70px; right: -50px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle,rgba(79,142,255,.18),transparent 70%); pointer-events: none; }
+.avatarImg { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 4px solid rgba(79,142,255,.3); position: relative; z-index: 1; }
+.avatarFallback { width: 160px; height: 160px; border-radius: 50%; background: linear-gradient(135deg,#4f8eff,#8b5cf6); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 52px; font-weight: 800; color: #fff; border: 4px solid rgba(79,142,255,.3); position: relative; z-index: 1; }
+.identityCard { position: absolute; bottom: 18px; left: 18px; right: 18px; background: rgba(14,14,24,.88); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.09); border-radius: 12px; padding: 11px 14px; display: flex; align-items: center; gap: 11px; }
+.identityAva { position: relative; width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg,#4f8eff,#8b5cf6); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 12px; font-weight: 700; color: #fff; flex-shrink: 0; overflow: hidden; }
+.identityAva img { width: 100%; height: 100%; object-fit: cover; }
+.identityOnline { position: absolute; bottom: 0; right: 0; width: 9px; height: 9px; border-radius: 50%; background: #4ade80; border: 2px solid #0f0f1a; }
+.identityName { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--text-primary); }
+.identityRole { font-size: 11px; color: var(--text-secondary); margin-top: 1px; }
+
+/* Featured projects */
+.featured { border-top: 1px solid var(--border); padding: 52px 48px; }
+.featuredInner { max-width: 1100px; margin: 0 auto; }
+.sectionHd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+.sectionTitle { font-family: var(--font-display); font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: var(--text-primary); margin: 0; }
+.seeAll { font-size: 13.5px; color: var(--accent); font-weight: 600; text-decoration: none; }
+.seeAll:hover { text-decoration: underline; }
+.projGrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+@media (max-width: 768px) { .projGrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .projGrid { grid-template-columns: 1fr; } }
+.projCard { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: border-color .25s, box-shadow .25s; cursor: pointer; }
+.projCard:hover { border-color: var(--border-hover); box-shadow: 0 12px 36px rgba(0,0,0,.4); }
+.projThumb { height: 148px; display: flex; align-items: center; justify-content: center; }
+.projEmoji { font-size: 42px; }
+.projBody  { padding: 15px; flex: 1; display: flex; flex-direction: column; gap: 7px; }
+.projTags  { display: flex; gap: 5px; flex-wrap: wrap; }
+.projTag   { font-size: 10.5px; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.05); color: var(--text-secondary); }
+.projTitle { font-family: var(--font-display); font-size: 14.5px; font-weight: 700; color: var(--text-primary); margin: 0; }
+.projDesc  { font-size: 12px; color: var(--text-secondary); line-height: 1.6; flex: 1; margin: 0; }
+.projLinks { display: flex; gap: 10px; }
+.projLinks a { font-size: 12px; color: var(--accent); text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+
+@media (max-width: 900px) {
+  .hero { flex-direction: column; padding: 44px 24px; }
+  .heroRight { width: 100%; max-width: 380px; margin: 0 auto; }
+  .featured { padding: 40px 24px; }
+}

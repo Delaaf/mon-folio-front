@@ -1,0 +1,25 @@
+.page  { padding: 52px 48px 72px; }
+.inner { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 36px; }
+.title  { font-family: var(--font-display); font-size: clamp(28px,4vw,42px); font-weight: 800; letter-spacing: -.03em; color: var(--text-primary); margin: 0 0 6px; }
+.accent { color: var(--accent); }
+.sub    { font-size: 14px; color: var(--text-secondary); margin: 0; }
+.layout { display: grid; grid-template-columns: 190px 1fr; gap: 20px; align-items: start; }
+.tabs   { display: flex; flex-direction: column; gap: 4px; position: sticky; top: 80px; }
+.tab    { display: flex; align-items: center; gap: 9px; padding: 10px 14px; border-radius: 8px; border: 1px solid transparent; background: transparent; color: var(--text-secondary); font-size: 13.5px; font-weight: 500; cursor: pointer; transition: all .2s; text-align: left; font-family: var(--font-body); }
+.tab:hover { color: var(--text-primary); background: rgba(255,255,255,.04); }
+.tabActive { color: var(--text-primary); border-color: var(--border-hover); background: rgba(79,142,255,.07); }
+.tabIcon { font-size: 16px; width: 20px; text-align: center; }
+.panel  { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 26px 28px; }
+.panelHeader { display: flex; align-items: center; gap: 11px; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.panelIcon  { font-size: 20px; }
+.panelTitle { font-family: var(--font-display); font-size: 18px; font-weight: 700; letter-spacing: -.02em; color: var(--text-primary); margin: 0; }
+.skillList  { display: flex; flex-direction: column; gap: 16px; }
+.skillBar   { display: flex; flex-direction: column; gap: 5px; }
+.skillHd    { display: flex; justify-content: space-between; align-items: center; }
+.skillName  { font-size: 13.5px; color: var(--text-primary); font-weight: 500; }
+.skillPct   { font-family: var(--font-display); font-size: 12px; font-weight: 700; color: var(--text-secondary); }
+.track      { height: 5px; background: rgba(255,255,255,.07); border-radius: 999px; overflow: hidden; }
+.fill       { height: 100%; border-radius: 999px; }
+.empty { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; gap: 14px; font-size: 15px; color: var(--text-secondary); }
+.empty span { font-size: 48px; }
+@media (max-width: 640px) { .layout { grid-template-columns: 1fr; } .tabs { flex-direction: row; flex-wrap: wrap; position: static; } .page { padding: 36px 20px 52px; } }

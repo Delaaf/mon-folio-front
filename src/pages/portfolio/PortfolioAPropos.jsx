@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Spin } from 'antd'
 import { EnvironmentOutlined, CalendarOutlined } from '@ant-design/icons'
-import { ProfileService } from '../services/index'
-import { ABOUT } from '../data/about'
-import styles from './AboutPage.module.css'
+import { ProfileService } from '../../services/index'
+import { ABOUT } from '../../data/about'
+import styles from './PortfolioAPropos.module.css'
+import { usePortfolio } from './PortfolioLayout'
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 },
@@ -39,24 +40,10 @@ const levelToPercent = (level) => {
   }
 }
 
-const AboutPage = () => {
-  const [profile, setProfile] = useState(null)
-  const [loading, setLoading] = useState(true)
+const PortfolioAPropos = () => {
+  const {profile, loading} = usePortfolio()
 
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const data = await ProfileService.get()
-        setProfile(data)
-      } catch {
-        // Fallback to static data
-        setProfile(null)
-      } finally {
-        setLoading(false)
-      }
-    }
-    load()
-  }, [])
+  
 console.log(profile)
   // Use API data or fall back to static
   const name     = profile?.name     ?? ABOUT.name
@@ -237,4 +224,4 @@ const groupedSkills = (profile?.skills || []).reduce((acc, skill) => {
   )
 }
 
-export default AboutPage
+export default PortfolioAPropos

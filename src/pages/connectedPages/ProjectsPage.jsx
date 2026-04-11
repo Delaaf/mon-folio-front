@@ -3,13 +3,13 @@ import { Button, notification, Empty, Spin } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
 import { motion, AnimatePresence } from 'framer-motion'
 
-import FilterBar    from '../components/FilterBar'
-import ProjectCard  from '../components/ProjectCard'
-import AddCard      from '../components/AddCard'
-import { CaseStudyModal, ProjectFormModal } from '../components/Modal'
-import { useModal } from '../hooks/useModal'
-import { ProjectService } from '../services/index'
-import { CATEGORIES } from '../data/projects'
+import FilterBar    from '../../components/FilterBar'
+import ProjectCard  from '../../components/ProjectCard'
+import AddCard      from '../../components/AddCard'
+import { CaseStudyModal, ProjectFormModal } from '../../components/Modal'
+import { useModal } from '../../hooks/useModal'
+import { ProjectService } from '../../services/index'
+import { CATEGORIES } from '../../data/projects'
 
 import styles from './ProjectsPage.module.css'
 
@@ -53,7 +53,7 @@ const ProjectsPage = ({ externalAddModal }) => {
       //setMeta(res.meta ?? {})
     } catch {
       // Fallback to static data if API not connected
-      const { PROJECTS } = await import('../data/projects')
+      const { PROJECTS } = await import('../../data/projects')
       const filtered = filter === 'Tout' ? PROJECTS : PROJECTS.filter(p => p.category === filter)
       setProjects(filtered)
     } finally {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom'
 import { useModal } from './hooks/useModal'
 import { AuthProvider } from './contexts/AuthContext'
 import { ProtectedRoute, PublicOnlyRoute } from './components/ProtectedRoute'
@@ -15,14 +15,29 @@ import ForgotPasswordPage from './pages/authPages/ForgotPasswordPage'
 import ResetPasswordPage  from './pages/authPages/ResetPasswordPage'
 import OAuthCallback      from './pages/authPages/OAuthCallback'
 
-// Public
-import HomePage      from './pages/HomePage'
-import ProjectsPage  from './pages/ProjectsPage'
-import AboutPage     from './pages/AboutPage'
-import SkillsPage    from './pages/SkillsPage'
-import ContactPage   from './pages/ContactPage'
+// Page d'accueil plateforme
+import HomePage from './pages/connectedPages/HomePage'
 
-// Backoffice
+// ── Portfolio PUBLIC (/portfolio/:username/...) ──
+import PortfolioLayout    from './pages/portfolio/PortfolioLayout'
+import PortfolioHome      from './pages/portfolio/PortfolioHome'
+import  PortfolioProjets      from './pages/portfolio/PortfolioProjets'
+import  PortfolioAPropos      from './pages/portfolio/PortfolioAPropos'
+import PortfolioContact     from './pages/portfolio/PortfolioContact'
+
+// Portfolio PUBLIC d'un utilisateur  →  /portfolio/:username
+//import PublicPortfolioPage from './pages/portfolio/PublicPortfolioPage'
+
+// Dashboard (connecté)  →  /dashboard
+import DashboardPage from './pages/dashboard/DashboardPage'
+
+//Pages etant connecté
+
+import ProjectsPage from './pages/connectedPages/ProjectsPage'
+import AboutPage from './pages/connectedPages/AboutPage'
+import ContactPage from './pages/connectedPages/ContactPage'
+
+// Backoffice(connecté)
 import MesInformations       from './pages/backoffice/MesInformations'
 import ModificationPortfolio from './pages/backoffice/ModificationPortfolio'
 import GestionProjets        from './pages/backoffice/GestionProjets'
@@ -31,13 +46,17 @@ import GestionAutres         from './pages/backoffice/GestionAutres'
 import ParametresCompte      from './pages/backoffice/ParametresCompte'
 import AideSupport           from './pages/backoffice/AideSupport'
 
+
 const WithLayout = ({ children }) => {
   const addModal = useModal()
-  return (<>
+  return (
+  <>
   <Navbar onAddProject={addModal.open} />
   <EmailVerificationBanner />
   {children}
-  <Footer /></>)
+  <Footer />
+  </>
+  )
 }
 
 const App = () => (
@@ -51,12 +70,17 @@ const App = () => (
         <Route path="/reinitialiser-mot-de-passe"  element={<PublicOnlyRoute><ResetPasswordPage /></PublicOnlyRoute>} />
         <Route path="/auth/callback"   element={<OAuthCallback />} />
 
-        {/* Public */}
-        <Route path="/"         element={<WithLayout><HomePage /></WithLayout>} />
-        <Route path="/projets" element={<WithLayout><ProjectsPage /></WithLayout>} />
-        <Route path="/a-propos"    element={<WithLayout><AboutPage /></WithLayout>} />
-        <Route path="/competences"   element={<WithLayout><SkillsPage /></WithLayout>} />
-        <Route path="/contact"  element={<WithLayout><ContactPage /></WithLayout>} />
+        {/* ── Page d'accueil de la plateforme ── */}
+        <Route path="/" element={<WithLayout><HomePage /></WithLayout>} />
+
+        {/* ── Portfolio PUBLIC d'un utilisateur ── */}
+        {/* Accessible sans connexion : /portfolio/alexrivera */}
+        <Route path="/portfolio/:username" element={<PortfolioLayout />}>
+          <Route index              element={<PortfolioHome />} />
+          <Route path="projets"     element={<PortfolioProjets />} />
+          <Route path="a-propos"    element={<PortfolioAPropos />} />
+          <Route path="contact"     element={<PortfolioContact />} />
+        </Route>
 
         {/* Backoffice (authentification requise) */}
         <Route path="/mes-informations"       element={<ProtectedRoute><WithLayout><MesInformations /></WithLayout></ProtectedRoute>} />
@@ -66,6 +90,11 @@ const App = () => (
         <Route path="/gerer-autres"           element={<ProtectedRoute><WithLayout><GestionAutres /></WithLayout></ProtectedRoute>} />
         <Route path="/parametres-du-compte"   element={<ProtectedRoute><WithLayout><ParametresCompte /></WithLayout></ProtectedRoute>} />
         <Route path="/aide-et-support"        element={<ProtectedRoute><WithLayout><AideSupport /></WithLayout></ProtectedRoute>} />
+        <Route path="/projets"                element={<ProtectedRoute><WithLayout><ProjectsPage /></WithLayout></ProtectedRoute>} />
+        <Route path="/a-propos"               element={<ProtectedRoute><WithLayout><AboutPage /></WithLayout></ProtectedRoute>} />
+        <Route path="/contact"                element={<ProtectedRoute><WithLayout><ContactPage /></WithLayout></ProtectedRoute>} />
+
+
       </Routes>
     </AuthProvider>
   </BrowserRouter>
