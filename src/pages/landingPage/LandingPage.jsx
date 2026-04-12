@@ -26,7 +26,7 @@ export default function LandingPage() {
           animate={{ opacity: 1, y: 0 }}
         >
           Crée ton portfolio <br />
-          <span>professionnel en minutes</span>
+          <span>professionnel en quelques minutes</span>
         </motion.h1>
 
         <motion.p

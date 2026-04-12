@@ -30,7 +30,7 @@ import PortfolioContact     from './pages/portfolio/PortfolioContact'
 
 // Dashboard (connecté)  →  /dashboard
 import DashboardPage from './pages/dashboard/DashboardPage'
-import LandingPage from './pages/landingPage/landingPage'
+import LandingPage from './pages/landingPage/LandingPage'
 
 //Pages etant connecté
 
