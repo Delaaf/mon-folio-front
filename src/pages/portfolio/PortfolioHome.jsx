@@ -5,7 +5,7 @@ import {
   GithubOutlined, LinkedinOutlined, TwitterOutlined,
   GlobalOutlined, MailOutlined, EnvironmentOutlined,
 } from '@ant-design/icons'
-import { usePortfolio } from './PortfolioLayout'
+import { usePortfolio } from '../../layouts/PortfolioLayout'
 import styles from './PortfolioHome.module.css'
 
 export default function PortfolioHome() {
@@ -85,9 +85,9 @@ export default function PortfolioHome() {
 
         {/* Avatar card */}
         <motion.div className={styles.heroRight}
-          initial={{ opacity: 0, x: 32, scale: 0.95 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}>
+          initial={{ opacity: 0, x: 40, scale: 0.9 }}
+          animate={{opacity: 1,x: 0,scale: 1,}}
+          transition={{duration: 0.8,ease: [0.22, 1, 0.36, 1],}}>
           <div className={styles.avatarCard}>
             <div className={styles.glowTop} />
             {profile?.avatar

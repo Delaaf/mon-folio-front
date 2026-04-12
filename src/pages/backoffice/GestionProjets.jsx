@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Button, Table, Tag, Modal, Form, Input, Select, Popconfirm, Badge, Space, Tooltip, notification } from 'antd'
 import { PlusOutlined, EditOutlined, DeleteOutlined, ProjectOutlined, LinkOutlined, GithubOutlined, SearchOutlined, ReloadOutlined } from '@ant-design/icons'
 import { motion } from 'framer-motion'
-import { useApi, useMutation } from '../../../../../Downloads/devportfolio_add_api/devportfolio/src/hooks/useApi'
-import { ProjectService } from '../../../../../Downloads/devportfolio_add_api/devportfolio/src/services/index'
+import { useApi, useMutation } from '../../hooks/useApi'
+import { ProjectService } from '../../services/index'
 import s from './backoffice.module.css'
 import ls from './GestionProjets.module.css'
 
@@ -20,8 +20,14 @@ export default function GestionProjets() {
   const [form]                = Form.useForm()
   const [notifApi, notifCtx]  = notification.useNotification()
 
-  const { data: response, loading, execute: fetchProjects } = useApi(ProjectService.list, { showErrorNotif: true })
-  const projects = response/*?.data ?? []*/
+const { data: categories, loading, execute: fetchProjects } = useApi(
+  ProjectService.list,
+  { initialData: [] }
+)
+
+const projects = categories.flatMap(c => c.projects)
+
+  console.log("les projets ==>", projects)
 
   useEffect(() => { fetchProjects({ search }) }, [search])
 
@@ -40,8 +46,8 @@ export default function GestionProjets() {
     } catch {}
   }
 
-  const published  = projects.filter(p=>p.status==='published').length
-  const totalViews = projects.reduce((a,p)=>a+(p.views_count??0),0)
+  const published  = projects?.filter(p=>p.status==='published')?.length
+  const totalViews = projects?.reduce((a,p)=>a+(p.views_count??0),0)
 
   const columns = [
     { title:'Projet', key:'title', render:(_,r)=><div className={ls.projCell}><span className={ls.projEmoji}>{r.emoji}</span><div><div className={ls.projTitle}>{r.title}</div><div className={ls.projCat}>{r.category}</div></div></div> },
@@ -62,7 +68,7 @@ export default function GestionProjets() {
           <div className={s.titleGroup}>
             <div className={s.breadcrumb}>Dashboard <span>/</span> Gérer mes projets</div>
             <h1 className={s.pageTitle}>Gestion des <em>projets</em></h1>
-            <p className={s.pageSubtitle}>{projects.length} projets · {published} publiés</p>
+            <p className={s.pageSubtitle}>{projects?.length?? 0} projets · {published ?? 0} publiés</p>
           </div>
           <Space><Button icon={<ReloadOutlined />} onClick={fetchProjects} loading={loading} /><Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>Nouveau projet</Button></Space>
         </motion.div>

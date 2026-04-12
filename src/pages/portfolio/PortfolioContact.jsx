@@ -4,7 +4,7 @@ import { Form, Input, Button, notification } from 'antd'
 import { GithubOutlined, TwitterOutlined, LinkedinOutlined, MailOutlined, SendOutlined, EnvironmentOutlined } from '@ant-design/icons'
 import { ProfileService } from '../../services/index'
 import api from '../../services/api'
-import { usePortfolio } from './PortfolioLayout'
+import { usePortfolio } from '../../layouts/PortfolioLayout'
 import styles from './PortfolioContact.module.css'
 
 const { TextArea } = Input

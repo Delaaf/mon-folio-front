@@ -19,7 +19,7 @@ import OAuthCallback      from './pages/authPages/OAuthCallback'
 import HomePage from './pages/connectedPages/HomePage'
 
 // ── Portfolio PUBLIC (/portfolio/:username/...) ──
-import PortfolioLayout    from './pages/portfolio/PortfolioLayout'
+import PortfolioLayout    from './layouts/PortfolioLayout'
 import PortfolioHome      from './pages/portfolio/PortfolioHome'
 import  PortfolioProjets      from './pages/portfolio/PortfolioProjets'
 import  PortfolioAPropos      from './pages/portfolio/PortfolioAPropos'
@@ -30,6 +30,7 @@ import PortfolioContact     from './pages/portfolio/PortfolioContact'
 
 // Dashboard (connecté)  →  /dashboard
 import DashboardPage from './pages/dashboard/DashboardPage'
+import LandingPage from './pages/landingPage/landingPage'
 
 //Pages etant connecté
 
@@ -71,7 +72,7 @@ const App = () => (
         <Route path="/auth/callback"   element={<OAuthCallback />} />
 
         {/* ── Page d'accueil de la plateforme ── */}
-        <Route path="/" element={<WithLayout><HomePage /></WithLayout>} />
+        <Route path="/" element={<LandingPage/>}/>
 
         {/* ── Portfolio PUBLIC d'un utilisateur ── */}
         {/* Accessible sans connexion : /portfolio/alexrivera */}

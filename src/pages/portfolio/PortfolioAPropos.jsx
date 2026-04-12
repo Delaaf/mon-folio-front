@@ -5,7 +5,7 @@ import { EnvironmentOutlined, CalendarOutlined } from '@ant-design/icons'
 import { ProfileService } from '../../services/index'
 import { ABOUT } from '../../data/about'
 import styles from './PortfolioAPropos.module.css'
-import { usePortfolio } from './PortfolioLayout'
+import { usePortfolio } from '../../layouts/PortfolioLayout'
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 }, animate: { opacity: 1, y: 0 },

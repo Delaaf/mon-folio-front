@@ -11,7 +11,11 @@ import {
   GoogleOutlined,
   ManOutlined,
   BarsOutlined,
-  DashboardOutlined
+  DashboardOutlined,
+  EyeOutlined,
+  ThunderboltOutlined,
+  EllipsisOutlined,
+  CustomerServiceOutlined
 } from '@ant-design/icons'
 import { motion } from 'framer-motion'
 import { useAuth } from '../../contexts/AuthContext'
@@ -34,15 +38,9 @@ const Navbar = ({ activePage = 'Projects', onAddProject }) => {
 
    const menuItems = [
     {
-      key: 'dashboard',
-      label: <NavLink to="/dashboard">Tableau de bord</NavLink>,
-      icon: <DashboardOutlined />,
-    },
-    { type: 'divider' },
-    {
       key: 'portfolio',
       label: <NavLink to={`/portfolio/${user?.username}`}>Voir mon portfolio</NavLink>,
-      icon: <EditOutlined />,
+      icon: <EyeOutlined />,
     },
     { type: 'divider' },
     {
@@ -57,19 +55,19 @@ const Navbar = ({ activePage = 'Projects', onAddProject }) => {
     },
     { type: 'divider' },
     {
-      key: 'projets',
+      key: 'projetsEdit',
       label: <NavLink to="/gerer-mes-projets">Gérer mes projets</NavLink>,
       icon: <ProjectOutlined />,
     },
     {
-      key: 'competences',
+      key: 'competencesEdit',
       label: <NavLink to="/gerer-mes-competences">Gérer mes compétences</NavLink>,
-      icon: <ManOutlined />,
+      icon: <ThunderboltOutlined />,
     },
     {
-      key: 'apropos',
+      key: 'autresEdit',
       label: <NavLink to="/gerer-autres">Gérer autres</NavLink>,
-      icon: <BarsOutlined />,
+      icon: <EllipsisOutlined />,
     },
     { type: 'divider' },
     {
@@ -81,7 +79,7 @@ const Navbar = ({ activePage = 'Projects', onAddProject }) => {
     {
       key: 'aide',
       label: <NavLink to="/aide-et-support">Aide & support</NavLink>,
-      icon: <GoogleOutlined />,
+      icon: <CustomerServiceOutlined />,
     },
     {
       key: 'deconnexion',

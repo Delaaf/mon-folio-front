@@ -6,7 +6,7 @@ import FilterBar from '../../components/FilterBar'
 import ProjectCard from '../../components/ProjectCard'
 import { CaseStudyModal } from '../../components/Modal'
 import { useModal } from '../../hooks/useModal'
-import { usePortfolio } from './PortfolioLayout'
+import { usePortfolio } from '../../layouts/PortfolioLayout'
 
 import styles from './PortfolioProjets.module.css'
 

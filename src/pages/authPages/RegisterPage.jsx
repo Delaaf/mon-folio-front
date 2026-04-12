@@ -5,7 +5,7 @@ import {
   MailOutlined, LockOutlined, UserOutlined,
   GithubOutlined, GoogleOutlined,
   EyeInvisibleOutlined, EyeTwoTone,
-  CheckCircleFilled, CloseCircleFilled,
+  CheckCircleFilled, CloseCircleFilled, CodeOutlined
 } from '@ant-design/icons'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../../contexts/AuthContext'
@@ -111,7 +111,7 @@ export default function RegisterPage() {
         <div className={styles.panelGrid}  />
 
         <Link to="/" className={styles.panelLogo}>
-          <div className={styles.panelLogoIcon}>&lt;/&gt;</div>
+          <div className={styles.panelLogoIcon}><CodeOutlined/> </div>
           <span>MonFolio</span>
         </Link>
 

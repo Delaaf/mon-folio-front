@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Input, Button, Checkbox, Divider, notification } from 'antd'
-import { MailOutlined, LockOutlined, GithubOutlined, GoogleOutlined, EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons'
+import { MailOutlined, LockOutlined, GithubOutlined, GoogleOutlined, EyeInvisibleOutlined, EyeTwoTone, CodeOutlined } from '@ant-design/icons'
 import { motion } from 'framer-motion'
 import { useAuth } from '../../contexts/AuthContext'
 import styles from './AuthPages.module.css'
@@ -36,7 +36,7 @@ export default function LoginPage() {
       {ctx}
       <motion.aside className={styles.panel} initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
         <div className={styles.panelGlow1} /><div className={styles.panelGlow2} /><div className={styles.panelGrid} />
-        <Link to="/" className={styles.panelLogo}><div className={styles.panelLogoIcon}>&lt;/&gt;</div><span>MonFolio</span></Link>
+        <Link to="/" className={styles.panelLogo}><div className={styles.panelLogoIcon}> <CodeOutlined/> </div><span>MonFolio</span></Link>
         <div className={styles.panelHero}>
           <motion.h2 className={styles.panelTitle} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
             Votre portfolio,<br /><span className={styles.panelAccent}>votre identité.</span>

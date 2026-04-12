@@ -11,6 +11,7 @@ import { motion } from 'framer-motion'
 import s from './backoffice.module.css'
 import ls from './GestionCompetences.module.css'
 import {SkillService} from '../../services/index'
+import { useApi, useMutation } from '../../hooks/useApi'
 
 const { Option } = Select
 
@@ -33,26 +34,33 @@ export default function GestionCompetences() {
   const [form]                 = Form.useForm()
   const [notifApi, notifCtx]   = notification.useNotification()
 
+  const { data, loading, execute: fetchSkills } = useApi(SkillService.list)
 
-  const fetchCategories = async () => {
-  try {
-    const res = await SkillService.list()
-    setSkills(res)
-    console.log('RES =', res)
-    
-    // extraire catégories uniques
-    const uniqueCats = [...new Set(res.map(s => s.label))]
-    setCategories(uniqueCats)
-  } catch (err) {
-    console.error(err)
-  }
-}
-useEffect(() => {
-  fetchCategories()
-}, [])
+  useEffect(() => {
+  fetchSkills()
+    }, [])
+
+  useEffect(() => {
+  if (!data) return
+
+  setCategories(data)
+
+  const flatSkills = data.flatMap(cat =>
+    cat.skills.map(skill => ({
+      ...skill,
+      category: cat.label,
+      category_id: cat.id,
+      catIcon: cat.icon
+    }))
+  )
+
+  setSkills(flatSkills)
+
+}, [data])
+  
 console.log("cateeeegories ==>", categories)
 
-  const cats = ['Tous', ...new Set(skills.map(s => s.category))]
+const cats = ['Tous', ...categories.map(c => c.label)]
 
   const filtered = skills.filter(sk => {
    const matchSearch = (sk.name || '').toLowerCase().includes(search.toLowerCase())
@@ -63,24 +71,87 @@ console.log("cateeeegories ==>", categories)
   const openCreate = () => { setEditing(null); form.resetFields(); setModal(true) }
   const openEdit   = (sk) => { setEditing(sk); form.setFieldsValue(sk); setModal(true) }
 
-  const handleSkillCreate = async () => {
-    try {
-      const vals = await form.validateFields()
-      if (editing) {
-        setSkills(prev => prev.map(sk => sk.id === editing.id ? { ...sk, ...vals } : sk))
-        notifApi.success({ message: 'Compétence mise à jour !', placement: 'bottomRight' })
-      } else {
-        setSkills(prev => [{ id: Date.now().toString(), catIcon: '🔧', ...vals }, ...prev])
-        notifApi.success({ message: 'Compétence ajoutée !', placement: 'bottomRight' })
-      }
-      setModal(false)
-    } catch {}
+  const createMutation = useMutation(SkillService.create, {
+  successMessage: 'Compétence créée !',
+  onSuccess: () => {
+    fetchSkills()
+    setModal(false)
   }
+ })
 
-  const handleSkillDelete = (id) => {
+  const updateMutation = useMutation(  
+    (payload) => SkillService.update(editing.id, payload),
+      {
+          successMessage: 'Compétence mise à jour !',
+        onSuccess: () => {
+        fetchSkills()
+          setModal(false)
+      }
+    }
+  )
+
+  const deleteMutation = useMutation(SkillService.remove, {
+    successMessage: 'Compétence supprimée',
+    onSuccess: () => fetchSkills()
+  })
+
+const handleSkillCreate = async () => {
+  try {
+    const vals = await form.validateFields()
+
+    const payload = {
+      name: vals.name,
+      level: vals.level,
+      color: vals.color,
+      skill_category_id: vals.category,
+    }
+
+    if (editing) {
+      const updated = await SkillService.update(editing.id, payload)
+
+      setSkills(prev =>
+        prev.map(sk =>
+          sk.id === updated.id
+            ? {
+                ...updated,
+                category: categories.find(c => c.id === updated.skill_category_id)?.label,
+                catIcon: categories.find(c => c.id === updated.skill_category_id)?.icon,
+              }
+            : sk
+        )
+      )
+
+      notifApi.success({ message: 'Compétence mise à jour !', placement: 'bottomRight' })
+
+    } else {
+      const created = await SkillService.create(payload)
+
+      const category = categories.find(c => c.id === created.skill_category_id)
+
+      setSkills(prev => [
+        {
+          ...created,
+          category: category?.label,
+          catIcon: category?.icon,
+        },
+        ...prev,
+      ])
+
+      notifApi.success({ message: 'Compétence ajoutée !', placement: 'bottomRight' })
+    }
+
+    setModal(false)
+    form.resetFields()
+
+  } catch (err) {
+    console.log(err.response?.data)
+  }
+}
+
+  /*const handleSkillDelete = (id) => {
     setSkills(prev => prev.filter(sk => sk.id !== id))
     notifApi.success({ message: 'Compétence supprimée', placement: 'bottomRight' })
-  }
+  }*/
 
   const handleCategoryCreate = async () => {
   try {
@@ -88,9 +159,10 @@ console.log("cateeeegories ==>", categories)
 
     const res = await SkillService.createCategory({
       label: values.name,
+      icon: values.icon
     })
 
-    setCategories(prev => [...prev, res.label])
+   setCategories(prev => [...prev, res])
 
     notifApi.success({
       message: 'Catégorie ajoutée !',
@@ -124,8 +196,10 @@ console.log("cateeeegories ==>", categories)
 
         {/* Stats */}
         <motion.div className={ls.statsRow} {...fadeUp(0.07)}>
-          {categories.filter(c => c).map(c => (
-          <Option key={c} value={c}>{c}</Option>
+          {categories.map(c => (
+          <Option key={c.id} value={c.label}>
+            {c.icon} {c.label}
+          </Option>
           ))}
         </motion.div>
 
@@ -153,7 +227,7 @@ console.log("cateeeegories ==>", categories)
                     <Button type="text" size="small" icon={<EditOutlined />} className={ls.actionBtn} onClick={() => openEdit(sk)} />
                   </Tooltip>
                   <Popconfirm title="Supprimer ?" okText="Oui" cancelText="Non" okButtonProps={{ danger: true }}
-                    onConfirm={() => handleSkillDelete(sk.id)}>
+                    onConfirm={() => deleteMutation.mutate(sk.id)}>
                     <Tooltip title="Supprimer">
                       <Button type="text" size="small" icon={<DeleteOutlined />} className={ls.actionBtnD} />
                     </Tooltip>
@@ -191,7 +265,7 @@ console.log("cateeeegories ==>", categories)
           <Form.Item name="category" label="Catégorie" rules={[{ required: true }]}>
             <Select placeholder="Sélectionner">
               {categories.filter(c => c).map(c => (
-             <Option key={c} value={c}>{c}</Option>
+             <Option key={c.id} value={c.id}>{c.label}</Option>
               ))}
             </Select>
           </Form.Item>
@@ -219,6 +293,13 @@ console.log("cateeeegories ==>", categories)
             rules={[{ required: true }]}
           >
             <Input placeholder="Ex: Mobile, IA..." />
+          </Form.Item>
+          <Form.Item
+            name="icon"
+            label="Icon de la catégorie"
+            rules={[{ required: false }]}
+          >
+            <Input placeholder="⚙️..." />
           </Form.Item>
         </Form>
       </Modal>

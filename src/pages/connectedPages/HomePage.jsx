@@ -1,6 +1,8 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Button } from 'antd'
+import { Spin } from 'antd'
+import { useEffect } from 'react'
 import { ArrowRightOutlined, MailOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 
@@ -9,6 +11,10 @@ import HeroCard       from '../../components/HeroCard'
 import TechStack      from '../../components/TechStack'
 import { HERO }       from '../../data/hero'
 import styles from './HomePage.module.css'
+
+import { useApi } from '../../hooks/useApi'
+import { ProfileService, ProjectService, SkillService } from '../../services/index'
+
 
 const containerVariants = {
   hidden: {},
@@ -22,48 +28,99 @@ const lineVariants = {
 const HomePage = () => {
   const navigate = useNavigate()
 
+  const { data: profile, loading: loadingProfile, execute: fetchProfile } =
+    useApi(ProfileService.get)
+
+  const { data: projects, execute: fetchProjects } =
+    useApi(ProjectService.list, { initialData: [] })
+
+  const { data: categories, execute: fetchSkills } =
+    useApi(SkillService.list, { initialData: [] })
+
+  useEffect(() => {
+    fetchProfile()
+    fetchProjects()
+    fetchSkills()
+  }, [])
+
+console.log("les categories==>", categories)
+
+    const skills = (categories ?? []).flatMap(cat =>
+  (cat.skills ?? []).map(skill => ({
+    ...skill,
+    category: cat.label
+  }))
+)
+    const featuredProjects = projects
+    .filter(p => p.featured || p.status === 'published')
+    .slice(0, 3)
+
+    if (loadingProfile) {
+      return (<div style={{ display: 'flex', justifyContent: 'center', padding: '80px 0' }}>
+                <Spin size="large" />
+              </div>)
+    }
   return (
     <div className={styles.page}>
       <div className={styles.bgGlow1} />
       <div className={styles.bgGlow2} />
       <div className={styles.bgGrid} />
 
-      <section className={styles.hero}>
+            <section className={styles.hero}>
         <div className={styles.left}>
-          <AvailableBadge label={HERO.badge} />
 
-          <motion.h1 className={styles.headline} variants={containerVariants} initial="hidden" animate="visible">
-            {HERO.headline.map((line, i) => (
-              <motion.span key={i}
-                className={`${styles.headlineLine} ${i === HERO.accentLine ? styles.accent : ''}`}
-                variants={lineVariants}>
-                {line}
-              </motion.span>
-            ))}
+          {/* Badge */}
+          {profile?.is_available && (
+            <AvailableBadge label="Disponible pour des projets" />
+          )}
+
+          {/* Title */}
+          <motion.h1 className={styles.headline}>
+            <span className={styles.headlineLine}>
+              {profile?.name?.split(' ')[0]},
+            </span>
+            <span className={`${styles.headlineLine} ${styles.accent}`}>
+              {profile?.role_title || 'Développeur'}
+            </span>
           </motion.h1>
-
-          <motion.p className={styles.description}
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.52 }}>
-            {HERO.description}
+        
+          {/* Description */}
+          <motion.p className={styles.description}>
+            {profile?.bio || "Bienvenue sur votre espace."}
           </motion.p>
-
-          <motion.div className={styles.cta}
-            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.62 }}>
-            <Button type="primary" size="large" icon={<ArrowRightOutlined />} iconPosition="end"
-              className={styles.btnPrimary} onClick={() => navigate('/projets')}>
-              {HERO.cta.primary}
+        
+          {/* CTA */}
+          <div className={styles.cta}>
+            <Button type="primary"
+              icon={<ArrowRightOutlined />}
+              onClick={() => navigate('/projets')}>
+              Voir mes projets
             </Button>
-            <Button size="large" icon={<MailOutlined />} className={styles.btnSecondary}
+        
+            <Button icon={<MailOutlined />}
               onClick={() => navigate('/contact')}>
-              {HERO.cta.secondary}
+              Me contacter
             </Button>
-          </motion.div>
-
-          <div className={styles.techWrap}><TechStack /></div>
+          </div>
+        
+          {/* Tech stack */}
+          <div className={styles.techWrap}>
+            <div className={styles.techItems}>
+              {skills.slice(0, 6).map(sk => (
+               <span key={sk.id} className={styles.techTag} style={{ borderColor: sk.color, color: sk.color }}>
+                 {sk.name}
+               </span>
+             ))}
+            </div>
+          </div>
+            
         </div>
-        <HeroCard name={HERO.name} role={HERO.role} />
+            
+        {/* Card droite */}
+        <HeroCard
+          name={profile?.name}
+          role={profile?.role_title}
+        />
       </section>
     </div>
   )

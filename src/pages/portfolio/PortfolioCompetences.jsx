@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { usePortfolio } from './PortfolioLayout'
+import { usePortfolio } from '../../layouts/PortfolioLayout'
 import styles from './PortfolioCompetences.module.css'
 
 export function PortfolioCompetences() {
