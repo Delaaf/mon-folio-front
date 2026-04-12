@@ -22,7 +22,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import styles from './Navbar.module.css'
 
 const NAV_LINKS = [
-  { label: 'Accueil', path: '/' },
+  { label: 'Accueil', path: '/accueil' },
   { label: 'Projets', path: '/projets' },
   { label: 'A propos', path: '/a-propos' }, 
   { label: 'Contact', path: '/contact' },
