@@ -20,10 +20,10 @@ const PortfolioNavbar = ({ profile }) => {
   const base = `/portfolio/${username}`
 
   const NAV_LINKS = [
-    { label: 'Accueil',   to: base },
-    { label: 'Projets',   to: `${base}/projets`    },
-    { label: 'À propos',  to: `${base}/a-propos`   },
-    { label: 'Contact',   to: `${base}/contact`    },
+    { label: 'Accueil',   path: base },
+    { label: 'Projets',   path: `${base}/projets`    },
+    { label: 'À propos',  path: `${base}/a-propos`   },
+    { label: 'Contact',   path: `${base}/contact`    },
   ]
 
   return (
