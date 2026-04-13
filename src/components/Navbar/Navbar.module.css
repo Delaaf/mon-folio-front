@@ -120,7 +120,51 @@
   font-family: var(--font-display) !important;
 }
 
+.hamburger {
+  display: none;
+}
+
+.menuBtn {
+  display: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.menuBtn:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+
 @media (max-width: 768px) {
-  .navbar { padding: 0 20px; }
-  .links  { display: none; }
+
+  .btnHire {
+    display: none !important;
+  }
+
+  .menuBtn {
+    display: block;
+  }
+
+  .links {
+    position: absolute;
+    top: 68px;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background: rgba(10,10,15,0.95);
+    backdrop-filter: blur(20px);
+    padding: 15px 20px;
+    gap: 10px;
+
+    display: none;
+  }
+
+  .show {
+    display: flex;
+  }
 }

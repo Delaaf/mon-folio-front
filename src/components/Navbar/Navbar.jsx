@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Button, Avatar, Dropdown } from 'antd'
 import {
@@ -35,7 +35,7 @@ const NAV_LINKS = [
  */
 const Navbar = ({ activePage = 'Projects', onAddProject }) => {
   const { user, logout } = useAuth()
-
+  const [open, setOpen] = useState(false)
    const menuItems = [
     {
       key: 'portfolio',
@@ -98,31 +98,40 @@ const Navbar = ({ activePage = 'Projects', onAddProject }) => {
       transition={{ duration: 0.4, ease: 'easeOut' }}
     >
       {/* Logo */}
-      <NavLink to="/" className={styles.logo}>
+      <NavLink to="/accueil" className={styles.logo}>
         <div className={styles.logoIcon}>
           <CodeOutlined />
         </div>
         <span>MonFolio</span>
       </NavLink>
 
-      {/* Nav links */}
-      <ul className={styles.links}>
-        {NAV_LINKS.map((link) => (
-  <li key={link.path}>
-        <NavLink
-          to={link.path}
-          className={({ isActive }) =>
-            `${styles.link} ${isActive ? styles.active : ''}`
-          }
-        >
-          {link.label}
-        </NavLink>
-  </li>
-    ))}
-      </ul>
+            {/* Nav links */}
+            <ul className={`${styles.links} ${open ? styles.show : ''}`}>
+  {NAV_LINKS.map((link) => (
+    <li key={link.path}>
+      <NavLink
+        to={link.path}
+        onClick={() => setOpen(false)}
+        className={({ isActive }) =>
+          `${styles.link} ${isActive ? styles.active : ''}`
+        }
+      >
+        {link.label}
+      </NavLink>
+    </li>
+  ))}
+</ul>
 
       {/* Right actions */}
       <div className={styles.right}>
+
+        {/* Bouton Menu mobile */}
+        <div
+          className={styles.menuBtn}
+          onClick={() => setOpen(!open)}
+        >
+          Menu
+        </div>
         <Button
           type="primary"
           className={styles.btnHire}
