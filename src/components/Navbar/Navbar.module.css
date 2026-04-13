@@ -120,7 +120,38 @@
   font-family: var(--font-display) !important;
 }
 
+.hamburger {
+  display: none;
+}
+
+
 @media (max-width: 768px) {
-  .navbar { padding: 0 20px; }
-  .links  { display: none; }
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .hamburger {
+    display: block;
+    font-size: 22px;
+    color: var(--text-primary);
+    cursor: pointer;
+  }
+
+  .links {
+    position: absolute;
+    top: 68px;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 15px 20px;
+    gap: 10px;
+
+    display: none;
+  }
+
+  .show {
+    display: flex;
+  }
 }

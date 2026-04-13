@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Button, Avatar, Dropdown } from 'antd'
 import {
@@ -22,7 +22,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import styles from './Navbar.module.css'
 
 const NAV_LINKS = [
-  { label: 'Accueil', path: '/' },
+  { label: 'Accueil', path: '/accueil' },
   { label: 'Projets', path: '/projets' },
   { label: 'A propos', path: '/a-propos' }, 
   { label: 'Contact', path: '/contact' },
@@ -35,7 +35,7 @@ const NAV_LINKS = [
  */
 const Navbar = ({ activePage = 'Projects', onAddProject }) => {
   const { user, logout } = useAuth()
-
+  const [open, setOpen] = useState(false)
    const menuItems = [
     {
       key: 'portfolio',
@@ -106,7 +106,7 @@ const Navbar = ({ activePage = 'Projects', onAddProject }) => {
       </NavLink>
 
       {/* Nav links */}
-      <ul className={styles.links}>
+      <ul className={`${styles.links} ${open ? styles.show : ''}`}>
         {NAV_LINKS.map((link) => (
   <li key={link.path}>
         <NavLink
@@ -117,6 +117,12 @@ const Navbar = ({ activePage = 'Projects', onAddProject }) => {
         >
           {link.label}
         </NavLink>
+
+                {/* BURGER MENU */}
+        <BarsOutlined
+          className={styles.hamburger}
+          onClick={() => setOpen(!open)}
+        />
   </li>
     ))}
       </ul>

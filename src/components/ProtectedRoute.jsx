@@ -55,7 +55,7 @@ export function PublicOnlyRoute({ children }) {
   }
 
   if (isAuthenticated) {
-    return <Navigate to="/" replace />
+    return <Navigate to="/accueil" replace />
   }
 
   return children
