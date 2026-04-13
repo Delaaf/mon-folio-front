@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import { Button, Avatar } from 'antd'
 import { CodeOutlined } from '@ant-design/icons'
@@ -14,6 +14,7 @@ import styles from './PortfolioNavbar.module.css'
 const PortfolioNavbar = ({ profile }) => {
   const { username }            = useParams()
   const { user, isAuthenticated } = useAuth()
+  const [open, setOpen] = useState(false)
   const isOwner = isAuthenticated && user?.username === username
 
   const base = `/portfolio/${username}`
@@ -41,18 +42,18 @@ const PortfolioNavbar = ({ profile }) => {
         <span>{profile?.name ?? 'Portfolio'}</span>
       </NavLink>
 
-      {/* Nav links */}
-      <ul className={styles.links}>
-        {NAV_LINKS.map(({ label, to }) => (
-          <li key={label}>
+            {/* Nav links */}
+                  <ul className={`${styles.links} ${open ? styles.show : ''}`}>
+        {NAV_LINKS.map((link) => (
+          <li key={link.path}>
             <NavLink
-              to={to}
-              end={to === base}
+              to={link.path}
+              onClick={() => setOpen(false)}
               className={({ isActive }) =>
                 `${styles.link} ${isActive ? styles.active : ''}`
               }
             >
-              {label}
+              {link.label}
             </NavLink>
           </li>
         ))}
@@ -60,6 +61,14 @@ const PortfolioNavbar = ({ profile }) => {
 
       {/* Right */}
       <div className={styles.right}>
+
+         {/* Bouton Menu mobile */}
+        <div
+          className={styles.menuBtn}
+          onClick={() => setOpen(!open)}
+        >
+          Menu
+        </div>
         {isOwner ? (
           <Button type="primary" className={styles.btnEdit}
             href="/dashboard">

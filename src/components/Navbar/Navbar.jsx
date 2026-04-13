@@ -98,37 +98,40 @@ const Navbar = ({ activePage = 'Projects', onAddProject }) => {
       transition={{ duration: 0.4, ease: 'easeOut' }}
     >
       {/* Logo */}
-      <NavLink to="/" className={styles.logo}>
+      <NavLink to="/accueil" className={styles.logo}>
         <div className={styles.logoIcon}>
           <CodeOutlined />
         </div>
         <span>MonFolio</span>
       </NavLink>
 
-      {/* Nav links */}
-      <ul className={`${styles.links} ${open ? styles.show : ''}`}>
-        {NAV_LINKS.map((link) => (
-  <li key={link.path}>
-        <NavLink
-          to={link.path}
-          className={({ isActive }) =>
-            `${styles.link} ${isActive ? styles.active : ''}`
-          }
-        >
-          {link.label}
-        </NavLink>
-
-                {/* BURGER MENU */}
-        <BarsOutlined
-          className={styles.hamburger}
-          onClick={() => setOpen(!open)}
-        />
-  </li>
-    ))}
-      </ul>
+            {/* Nav links */}
+            <ul className={`${styles.links} ${open ? styles.show : ''}`}>
+  {NAV_LINKS.map((link) => (
+    <li key={link.path}>
+      <NavLink
+        to={link.path}
+        onClick={() => setOpen(false)}
+        className={({ isActive }) =>
+          `${styles.link} ${isActive ? styles.active : ''}`
+        }
+      >
+        {link.label}
+      </NavLink>
+    </li>
+  ))}
+</ul>
 
       {/* Right actions */}
       <div className={styles.right}>
+
+        {/* Bouton Menu mobile */}
+        <div
+          className={styles.menuBtn}
+          onClick={() => setOpen(!open)}
+        >
+          Menu
+        </div>
         <Button
           type="primary"
           className={styles.btnHire}
