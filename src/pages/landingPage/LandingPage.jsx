@@ -187,7 +187,7 @@ function LandingNavbar() {
             Connexion
           </button>
           <button className={styles.navBtnPrimary} onClick={() => navigate('/inscription')}>
-            Commencer gratuitement →
+            Commencer
           </button>
         </div>
       </div>
