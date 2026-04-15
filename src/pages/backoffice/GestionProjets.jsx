@@ -50,9 +50,22 @@ const projects = categories.flatMap(c => c.projects)
   const totalViews = projects?.reduce((a,p)=>a+(p.views_count??0),0)
 
   const columns = [
-    { title:'Projet', key:'title', render:(_,r)=><div className={ls.projCell}><span className={ls.projEmoji}>{r.emoji}</span><div><div className={ls.projTitle}>{r.title}</div><div className={ls.projCat}>{r.category}</div></div></div> },
-    { title:'Technologies', key:'tags', render:(_,r)=><Space wrap size={4}>{(r.tags??[]).slice(0,3).map(t=><Tag key={t} className={ls.techTag}>{t}</Tag>)}{(r.tags??[]).length>3&&<Tag>+{r.tags.length-3}</Tag>}</Space> },
-    { title:'Statut', key:'status', render:(_,r)=><Badge status={r.status==='published'?'success':'default'} text={<span className={ls.statusText}>{r.status==='published'?'Publié':'Brouillon'}</span>} /> },
+    { title:'Projet', key:'title', render:(_,r)=>
+    <div className={ls.projCell}>
+      <span className={ls.projEmoji}>{r.emoji}</span>
+      <div>
+        <div className={ls.projTitle}>{r.title}</div>
+        <div className={ls.projCat}>{r.category}</div>
+      </div>
+    </div> 
+    },
+    { title:'Technologies', key:'tags', render:(_,r)=>
+    <Space wrap size={4}>{(r.tags??[]).slice(0,3).map(t=>
+    <Tag key={t} className={ls.techTag}>{t}</Tag>)}
+    {(r.tags??[]).length>3&&<Tag>+{r.tags.length-3}</Tag>}
+    </Space> },
+    { title:'Statut', key:'status', render:(_,r)=>
+    <Badge status={r.status==='published'?'success':'default'} text={<span className={ls.statusText}>{r.status==='published'?'Publié':'Brouillon'}</span>} /> },
     { title:'Vues', dataIndex:'views_count', key:'views', render:v=><span className={ls.views}>{v??0}</span> },
     { title:'Actions', key:'actions', align:'right', render:(_,r)=><Space>
       <Tooltip title="Modifier"><Button type="text" size="small" icon={<EditOutlined />} className={ls.actionBtn} onClick={()=>openEdit(r)} /></Tooltip>
@@ -95,7 +108,7 @@ const projects = categories.flatMap(c => c.projects)
           <div className={s.formGrid}>
             <Form.Item name="title" label="Titre" rules={[{required:true}]}><Input placeholder="Mon projet" /></Form.Item>
             <Form.Item name="emoji" label="Emoji" initialValue="🚀"><Input /></Form.Item>
-            <Form.Item name="category" label="Catégorie" rules={[{required:true}]} className={s.formGridFull}><Select>{CATS.map(c=><Option key={c} value={c}>{c}</Option>)}</Select></Form.Item>
+            <Form.Item name="project_category_id" label="Catégorie" rules={[{required:true}]} className={s.formGridFull}><Select>{CATS.map(c=><Option key={c} value={c}>{c}</Option>)}</Select></Form.Item>
             <Form.Item name="tags" label="Technologies (virgule)" className={s.formGridFull}><Input placeholder="React, Node.js" /></Form.Item>
             <Form.Item name="description" label="Description" rules={[{required:true}]} className={s.formGridFull}><TextArea rows={3} /></Form.Item>
             <Form.Item name="live_url"   label="URL Live"><Input prefix={<LinkOutlined />} /></Form.Item>
