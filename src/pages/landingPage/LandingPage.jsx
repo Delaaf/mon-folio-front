@@ -275,7 +275,7 @@ function Hero() {
               <span style={{ background: '#f59e0b' }} />
               <span style={{ background: '#4ade80' }} />
             </div>
-            <div className={styles.mockupUrl}>monfolio.net/noeldelafosse</div>
+            <div className={styles.mockupUrl}>monfolio.net/public/noeldelafosse</div>
           </div>
           <div className={styles.mockupScreen}>
             <div className={styles.mockupNav}>

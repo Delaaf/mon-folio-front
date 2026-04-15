@@ -76,7 +76,7 @@ const App = () => (
 
         {/* ── Portfolio PUBLIC d'un utilisateur ── */}
         {/* Accessible sans connexion : /portfolio/alexrivera */}
-        <Route path="/portfolio/:username" element={<PortfolioLayout />}>
+        <Route path="/public/:username" element={<PortfolioLayout />}>
           <Route index              element={<PortfolioHome />} />
           <Route path="projets"     element={<PortfolioProjets />} />
           <Route path="a-propos"    element={<PortfolioAPropos />} />
