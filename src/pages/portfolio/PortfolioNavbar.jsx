@@ -17,7 +17,7 @@ const PortfolioNavbar = ({ profile }) => {
   const [open, setOpen] = useState(false)
   const isOwner = isAuthenticated && user?.username === username
 
-  const base = `/portfolio/${username}`
+  const base = `/public/${username}`
 
   const NAV_LINKS = [
     { label: 'Accueil',   path: base },
@@ -72,11 +72,11 @@ const PortfolioNavbar = ({ profile }) => {
         {isOwner ? (
           <Button type="primary" className={styles.btnEdit}
             href="/dashboard">
-            ✏️ Modifier mon portfolio
+            Modifier mon portfolio
           </Button>
         ) : (
           <Button type="primary" className={styles.btnHire}
-            href={`/portfolio/${username}/contact`}>
+            href={`/public/${username}/contact`}>
             Me recruter
           </Button>
         )}

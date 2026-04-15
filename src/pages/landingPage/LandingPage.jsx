@@ -246,7 +246,7 @@ function Hero() {
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>
-          <button className={styles.ctaSecondary} onClick={() => navigate('/portfolio/delafossekouakou')}>
+          <button className={styles.ctaSecondary} onClick={() => navigate('/public/delafossekouakou')}>
             Voir un exemple →
           </button>
         </motion.div>
@@ -485,7 +485,7 @@ function FinalCTA() {
           <button className={styles.ctaPrimary} onClick={() => navigate('/inscription')}>
             Créer mon portfolio gratuitement →
           </button>
-          <button className={styles.ctaSecondary} onClick={() => navigate('/portfolio/delafossekouakou')}>
+          <button className={styles.ctaSecondary} onClick={() => navigate('/public/delafossekouakou')}>
             Voir un exemple
           </button>
         </div>
