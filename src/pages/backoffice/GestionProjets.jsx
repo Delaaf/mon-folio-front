@@ -18,6 +18,8 @@ export default function GestionProjets() {
   const [modal, setModal]     = useState(false)
   const [editing, setEditing] = useState(null)
   const [form]                = Form.useForm()
+  const [catModal, setCatModal] = useState(false)
+  const [catForm] = Form.useForm()
   const [notifApi, notifCtx]  = notification.useNotification()
 
 const { data: categories, loading, execute: fetchProjects } = useApi(
@@ -30,6 +32,13 @@ const projects = (categories || []).flatMap(c => c.projects || [])
 
   useEffect(() => { fetchProjects({ search }) }, [search])
 
+  const createCategoryMutation = useMutation(ProjectService.createCategory, {
+  successMessage: '✅ Catégorie créée !',
+  onSuccess: () => {
+    fetchProjects() // recharge les catégories
+    setCatModal(false)
+  }
+})
   const createMutation = useMutation(ProjectService.create, { successMessage: '✅ Projet créé !', onSuccess: () => { fetchProjects(); setModal(false) } })
   const updateMutation = useMutation((p) => ProjectService.update(editing?.id, p), { successMessage: '✅ Mis à jour.', onSuccess: () => { fetchProjects(); setModal(false) } })
   const deleteMutation = useMutation(ProjectService.remove, { successMessage: '🗑 Supprimé.', onSuccess: fetchProjects })
@@ -45,6 +54,20 @@ const projects = (categories || []).flatMap(c => c.projects || [])
       editing ? await updateMutation.mutate(payload) : await createMutation.mutate(payload)
     } catch {}
   }
+
+  const handleCategoryCreate = async () => {
+    try {
+      const values = await catForm.validateFields()
+  
+      await createCategoryMutation.mutate(values)
+  
+      setCatModal(false)
+      catForm.resetFields()
+    } catch (err) {
+      console.log(err.response?.data) // 🔥 debug utile
+    }
+  }
+  
 
   const published  = projects?.filter(p=>p.status==='published')?.length
   const totalViews = projects?.reduce((a,p)=>a+(p.views_count??0),0)
@@ -83,7 +106,12 @@ const projects = (categories || []).flatMap(c => c.projects || [])
             <h1 className={s.pageTitle}>Gestion des <em>projets</em></h1>
             <p className={s.pageSubtitle}>{projects?.length?? 0} projets · {published ?? 0} publiés</p>
           </div>
-          <Space><Button icon={<ReloadOutlined />} onClick={fetchProjects} loading={loading} /><Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>Nouveau projet</Button></Space>
+          <Space>
+            <Button icon={<ReloadOutlined />} onClick={fetchProjects} loading={loading} />
+            <Button onClick={() => setCatModal(true)}>
+              Nouvelle catégorie
+            </Button>
+            <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>Nouveau projet</Button></Space>
         </motion.div>
 
         <motion.div className={ls.statsRow} {...fadeUp(0.07)}>
@@ -126,6 +154,25 @@ const projects = (categories || []).flatMap(c => c.projects || [])
             </Form.Item>
           </div>
         </Form>
+      </Modal>
+
+      <Modal open={catModal} onCancel={() => setCatModal(false)} onOk={handleCategoryCreate} title="Nouvelle catégorie">
+          <Form form={catForm} layout="vertical">
+            <Form.Item
+                name="label"
+                label="Nom de la catégorie"
+                rules={[{ required: true }]}
+            >
+                <Input placeholder="Ex: SaaS, Mobile..." />
+            </Form.Item>
+            <Form.Item
+                name="icon"
+                label="Icone de la catégorie"
+                rules={[{ required: false }]}
+            >
+                <Input placeholder="⚙️..." />
+            </Form.Item>
+          </Form>
       </Modal>
     </div>
   )

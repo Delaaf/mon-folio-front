@@ -44,6 +44,11 @@ export const ProjectService = {
     const { data } = await api.get(`/public/${username}/projects`, { params })
     return data
   },
+
+  async createCategory(payload) {
+  const { data } = await api.post('/categories', payload)
+  return data.data
+}
 }
 
 /**
