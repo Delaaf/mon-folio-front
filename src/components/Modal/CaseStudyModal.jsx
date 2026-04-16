@@ -48,13 +48,9 @@ const CaseStudyModal = ({ project, open, onClose }) => {
         </div>
 
         {/* Description */}
-        <p className={styles.desc}>{project.description}</p>
+        <p className={styles.desc}>{project.short_description}</p>
 
-        <p className={styles.desc}>
-          Ce projet repose sur une architecture distribuée conçue pour la montée en charge.
-          Pipeline CI/CD entièrement automatisé, tests unitaires et E2E à 90% de couverture,
-          monitoring Datadog avec alertes personnalisées.
-        </p>
+        <p className={styles.desc}>{project.description}</p>
 
         {/* Metrics */}
         <div className={styles.metrics}>

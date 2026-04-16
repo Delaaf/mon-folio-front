@@ -63,7 +63,7 @@ const truncateWords = (text, maxWords = 10) => {
 
         {/* Description */}
        <p className={styles.desc}>
-  {truncateWords(project.description, 12)}
+  {truncateWords(project.short_description, 12)}
 </p>
 
         {/* Actions */}

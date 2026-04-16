@@ -39,6 +39,7 @@ const projects = (categories || []).flatMap(c => c.projects || [])
     setCatModal(false)
   }
 })
+
   const createMutation = useMutation(ProjectService.create, { successMessage: '✅ Projet créé !', onSuccess: () => { fetchProjects(); setModal(false) } })
   const updateMutation = useMutation((p) => ProjectService.update(editing?.id, p), { successMessage: '✅ Mis à jour.', onSuccess: () => { fetchProjects(); setModal(false) } })
   const deleteMutation = useMutation(ProjectService.remove, { successMessage: '🗑 Supprimé.', onSuccess: fetchProjects })
@@ -146,7 +147,15 @@ const projects = (categories || []).flatMap(c => c.projects || [])
                 </Select>
             </Form.Item>
             <Form.Item name="tags" label="Technologies (virgule)" className={s.formGridFull}><Input placeholder="React, Node.js" /></Form.Item>
-            <Form.Item name="description" label="Description" rules={[{required:true}]} className={s.formGridFull}><TextArea rows={3} /></Form.Item>
+            <Form.Item
+              name="short_description"
+              label="Courte description"
+              rules={[{ required: true, message: 'Veuillez ajouter une courte description' }]}
+              className={s.formGridFull}
+            >
+            <TextArea rows={2} maxLength={150} showCount />
+            </Form.Item>
+            <Form.Item name="description" label="Description détaillée" rules={[{required:true}]} className={s.formGridFull}><TextArea rows={3} /></Form.Item>
             <Form.Item name="live_url"   label="URL Live"><Input prefix={<LinkOutlined />} /></Form.Item>
             <Form.Item name="github_url" label="GitHub"><Input prefix={<GithubOutlined />} /></Form.Item>
             <Form.Item name="status" label="Statut" initialValue="draft" className={s.formGridFull}>
