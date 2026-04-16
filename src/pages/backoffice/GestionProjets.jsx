@@ -52,6 +52,7 @@ const projects = (categories || []).flatMap(c => c.projects || [])
     try {
       const vals = await form.validateFields()
       const payload = { ...vals, tags: (vals.tags||'').split(',').map(t=>t.trim()).filter(Boolean) }
+      console.log("mon payload ==>", payload)
       editing ? await updateMutation.mutate(payload) : await createMutation.mutate(payload)
     } catch {}
   }
