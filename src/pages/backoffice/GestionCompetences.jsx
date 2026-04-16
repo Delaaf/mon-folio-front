@@ -71,7 +71,7 @@ const cats = ['Tous', ...categories.map(c => c.label)]
   const openCreate = () => { setEditing(null); form.resetFields(); setModal(true) }
   const openEdit   = (sk) => { setEditing(sk); form.setFieldsValue(sk); setModal(true) }
 
-  const createMutation = useMutation(SkillService.create, {
+ /* const createMutation = useMutation(SkillService.create, {
   successMessage: 'Compétence créée !',
   onSuccess: () => {
     fetchSkills()
@@ -88,7 +88,7 @@ const cats = ['Tous', ...categories.map(c => c.label)]
           setModal(false)
       }
     }
-  )
+  )*/
 
   const deleteMutation = useMutation(SkillService.remove, {
     successMessage: 'Compétence supprimée',
@@ -121,7 +121,7 @@ const handleSkillCreate = async () => {
         )
       )
 
-      notifApi.success({ message: 'Compétence mise à jour !', placement: 'bottomRight' })
+      notifApi.success({ message: 'Compétence mise à jour !', placement: 'bottomRight', style: { color:'#fff',}, })
 
     } else {
       const created = await SkillService.create(payload)
@@ -137,7 +137,7 @@ const handleSkillCreate = async () => {
         ...prev,
       ])
 
-      notifApi.success({ message: 'Compétence ajoutée !', placement: 'bottomRight' })
+      notifApi.success({ message: 'Compétence ajoutée !', placement: 'bottomRight', style: { color:'#fff',} })
     }
 
     setModal(false)
@@ -167,6 +167,7 @@ const handleSkillCreate = async () => {
     notifApi.success({
       message: 'Catégorie ajoutée !',
       placement: 'bottomRight',
+      style: { color:'#fff',}
     })
 
     setCatModal(false)

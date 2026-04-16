@@ -38,7 +38,7 @@ export function useApi(fn, options = {}) {
       setData(result)
 
       if (successMessage) {
-        notification.success({ message: successMessage, placement: 'bottomRight', duration: 3 })
+        notification.success({ message: successMessage, placement: 'bottomRight', duration: 3, style: { color:'#fff',} })
       }
 
       onSuccess?.(result)
@@ -82,7 +82,7 @@ export function useMutation(fn, options = {}) {
       const result = await fn(...args)
 
       if (successMessage) {
-        notification.success({ message: successMessage, placement: 'bottomRight', duration: 3 })
+        notification.success({ message: successMessage, placement: 'bottomRight', duration: 3,style: { color:'#fff',} })
       }
 
       onSuccess?.(result)
@@ -92,7 +92,7 @@ export function useMutation(fn, options = {}) {
       setError({ message, errors: err.response?.data?.errors ?? null })
 
       if (showErrorNotif) {
-        notification.error({ message, placement: 'bottomRight', duration: 4 })
+        notification.error({ message, placement: 'bottomRight', duration: 4, style: { color:'#fff',} })
       }
 
       onError?.(err)
