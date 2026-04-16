@@ -24,8 +24,7 @@ const { data: categories, loading, execute: fetchProjects } = useApi(
   ProjectService.list,
   { initialData: [] }
 )
-
-const projects = categories.flatMap(c => c.projects)
+const projects = (categories || []).flatMap(c => c.projects || [])
 
   console.log("les projets ==>", projects)
 
@@ -36,7 +35,8 @@ const projects = categories.flatMap(c => c.projects)
   const deleteMutation = useMutation(ProjectService.remove, { successMessage: '🗑 Supprimé.', onSuccess: fetchProjects })
 
   const openCreate = () => { setEditing(null); form.resetFields(); setModal(true) }
-  const openEdit   = (p)  => { setEditing(p); form.setFieldsValue({ ...p, tags: (p.tags??[]).join(', ') }); setModal(true) }
+  const openEdit   = (p)  => { setEditing(p); form.setFieldsValue({ ...p, project_category_id: p.category?.id,
+  tags: (p.tags ?? []).join(', ')}); setModal(true) }
 
   const handleSave = async () => {
     try {
@@ -108,7 +108,15 @@ const projects = categories.flatMap(c => c.projects)
           <div className={s.formGrid}>
             <Form.Item name="title" label="Titre" rules={[{required:true}]}><Input placeholder="Mon projet" /></Form.Item>
             <Form.Item name="emoji" label="Emoji" initialValue="🚀"><Input /></Form.Item>
-            <Form.Item name="project_category_id" label="Catégorie" rules={[{required:true}]} className={s.formGridFull}><Select>{CATS.map(c=><Option key={c} value={c}>{c}</Option>)}</Select></Form.Item>
+            <Form.Item name="project_category_id" label="Catégorie" rules={[{required:true}]} className={s.formGridFull}>
+                <Select>
+                  {categories.map(cat => (
+                    <Option key={cat.id} value={cat.id}>
+                      {cat.label}
+                    </Option>
+                  ))}
+                </Select>
+            </Form.Item>
             <Form.Item name="tags" label="Technologies (virgule)" className={s.formGridFull}><Input placeholder="React, Node.js" /></Form.Item>
             <Form.Item name="description" label="Description" rules={[{required:true}]} className={s.formGridFull}><TextArea rows={3} /></Form.Item>
             <Form.Item name="live_url"   label="URL Live"><Input prefix={<LinkOutlined />} /></Form.Item>
