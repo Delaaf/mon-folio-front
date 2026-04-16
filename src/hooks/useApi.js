@@ -82,7 +82,7 @@ export function useMutation(fn, options = {}) {
       const result = await fn(...args)
 
       if (successMessage) {
-        notification.success({ message: successMessage, placement: 'bottomRight', duration: 3,style: { color:'#fff',} })
+        notification.success({ message: successMessage, placement: 'bottomRight', duration: 3, style: { color:'#fff',} })
       }
 
       onSuccess?.(result)

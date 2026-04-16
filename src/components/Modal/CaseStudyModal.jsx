@@ -36,7 +36,7 @@ const CaseStudyModal = ({ project, open, onClose }) => {
         <div className={styles.header}>
           <div>
             <h2 className={styles.title}>{project.title}</h2>
-            <span className={styles.category}>{project.category}</span>
+            <span className={styles.category}>{project.category?.label}</span>
           </div>
         </div>
 
