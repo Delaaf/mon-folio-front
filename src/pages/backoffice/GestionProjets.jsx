@@ -55,7 +55,7 @@ const projects = categories.flatMap(c => c.projects)
       <span className={ls.projEmoji}>{r.emoji}</span>
       <div>
         <div className={ls.projTitle}>{r.title}</div>
-        <div className={ls.projCat}>{r.category}</div>
+        <div className={ls.projCat}>{r.category?.label}</div>
       </div>
     </div> 
     },
