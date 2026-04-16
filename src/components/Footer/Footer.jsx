@@ -10,7 +10,7 @@ const SOCIAL_LINKS = [
 
 const Footer = () => (
   <footer className={styles.footer}>
-    <span className={styles.copy}>© 2024 DevPortfolio. All rights reserved.</span>
+    <span className={styles.copy}> © {new Date().getFullYear()} DevPortfolio. All rights reserved.</span>
     <nav className={styles.links} aria-label="Réseaux sociaux">
       {SOCIAL_LINKS.map(({ label, icon, href }) => (
         <a
