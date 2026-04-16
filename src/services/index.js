@@ -46,7 +46,7 @@ export const ProjectService = {
   },
 
   async createCategory(payload) {
-  const { data } = await api.post('/categories', payload)
+  const { data } = await api.post('/projects/categories', payload)
   return data.data
 }
 }
