@@ -22,7 +22,7 @@ export default function OAuthCallback() {
           description: 'Veuillez réessayer ou utiliser email/mot de passe.',
           placement: 'bottomRight',
         })
-        setTimeout(() => navigate('/login'), 2000)
+        setTimeout(() => navigate('/connexion'), 2000)
         return
       }
 
@@ -30,9 +30,9 @@ export default function OAuthCallback() {
         setToken(token)
         const me = await AuthService.me()
         updateUser(me)
-        navigate('/dashboard')
+        navigate('/accueil')
       } catch {
-        navigate('/login?error=oauth_failed')
+        navigate('/connexion?error=oauth_failed')
       }
     }
 
