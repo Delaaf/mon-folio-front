@@ -29,7 +29,7 @@ const FEATURES = [
   {
     icon: '🌐',
     title: 'URL personnalisée',
-    desc: 'monfolio.net/tonnom — une adresse propre à partager sur ton CV ou LinkedIn.',
+    desc: 'monfolio.net/public/username — une adresse propre à partager sur ton CV ou LinkedIn.',
   },
   {
     icon: '📬',
@@ -41,15 +41,15 @@ const FEATURES = [
 const STEPS = [
   { num: '01', title: "Crée ton compte", desc: "Inscription en 30 secondes avec ton email ou Google/GitHub." },
   { num: '02', title: "Remplis ton profil", desc: "Ajoute tes projets, compétences, bio et photo de profil." },
-  { num: '03', title: "Personnalise le design", desc: "Choisis ton thème, tes couleurs et les sections à afficher." },
-  { num: '04', title: "Publie et partage", desc: "Ton portfolio est en ligne. Partage l'URL et décroche des opportunités." },
+  { num: '03', title: "Publie et partage", desc: "Ton portfolio est en ligne. Partage l'URL et décroche des opportunités." },
+  { num: '04',  title: "Personnalise le design", desc: "Choisis ton thème, tes couleurs et les sections à afficher."},
 ]
 
 const TESTIMONIALS = [
   {
-    name: 'Yasmine Berté',
+    name: 'Berei Yasmine',
     role: 'Designer professionnel',
-    avatar: 'YB',
+    avatar: 'BY',
     color: '#4f8eff',
     text: "J'ai décroché mon poste chez Stripe 3 semaines après avoir publié mon portfolio MonFolio. Le design m'a démarqué de centaines de candidats.",
   },

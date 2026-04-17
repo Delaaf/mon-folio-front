@@ -39,7 +39,7 @@ const Navbar = ({ activePage = 'Projects', onAddProject }) => {
    const menuItems = [
     {
       key: 'portfolio',
-      label: <NavLink to={`/portfolio/${user?.username}`}>Voir mon portfolio</NavLink>,
+      label: <NavLink to={`/public/${user?.username}`}>Voir mon portfolio</NavLink>,
       icon: <EyeOutlined />,
     },
     { type: 'divider' },
