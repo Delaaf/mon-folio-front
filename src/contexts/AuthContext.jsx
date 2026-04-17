@@ -71,15 +71,23 @@ export function AuthProvider({ children }) {
   }, [])
 
   const loginWithGoogle = useCallback(async () => {
+  try {
     const url = await AuthService.getGoogleRedirectUrl()
+    // Redirection complète du navigateur vers Google
     window.location.href = url
-  }, [])
+  } catch {
+    notifApi.error({ message: 'Impossible de se connecter avec Google.', placement: 'bottomRight' })
+  }
+}, [notifApi])
 
-  const loginWithGithub = useCallback(async () => {
+const loginWithGithub = useCallback(async () => {
+  try {
     const url = await AuthService.getGithubRedirectUrl()
     window.location.href = url
-  }, [])
-
+  } catch {
+    notifApi.error({ message: 'Impossible de se connecter avec GitHub.', placement: 'bottomRight' })
+  }
+}, [notifApi])
   // ── Value ─────────────────────────────────────────────────────
   const value = {
     user,

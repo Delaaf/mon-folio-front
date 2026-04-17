@@ -1,34 +1,36 @@
 import React, { useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { Spin } from 'antd'
+import { Spin, notification } from 'antd'
 import { setToken } from '../../services/api'
 import { useAuth } from '../../contexts/AuthContext'
 import AuthService from '../../services/authService'
 
-/**
- * OAuthCallback — page intermédiaire appelée après le redirect OAuth
- * Route : /auth/callback?token=xxx  (le backend redirige ici avec le token)
- */
 export default function OAuthCallback() {
-  const navigate           = useNavigate()
-  const [params]           = useSearchParams()
-  const { updateUser }     = useAuth()
+  const navigate        = useNavigate()
+  const [params]        = useSearchParams()
+  const { updateUser }  = useAuth()
+  const [notifApi, ctx] = notification.useNotification()
 
   useEffect(() => {
     const handleCallback = async () => {
       const token = params.get('token')
+      const error = params.get('error')
 
-      if (!token) {
-        navigate('/login?error=oauth_failed')
+      if (error || !token) {
+        notifApi.error({
+          message: 'Authentification échouée.',
+          description: 'Veuillez réessayer ou utiliser email/mot de passe.',
+          placement: 'bottomRight',
+        })
+        setTimeout(() => navigate('/login'), 2000)
         return
       }
 
-      // Store token & fetch user profile
-      setToken(token)
       try {
+        setToken(token)
         const me = await AuthService.me()
         updateUser(me)
-        navigate('/')
+        navigate('/dashboard')
       } catch {
         navigate('/login?error=oauth_failed')
       }
@@ -45,10 +47,11 @@ export default function OAuthCallback() {
       justifyContent: 'center',
       minHeight: '100vh',
       gap: 16,
-      background: 'var(--bg-primary)',
+      background: '#04040a',
     }}>
+      {ctx}
       <Spin size="large" />
-      <p style={{ color: 'var(--text-secondary)', fontSize: 14 }}>
+      <p style={{ color: 'rgba(240,240,248,0.5)', fontSize: 14 }}>
         Authentification en cours…
       </p>
     </div>
