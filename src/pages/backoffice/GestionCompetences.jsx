@@ -121,7 +121,7 @@ const handleSkillCreate = async () => {
         )
       )
 
-      notifApi.success({ message: 'Compétence mise à jour !', placement: 'bottomRight', style: { color:'#fff',}, })
+      notifApi.success({ message: 'Compétence mise à jour !', placement: 'bottomRight', style: { color:'#fff !important',}, })
 
     } else {
       const created = await SkillService.create(payload)
@@ -137,7 +137,7 @@ const handleSkillCreate = async () => {
         ...prev,
       ])
 
-      notifApi.success({ message: 'Compétence ajoutée !', placement: 'bottomRight', style: { color:'#fff',} })
+      notifApi.success({ message: 'Compétence ajoutée !', placement: 'bottomRight', style: { color:'#fff !important',} })
     }
 
     setModal(false)
@@ -167,7 +167,7 @@ const handleSkillCreate = async () => {
     notifApi.success({
       message: 'Catégorie ajoutée !',
       placement: 'bottomRight',
-      style: { color:'#fff',}
+      style: { color:'#fff !important',}
     })
 
     setCatModal(false)

@@ -156,7 +156,7 @@ const projects = (categories || []).flatMap(c => c.projects || [])
             >
             <TextArea rows={2} maxLength={150} showCount />
             </Form.Item>
-            <Form.Item name="description" label="Description détaillée" rules={[{required:true}]} className={s.formGridFull}><TextArea rows={3} /></Form.Item>
+            <Form.Item name="description" label="Description détaillée" className={s.formGridFull}><TextArea rows={3} /></Form.Item>
             <Form.Item name="live_url"   label="URL Live"><Input prefix={<LinkOutlined />} /></Form.Item>
             <Form.Item name="github_url" label="GitHub"><Input prefix={<GithubOutlined />} /></Form.Item>
             <Form.Item name="status" label="Statut" initialValue="draft" className={s.formGridFull}>

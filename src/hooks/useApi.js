@@ -38,7 +38,7 @@ export function useApi(fn, options = {}) {
       setData(result)
 
       if (successMessage) {
-        notification.success({ message: successMessage, placement: 'bottomRight', duration: 3, style: { color:'#fff',} })
+        notification.success({ message: successMessage, placement: 'bottomRight', duration: 3, style: { color:'#fff !important',} })
       }
 
       onSuccess?.(result)
