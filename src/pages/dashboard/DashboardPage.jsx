@@ -57,9 +57,9 @@ export default function DashboardPage() {
             </p>
           </div>
           <div className={styles.headerActions}>
-            <Button color="default" variant="filled" icon={<RocketOutlined />}>
-              URL : <Text copyable={{ text: portfolioUrl }} style={{ color: 'inherit', marginLeft: 5 }}>
-            {portfolioUrl}
+            <Button type="primary" icon={<RocketOutlined />}>
+              URL : <Text copyable={{ text: `https://monfolio.net${portfolioUrl}` }} style={{ color: 'inherit', marginLeft: 5 }}>
+            monfolio.net/{portfolioUrl}
             </Text>
             </Button>
           </div>
@@ -95,10 +95,10 @@ export default function DashboardPage() {
         <motion.div {...fadeUp(0.14)}>
           <h2 className={styles.sectionTitle}>Accès rapides</h2>
           <div className={styles.quickGrid}>
-            <QuickLink to="/gerer-mes-projets"      icon={<ProjectOutlined />} title="Gérer mes projets"     desc="Ajouter, modifier, supprimer vos projets"  color="#4f8eff" />
-            <QuickLink to="/gerer-mes-competences"  icon={<StarOutlined />}    title="Gérer mes compétences" desc="Mettre à jour votre tech stack"              color="#f59e0b" />
-            <QuickLink to="/modifier-mon-portfolio" icon={<EditOutlined />}    title="Personnaliser"         desc="Couleurs, thèmes, sections affichées"        color="#8b5cf6" />
-            <QuickLink to="/mes-informations"       icon={<EditOutlined />}    title="Mon profil"            desc="Photo, bio, liens sociaux"                   color="#4ade80" />
+            <QuickLink to="/dashboard/gerer-mes-projets"      icon={<ProjectOutlined />} title="Gérer mes projets"     desc="Ajouter, modifier, supprimer vos projets"  color="#4f8eff" />
+            <QuickLink to="/dashboard/gerer-mes-competences"  icon={<StarOutlined />}    title="Gérer mes compétences" desc="Mettre à jour votre tech stack"              color="#f59e0b" />
+            <QuickLink to="/dashboard/modifier-mon-portfolio" icon={<EditOutlined />}    title="Personnaliser"         desc="Couleurs, thèmes, sections affichées"        color="#8b5cf6" />
+            <QuickLink to="/dashboard/mes-informations"       icon={<EditOutlined />}    title="Mon profil"            desc="Photo, bio, liens sociaux"                   color="#4ade80" />
           </div>
         </motion.div>
 
@@ -106,7 +106,7 @@ export default function DashboardPage() {
         <motion.div className={styles.previewBanner} {...fadeUp(0.2)}>
           <div>
             <div className={styles.previewTitle}>🌐 Votre portfolio public</div>
-            <div className={styles.previewUrl}>localhost:5173/portfolio/{user?.username}</div>
+            <div className={styles.previewUrl}>https://monfolio.net{portfolioUrl}</div>
           </div>
           <Link to={portfolioUrl} className={styles.previewBtn} target="_blank" rel="noopener noreferrer">
             Voir <ExportOutlined />
