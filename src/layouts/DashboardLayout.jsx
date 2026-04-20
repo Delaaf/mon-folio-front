@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink, Outlet, useNavigate, useLocation, CodeOutlined } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Avatar, Tooltip, notification } from 'antd'
 import {
@@ -8,6 +8,7 @@ import {
   ExternalLink, Bell, Search, Menu, X,
   User, Palette, Star, Globe,
 } from 'lucide-react'
+import { CodeOutlined } from '@ant-design/icons'
 import { useAuth } from '../contexts/AuthContext'
 import styles from './DashboardLayout.module.css'
 
