@@ -86,7 +86,7 @@ const App = () => (
 
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index              element={<DashboardPage />} />
-          <Route path="mes-infomations"     element={<ProtectedRoute><MesInformations /></ProtectedRoute>} />
+          <Route path="mes-informations"     element={<ProtectedRoute><MesInformations /></ProtectedRoute>} />
           <Route path="modifier-mon-portfolio"    element={<ProtectedRoute><ModificationPortfolio /></ProtectedRoute>} />
           <Route path="gerer-mes-projets"     element={<ProtectedRoute><GestionProjets /></ProtectedRoute>} />
           <Route path="gerer-mes-competences"     element={<ProtectedRoute><GestionCompetences /></ProtectedRoute>} />

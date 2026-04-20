@@ -1,33 +1,73 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Button, Spin, Typography } from 'antd'
+import { Avatar } from 'antd'
 import {
-  ProjectOutlined, StarOutlined, EyeOutlined,
-  EditOutlined, ExportOutlined, RocketOutlined,
-} from '@ant-design/icons'
+  FolderOpen, Eye, Star, Rocket,
+  TrendingUp, ArrowUpRight, Plus,
+  ChevronRight, Globe, Clock, Zap,
+} from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { ProfileService } from '../../services/index'
 import styles from './DashboardPage.module.css'
 
-const { Text } = Typography;
-
-const fadeUp = (d = 0) => ({
-  initial: { opacity: 0, y: 18 },
+/* ── Helpers ── */
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.45, delay: d, ease: [0.22, 1, 0.36, 1] },
+  transition: { duration: 0.45, delay, ease: [0.22, 1, 0.36, 1] },
 })
 
-const QuickLink = ({ to, icon, title, desc, color }) => (
-  <Link to={to} className={styles.quickCard}>
-    <div className={styles.quickIcon} style={{ background: `${color}18`, color }}>{icon}</div>
-    <div>
-      <div className={styles.quickTitle}>{title}</div>
-      <div className={styles.quickDesc}>{desc}</div>
-    </div>
-  </Link>
-)
+function StatCard({ icon: Icon, label, value, color, delta, delay }) {
+  return (
+    <motion.div className={styles.statCard} {...fadeUp(delay)}>
+      <div className={styles.statTop}>
+        <div className={styles.statIconWrap} style={{ background: `${color}14`, color }}>
+          <Icon size={18} />
+        </div>
+        {delta !== undefined && (
+          <div className={`${styles.statDelta} ${delta >= 0 ? styles.deltaUp : styles.deltaDown}`}>
+            <TrendingUp size={11} />
+            <span>{Math.abs(delta)}%</span>
+          </div>
+        )}
+      </div>
+      <div className={styles.statValue}>{value}</div>
+      <div className={styles.statLabel}>{label}</div>
+    </motion.div>
+  )
+}
 
+function QuickAction({ to, icon: Icon, label, desc, color }) {
+  return (
+    <Link to={to} className={styles.quickCard}>
+      <div className={styles.quickIcon} style={{ background: `${color}12`, color }}>
+        <Icon size={18} />
+      </div>
+      <div className={styles.quickBody}>
+        <div className={styles.quickLabel}>{label}</div>
+        <div className={styles.quickDesc}>{desc}</div>
+      </div>
+      <ChevronRight size={15} className={styles.quickArrow} />
+    </Link>
+  )
+}
+
+function ActivityItem({ icon: Icon, text, time, color }) {
+  return (
+    <div className={styles.activityItem}>
+      <div className={styles.activityIcon} style={{ background: `${color}14`, color }}>
+        <Icon size={14} />
+      </div>
+      <div className={styles.activityBody}>
+        <div className={styles.activityText}>{text}</div>
+        <div className={styles.activityTime}>{time}</div>
+      </div>
+    </div>
+  )
+}
+
+/* ── PAGE ── */
 export default function DashboardPage() {
   const { user }              = useAuth()
   const [stats, setStats]     = useState(null)
@@ -35,84 +75,162 @@ export default function DashboardPage() {
 
   useEffect(() => {
     ProfileService.stats()
-      .then(data => setStats(data))
+      .then(d => setStats(d))
       .catch(() => {})
       .finally(() => setLoading(false))
   }, [])
 
-  const portfolioUrl = `/public/${user?.username}`
+  const hour    = new Date().getHours()
+  const greeting = hour < 12 ? 'Bonjour' : hour < 18 ? 'Bon après-midi' : 'Bonsoir'
+  const portfolioUrl = `/portfolio/${user?.username}`
 
   return (
     <div className={styles.page}>
-      <div className={styles.inner}>
 
-        {/* Header */}
-        <motion.div className={styles.header} {...fadeUp(0)}>
-          <div>
-            <h1 className={styles.title}>
-              Bonjour, <span className={styles.accent}>{user?.prenom ?? user?.name} 👋</span>
-            </h1>
-            <p className={styles.sub}>
-              Bienvenue dans votre espace MonFolio. Gérez votre portfolio et suivez vos statistiques.
-            </p>
+      {/* ── Header ── */}
+      <motion.div className={styles.header} {...fadeUp(0)}>
+        <div className={styles.headerLeft}>
+          <div className={styles.greeting}>
+            {greeting},{' '}
+            <span className={styles.greetingName}>
+              {user?.prenom ?? user?.name} 👋
+            </span>
           </div>
-          <div className={styles.headerActions}>
-            <Button type="primary" icon={<RocketOutlined />}>
-              URL : https://<Text copyable={{ text: `https://monfolio.net${portfolioUrl}` }} style={{ color: 'inherit', marginLeft: 5 }}>
-            monfolio.net{portfolioUrl}
-            </Text>
-            </Button>
+          <p className={styles.headerSub}>
+            Voici un aperçu de votre portfolio et de votre activité récente.
+          </p>
+        </div>
+        <div className={styles.headerActions}>
+          <a href={portfolioUrl} target="_blank" rel="noopener noreferrer"
+            className={styles.btnPortfolio}>
+            <Globe size={14} />
+            Voir mon portfolio
+            <ArrowUpRight size={13} />
+          </a>
+          <Link to="/gerer-mes-projets" className={styles.btnAdd}>
+            <Plus size={15} />
+            Nouveau projet
+          </Link>
+        </div>
+      </motion.div>
+
+      {/* ── URL Badge ── */}
+      <motion.div className={styles.urlBadge} {...fadeUp(0.06)}>
+        <div className={styles.urlDot} />
+        <span className={styles.urlLabel}>Votre portfolio est en ligne ·</span>
+        <a href={portfolioUrl} target="_blank" rel="noopener noreferrer" className={styles.urlLink}>
+          monfolio.dev/{user?.username}
+        </a>
+        <ArrowUpRight size={12} style={{ color: '#4f8eff', opacity: 0.7 }} />
+      </motion.div>
+
+      {/* ── Stats Grid ── */}
+      <div className={styles.statsGrid}>
+        <StatCard
+          icon={FolderOpen} label="Projets" delay={0.08}
+          value={loading ? '—' : (stats?.projects_count ?? 0)}
+          color="#4f8eff" delta={12} />
+        <StatCard
+          icon={Rocket} label="Publiés" delay={0.12}
+          value={loading ? '—' : (stats?.published_projects ?? 0)}
+          color="#4ade80" />
+        <StatCard
+          icon={Eye} label="Vues totales" delay={0.16}
+          value={loading ? '—' : (stats?.total_views ?? 0)}
+          color="#8b5cf6" delta={8} />
+        <StatCard
+          icon={Star} label="Compétences" delay={0.20}
+          value={loading ? '—' : (stats?.skills_count ?? 0)}
+          color="#f59e0b" />
+      </div>
+
+      {/* ── Two columns ── */}
+      <div className={styles.cols}>
+
+        {/* Quick actions */}
+        <motion.div className={styles.card} {...fadeUp(0.22)}>
+          <div className={styles.cardHead}>
+            <div className={styles.cardTitle}>
+              <Zap size={15} className={styles.cardTitleIcon} />
+              Accès rapides
+            </div>
+          </div>
+          <div className={styles.quickList}>
+            <QuickAction to="/mes-informations"       icon={FolderOpen} color="#4f8eff"
+              label="Mes informations"       desc="Photo, bio, liens sociaux" />
+            <QuickAction to="/gerer-mes-projets"      icon={FolderOpen} color="#8b5cf6"
+              label="Gérer mes projets"      desc="Ajouter ou modifier vos projets" />
+            <QuickAction to="/gerer-mes-competences"  icon={Star}       color="#f59e0b"
+              label="Mes compétences"        desc="Tech stack et niveaux" />
+            <QuickAction to="/modifier-mon-portfolio" icon={Rocket}     color="#4ade80"
+              label="Personnaliser"          desc="Thème, couleurs, sections" />
           </div>
         </motion.div>
 
-        {/* Stats */}
-        <motion.div className={styles.statsGrid} {...fadeUp(0.08)}>
-          {loading ? (
-            <div className={styles.statsLoading}><Spin /></div>
-          ) : (
-            <>
+        {/* Right col */}
+        <div className={styles.rightCol}>
+
+          {/* Profile completion */}
+          <motion.div className={styles.card} {...fadeUp(0.26)}>
+            <div className={styles.cardHead}>
+              <div className={styles.cardTitle}>
+                <TrendingUp size={15} className={styles.cardTitleIcon} />
+                Complétude du profil
+              </div>
+              <div className={styles.cardBadge}>
+                {loading ? '—' : `${Math.min(100, Math.round(
+                  ((stats?.projects_count > 0 ? 25 : 0) +
+                   (stats?.skills_count   > 0 ? 25 : 0) +
+                   (user?.bio             ? 25 : 0) +
+                   (user?.avatar          ? 25 : 0))
+                ))}%`}
+              </div>
+            </div>
+            <div className={styles.completionList}>
               {[
-                { label: 'Projets',           value: stats?.projects_count ?? 0,      icon: <ProjectOutlined />, color: '#4f8eff' },
-                { label: 'Publiés',           value: stats?.published_projects ?? 0,  icon: <RocketOutlined />,  color: '#4ade80' },
-                { label: 'Compétences',       value: stats?.skills_count ?? 0,        icon: <StarOutlined />,    color: '#f59e0b' },
-                { label: 'Vues totales',      value: stats?.total_views ?? 0,         icon: <EyeOutlined />,     color: '#8b5cf6' },
-              ].map(st => (
-                <div key={st.label} className={styles.statCard}>
-                  <div className={styles.statIcon} style={{ color: st.color, background: `${st.color}18` }}>
-                    {st.icon}
+                { label: 'Photo de profil',  done: !!user?.avatar,           to: '/mes-informations'       },
+                { label: 'Bio renseignée',   done: !!user?.bio,              to: '/mes-informations'       },
+                { label: 'Projets ajoutés',  done: (stats?.projects_count > 0), to: '/gerer-mes-projets'  },
+                { label: 'Compétences',      done: (stats?.skills_count > 0),   to: '/gerer-mes-competences' },
+              ].map(item => (
+                <div key={item.label} className={styles.completionItem}>
+                  <div className={`${styles.completionDot} ${item.done ? styles.completionDotDone : ''}`}>
+                    {item.done && '✓'}
                   </div>
-                  <div>
-                    <div className={styles.statValue} style={{ color: st.color }}>{st.value}</div>
-                    <div className={styles.statLabel}>{st.label}</div>
-                  </div>
+                  <span className={`${styles.completionLabel} ${item.done ? styles.completionLabelDone : ''}`}>
+                    {item.label}
+                  </span>
+                  {!item.done && (
+                    <Link to={item.to} className={styles.completionAction}>
+                      Compléter →
+                    </Link>
+                  )}
                 </div>
               ))}
-            </>
-          )}
-        </motion.div>
+            </div>
+          </motion.div>
 
-        {/* Quick links */}
-        <motion.div {...fadeUp(0.14)}>
-          <h2 className={styles.sectionTitle}>Accès rapides</h2>
-          <div className={styles.quickGrid}>
-            <QuickLink to="/dashboard/gerer-mes-projets"      icon={<ProjectOutlined />} title="Gérer mes projets"     desc="Ajouter, modifier, supprimer vos projets"  color="#4f8eff" />
-            <QuickLink to="/dashboard/gerer-mes-competences"  icon={<StarOutlined />}    title="Gérer mes compétences" desc="Mettre à jour votre tech stack"              color="#f59e0b" />
-            <QuickLink to="/dashboard/modifier-mon-portfolio" icon={<EditOutlined />}    title="Personnaliser"         desc="Couleurs, thèmes, sections affichées"        color="#8b5cf6" />
-            <QuickLink to="/dashboard/mes-informations"       icon={<EditOutlined />}    title="Mon profil"            desc="Photo, bio, liens sociaux"                   color="#4ade80" />
-          </div>
-        </motion.div>
+          {/* Activity */}
+          <motion.div className={styles.card} {...fadeUp(0.3)}>
+            <div className={styles.cardHead}>
+              <div className={styles.cardTitle}>
+                <Clock size={15} className={styles.cardTitleIcon} />
+                Activité récente
+              </div>
+            </div>
+            <div className={styles.activityList}>
+              <ActivityItem icon={Rocket}    color="#4ade80" time="Il y a 2h"
+                text="Portfolio consulté par un visiteur" />
+              <ActivityItem icon={FolderOpen} color="#4f8eff" time="Hier"
+                text="Projet mis à jour avec succès" />
+              <ActivityItem icon={Star}      color="#f59e0b" time="Il y a 3j"
+                text="Compétences mises à jour" />
+              <ActivityItem icon={Eye}       color="#8b5cf6" time="Il y a 5j"
+                text="12 nouvelles vues sur votre profil" />
+            </div>
+          </motion.div>
 
-        {/* Portfolio preview link */}
-        <motion.div className={styles.previewBanner} {...fadeUp(0.2)}>
-          <div>
-            <div className={styles.previewTitle}>🌐 Votre portfolio public</div>
-            <div className={styles.previewUrl}>https://monfolio.net{portfolioUrl}</div>
-          </div>
-          <Link to={portfolioUrl} className={styles.previewBtn} target="_blank" rel="noopener noreferrer">
-            Voir <ExportOutlined />
-          </Link>
-        </motion.div>
-
+        </div>
       </div>
     </div>
   )
