@@ -8,7 +8,7 @@ import {
   ExternalLink, Bell, Search, Menu, X,
   User, Palette, Star, Globe,
 } from 'lucide-react'
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 import styles from './DashboardLayout.module.css'
 
 /* ── NAV STRUCTURE ──────────────────────────── */
