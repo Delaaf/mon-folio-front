@@ -1,0 +1,23 @@
+.layout {
+  min-height: 100vh;
+}
+
+.sider {
+  background: #0a0a0f !important;
+  border-right: 1px solid var(--border);
+}
+
+.logo {
+  height: 68px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  font-weight: 700;
+  font-size: 18px;
+  color: white;
+}
+
+.content {
+  padding: 32px;
+  background: var(--bg-primary);
+}

@@ -15,7 +15,6 @@ import ForgotPasswordPage from './pages/authPages/ForgotPasswordPage'
 import ResetPasswordPage  from './pages/authPages/ResetPasswordPage'
 import OAuthCallback      from './pages/authPages/OAuthCallback'
 
-// Page d'accueil plateforme
 import HomePage from './pages/connectedPages/HomePage'
 
 // ── Portfolio PUBLIC (/portfolio/:username/...) ──
@@ -30,6 +29,8 @@ import PortfolioContact     from './pages/portfolio/PortfolioContact'
 
 // Dashboard (connecté)  →  /dashboard
 import DashboardPage from './pages/dashboard/DashboardPage'
+import DashboardLayout from './layouts/DashboarddLayout'
+
 import LandingPage from './pages/landingPage/LandingPage'
 
 //Pages etant connecté
@@ -81,6 +82,17 @@ const App = () => (
           <Route path="projets"     element={<PortfolioProjets />} />
           <Route path="a-propos"    element={<PortfolioAPropos />} />
           <Route path="contact"     element={<PortfolioContact />} />
+        </Route>
+
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index              element={<DashboardPage />} />
+          <Route path="mes-infomations"     element={<ProtectedRoute><MesInformations /></ProtectedRoute>} />
+          <Route path="modifier-mon-portfolio"    element={<ProtectedRoute><ModificationPortfolio /></ProtectedRoute>} />
+          <Route path="gerer-mes-projets"     element={<ProtectedRoute><GestionProjets /></ProtectedRoute>} />
+          <Route path="gerer-mes-competences"     element={<ProtectedRoute><GestionCompetences /></ProtectedRoute>} />
+          <Route path="gerer-autres"     element={<ProtectedRoute><GestionAutres /></ProtectedRoute>} />
+          <Route path="parametres-du-compte"     element={<ProtectedRoute><ParametresCompte /></ProtectedRoute>} />
+          <Route path="aide-et-support"     element={<ProtectedRoute><AideSupport /></ProtectedRoute>} />
         </Route>
 
         {/* Backoffice (authentification requise) */}

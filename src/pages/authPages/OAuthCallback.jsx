@@ -30,7 +30,7 @@ export default function OAuthCallback() {
         setToken(token)
         const me = await AuthService.me()
         updateUser(me)
-        navigate('/accueil')
+        navigate('/dashboard')
       } catch {
         navigate('/connexion?error=oauth_failed')
       }
