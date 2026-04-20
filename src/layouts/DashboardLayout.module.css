@@ -1,23 +1,345 @@
-.layout {
+/* ═══════════════════════════════════════
+   DASHBOARD LAYOUT (FINISH + UPGRADE)
+   ═══════════════════════════════════════ */
+
+/* ── Root ── */
+.root {
+  display: flex;
   min-height: 100vh;
+  background: radial-gradient(circle at 20% 10%, #11122a 0%, #07070f 50%, #05050a 100%);
+  color: #e8e8f0;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  overflow: hidden;
 }
 
-.sider {
-  background: #0a0a0f !important;
-  border-right: 1px solid var(--border);
+/* ─────────────────────────────
+   SIDEBAR
+────────────────────────────── */
+.sidebar {
+  position: relative;
+  height: 100vh;
+  background: rgba(12, 12, 24, 0.85);
+  backdrop-filter: blur(16px);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  z-index: 50;
 }
 
-.logo {
-  height: 68px;
+.sidebarMobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 260px !important;
+  z-index: 200;
+  box-shadow: 30px 0 80px rgba(0,0,0,0.6);
+}
+
+/* Overlay mobile */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(2px);
+  z-index: 150;
+}
+
+/* ── Sidebar Header ── */
+.sidebarHead {
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  font-weight: 700;
-  font-size: 18px;
-  color: white;
+  justify-content: space-between;
+  padding: 18px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+
+.brandIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4f8eff, #7c5cff);
+  font-size: 12px;
+}
+
+.brandName {
+  font-size: 15px;
+  letter-spacing: 0.3px;
+}
+
+.collapseBtn {
+  background: transparent;
+  border: none;
+  color: #cfd3ff;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+.collapseBtn:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+/* ── NAV ── */
+.nav {
+  flex: 1;
+  padding: 14px 8px;
+  overflow-y: auto;
+}
+
+.navGroup {
+  margin-bottom: 18px;
+}
+
+.navGroupLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.35);
+  margin: 10px 10px 6px;
+}
+
+/* Item */
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.navItem:hover {
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+}
+
+.navItemActive {
+  background: linear-gradient(90deg, rgba(79,142,255,0.15), transparent);
+  color: #fff;
+}
+
+.navIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+}
+
+.navLabel {
+  font-size: 14px;
+}
+
+.navActiveDot {
+  position: absolute;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4f8eff;
+}
+
+/* ── FOOTER ── */
+.sidebarFoot {
+  padding: 14px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.portfolioLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #aab3ff;
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  transition: 0.2s;
+}
+
+.portfolioLink:hover {
+  background: rgba(79,142,255,0.12);
+}
+
+.extIcon {
+  margin-left: auto;
+}
+
+/* Divider */
+.sidebarDivider {
+  height: 1px;
+  margin: 12px 0;
+  background: rgba(255,255,255,0.06);
+}
+
+/* USER */
+.userCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userAvatar {
+  border: 2px solid rgba(255,255,255,0.08);
+}
+
+.userInfo {
+  flex: 1;
+  overflow: hidden;
+}
+
+.userName {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userEmail {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logoutBtn {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.logoutBtn:hover {
+  background: rgba(255,0,0,0.1);
+  color: #ff5c5c;
+}
+
+/* ─────────────────────────────
+   MAIN AREA
+────────────────────────────── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* TOPBAR */
+.topbar {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  background: rgba(10,10,20,0.6);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.topbarLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topbarTitle {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.mobileMenuBtn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  display: none;
+}
+
+/* RIGHT */
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbarAction {
+  background: rgba(255,255,255,0.04);
+  border: none;
+  color: #cfd3ff;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: 0.2s;
+}
+
+.topbarAction:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.bellDot {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 6px;
+  height: 6px;
+  background: #ff4d4f;
+  border-radius: 50%;
+}
+
+.topbarDivider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255,255,255,0.08);
+}
+
+/* CONTENT */
 .content {
-  padding: 32px;
-  background: var(--bg-primary);
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* ─────────────────────────────
+   RESPONSIVE
+────────────────────────────── */
+@media (max-width: 768px) {
+  .mobileMenuBtn {
+    display: flex;
+  }
+
+  .content {
+    padding: 14px;
+  }
 }
