@@ -264,7 +264,7 @@ export default function DashboardLayout() {
   const pageTitle = PAGE_TITLES[location.pathname] ?? 'Dashboard'
 
   return (
-    <div className={`${styles.root} ${collapsed ? styles.rootCollapsed : ''}`}>
+    <div className={`${styles.root}`}>
 
       {/* Sidebar desktop */}
       {!isMobile && (
