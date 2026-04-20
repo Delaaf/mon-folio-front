@@ -29,7 +29,7 @@ import PortfolioContact     from './pages/portfolio/PortfolioContact'
 
 // Dashboard (connecté)  →  /dashboard
 import DashboardPage from './pages/dashboard/DashboardPage'
-import DashboardLayout from './layouts/DashboarddLayout'
+import DashboardLayout from './layouts/DashboardLayout'
 
 import LandingPage from './pages/landingPage/LandingPage'
 
@@ -95,7 +95,7 @@ const App = () => (
           <Route path="aide-et-support"     element={<ProtectedRoute><AideSupport /></ProtectedRoute>} />
         </Route>
 
-        {/* Backoffice (authentification requise) */}
+        {/* Backoffice (authentification requise) 
         <Route path="/mes-informations"       element={<ProtectedRoute><WithLayout><MesInformations /></WithLayout></ProtectedRoute>} />
         <Route path="/modifier-mon-portfolio" element={<ProtectedRoute><WithLayout><ModificationPortfolio /></WithLayout></ProtectedRoute>} />
         <Route path="/gerer-mes-projets"      element={<ProtectedRoute><WithLayout><GestionProjets /></WithLayout></ProtectedRoute>} />
@@ -107,7 +107,7 @@ const App = () => (
         <Route path="/projets"                element={<ProtectedRoute><WithLayout><ProjectsPage /></WithLayout></ProtectedRoute>} />
         <Route path="/a-propos"               element={<ProtectedRoute><WithLayout><AboutPage /></WithLayout></ProtectedRoute>} />
         <Route path="/contact"                element={<ProtectedRoute><WithLayout><ContactPage /></WithLayout></ProtectedRoute>} />
-
+*/}
 
       </Routes>
     </AuthProvider>
