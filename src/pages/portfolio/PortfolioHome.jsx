@@ -44,10 +44,10 @@ export default function PortfolioHome() {
           )}
 
           <div className={styles.cta}>
-            <Link to={`/portfolio/${username}/projets`} className={styles.btnPrimary}>
+            <Link to={`/public/${username}/projets`} className={styles.btnPrimary}>
               Voir mes projets →
             </Link>
-            <Link to={`/portfolio/${username}/contact`} className={styles.btnSecondary}>
+            <Link to={`/public/${username}/contact`} className={styles.btnSecondary}>
               ✉ Me contacter
             </Link>
           </div>
@@ -117,7 +117,7 @@ export default function PortfolioHome() {
           <div className={styles.featuredInner}>
             <div className={styles.sectionHd}>
               <h2 className={styles.sectionTitle}>Projets phares</h2>
-              <Link to={`/portfolio/${username}/projets`} className={styles.seeAll}>
+              <Link to={`/public/${username}/projets`} className={styles.seeAll}>
                 Voir tous →
               </Link>
             </div>

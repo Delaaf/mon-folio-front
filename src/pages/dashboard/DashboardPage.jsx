@@ -58,8 +58,8 @@ export default function DashboardPage() {
           </div>
           <div className={styles.headerActions}>
             <Button type="primary" icon={<RocketOutlined />}>
-              URL : <Text copyable={{ text: `https://monfolio.net${portfolioUrl}` }} style={{ color: 'inherit', marginLeft: 5 }}>
-            monfolio.net/{portfolioUrl}
+              URL : https://<Text copyable={{ text: `https://monfolio.net${portfolioUrl}` }} style={{ color: 'inherit', marginLeft: 5 }}>
+            monfolio.net{portfolioUrl}
             </Text>
             </Button>
           </div>
