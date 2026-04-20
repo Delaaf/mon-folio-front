@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Button, Spin } from 'antd'
+import { Button, Spin, Typography } from 'antd'
 import {
   ProjectOutlined, StarOutlined, EyeOutlined,
   EditOutlined, ExportOutlined, RocketOutlined,
@@ -9,6 +9,8 @@ import {
 import { useAuth } from '../../contexts/AuthContext'
 import { ProfileService } from '../../services/index'
 import styles from './DashboardPage.module.css'
+
+const { Text } = Typography;
 
 const fadeUp = (d = 0) => ({
   initial: { opacity: 0, y: 18 },
@@ -38,7 +40,7 @@ export default function DashboardPage() {
       .finally(() => setLoading(false))
   }, [])
 
-  const portfolioUrl = `/portfolio/${user?.username}`
+  const portfolioUrl = `/public/${user?.username}`
 
   return (
     <div className={styles.page}>
@@ -55,11 +57,10 @@ export default function DashboardPage() {
             </p>
           </div>
           <div className={styles.headerActions}>
-            <Button icon={<ExportOutlined />} href={portfolioUrl} target="_blank">
-              Voir mon portfolio
-            </Button>
             <Button type="primary" icon={<RocketOutlined />}>
-              URL : monfolio.dev/{user?.username}
+              URL : <Text copyable={{ text: `monfolio.dev/${user?.username}` }} style={{ color: 'inherit', marginLeft: 5 }}>
+            monfolio.dev/{user?.username}
+            </Text>
             </Button>
           </div>
         </motion.div>
@@ -107,7 +108,7 @@ export default function DashboardPage() {
             <div className={styles.previewTitle}>🌐 Votre portfolio public</div>
             <div className={styles.previewUrl}>localhost:5173/portfolio/{user?.username}</div>
           </div>
-          <Link to={portfolioUrl} className={styles.previewBtn}>
+          <Link to={portfolioUrl} className={styles.previewBtn} target="_blank" rel="noopener noreferrer">
             Voir <ExportOutlined />
           </Link>
         </motion.div>

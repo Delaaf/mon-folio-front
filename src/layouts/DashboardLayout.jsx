@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate, useLocation, CodeOutlined } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Avatar, Tooltip, notification } from 'antd'
 import {
@@ -22,18 +22,18 @@ const NAV = [
   {
     group: 'Mon Portfolio',
     items: [
-      { to: '/mes-informations',       icon: User,       label: 'Mes informations'      },
-      { to: '/modifier-mon-portfolio', icon: Palette,    label: 'Personnalisation'       },
-      { to: '/gerer-mes-projets',      icon: FolderOpen, label: 'Projets'               },
-      { to: '/gerer-mes-competences',  icon: Star,       label: 'Compétences'           },
-      { to: '/gerer-autres',           icon: Layers,     label: 'Autres'                },
+      { to: '/dashboard/mes-informations',       icon: User,       label: 'Mes informations'      },
+      { to: '/dashboard/modifier-mon-portfolio', icon: Palette,    label: 'Personnalisation'       },
+      { to: '/dashboard/gerer-mes-projets',      icon: FolderOpen, label: 'Projets'               },
+      { to: '/dashboard/gerer-mes-competences',  icon: Star,       label: 'Compétences'           },
+      { to: '/dashboard/gerer-autres',           icon: Layers,     label: 'Autres'                },
     ],
   },
   {
     group: 'Compte',
     items: [
-      { to: '/parametres-du-compte',   icon: Settings,   label: 'Paramètres'            },
-      { to: '/aide-et-support',        icon: HelpCircle, label: 'Aide & support'        },
+      { to: '/dashboard/parametres-du-compte',   icon: Settings,   label: 'Paramètres'            },
+      { to: '/dashboard/aide-et-support',        icon: HelpCircle, label: 'Aide & support'        },
     ],
   },
 ]
@@ -74,7 +74,7 @@ function Sidebar({ collapsed, onToggle, mobile, onMobileClose }) {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.18 }}>
-                <div className={styles.brandIcon}>&lt;/&gt;</div>
+                <div className={styles.brandIcon}><CodeOutlined /></div>
                 <span className={styles.brandName}>MonFolio</span>
               </motion.div>
             )}
@@ -148,7 +148,7 @@ function Sidebar({ collapsed, onToggle, mobile, onMobileClose }) {
           <AnimatePresence mode="wait">
             {(!collapsed || mobile) && (
               <motion.a
-                href={`/portfolio/${user?.username}`}
+                href={`/public/${user?.username}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.portfolioLink}
@@ -235,13 +235,13 @@ function Topbar({ onMobileOpen, pageTitle }) {
 /* ── PAGE TITLE MAP ─────────────────────────── */
 const PAGE_TITLES = {
   '/dashboard':              'Tableau de bord',
-  '/mes-informations':       'Mes informations',
-  '/modifier-mon-portfolio': 'Personnalisation du portfolio',
-  '/gerer-mes-projets':      'Gestion des projets',
-  '/gerer-mes-competences':  'Gestion des compétences',
-  '/gerer-autres':           'Autres informations',
-  '/parametres-du-compte':   'Paramètres du compte',
-  '/aide-et-support':        'Aide & support',
+  '/dashboard/mes-informations':       'Mes informations',
+  '/dashboard/modifier-mon-portfolio': 'Personnalisation du portfolio',
+  '/dashboard/gerer-mes-projets':      'Gestion des projets',
+  '/dashboard/gerer-mes-competences':  'Gestion des compétences',
+  '/dashboard/gerer-autres':           'Autres informations',
+  '/dashboard/parametres-du-compte':   'Paramètres du compte',
+  '/dashboard/aide-et-support':        'Aide & support',
 }
 
 /* ── LAYOUT PRINCIPAL ───────────────────────── */
