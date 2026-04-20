@@ -16,10 +16,7 @@
    SIDEBAR
 ────────────────────────────── */
 .sidebar {
-  /*position: relative;*/
-  position: fixed;
-  left: 0;
-  top: 0;
+  position: relative;
   height: 100vh;
   background: rgba(12, 12, 24, 0.85);
   backdrop-filter: blur(16px);
@@ -253,16 +250,11 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-
 }
-
 
 /* TOPBAR */
 .topbar {
   height: 60px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -338,8 +330,6 @@
   padding: 20px;
   overflow-y: auto;
 }
-
-
 
 /* ─────────────────────────────
    RESPONSIVE
