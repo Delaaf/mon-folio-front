@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Avatar } from 'antd'
+import { Avatar,Typography } from 'antd'
 import {
   FolderOpen, Eye, Star, Rocket,
   TrendingUp, ArrowUpRight, Plus,
@@ -17,6 +17,8 @@ const fadeUp = (delay = 0) => ({
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.45, delay, ease: [0.22, 1, 0.36, 1] },
 })
+
+const { Text } = Typography;
 
 function StatCard({ icon: Icon, label, value, color, delta, delay }) {
   return (
@@ -82,7 +84,7 @@ export default function DashboardPage() {
 
   const hour    = new Date().getHours()
   const greeting = hour < 12 ? 'Bonjour' : hour < 18 ? 'Bon après-midi' : 'Bonsoir'
-  const portfolioUrl = `/portfolio/${user?.username}`
+  const portfolioUrl = `/public/${user?.username}`
 
   return (
     <div className={styles.page}>
@@ -107,7 +109,7 @@ export default function DashboardPage() {
             Voir mon portfolio
             <ArrowUpRight size={13} />
           </a>
-          <Link to="/gerer-mes-projets" className={styles.btnAdd}>
+          <Link to="/dashboard/gerer-mes-projets" className={styles.btnAdd}>
             <Plus size={15} />
             Nouveau projet
           </Link>
@@ -118,10 +120,9 @@ export default function DashboardPage() {
       <motion.div className={styles.urlBadge} {...fadeUp(0.06)}>
         <div className={styles.urlDot} />
         <span className={styles.urlLabel}>Votre portfolio est en ligne ·</span>
-        <a href={portfolioUrl} target="_blank" rel="noopener noreferrer" className={styles.urlLink}>
-          monfolio.dev/{user?.username}
-        </a>
-        <ArrowUpRight size={12} style={{ color: '#4f8eff', opacity: 0.7 }} />
+          <Text copyable={{ text: `https://monfolio.net/public/${user?.username}` }}className={styles.urlLink}>
+              https://monfolio.net/public/{user?.username}
+          </Text>
       </motion.div>
 
       {/* ── Stats Grid ── */}
@@ -156,13 +157,13 @@ export default function DashboardPage() {
             </div>
           </div>
           <div className={styles.quickList}>
-            <QuickAction to="/mes-informations"       icon={FolderOpen} color="#4f8eff"
+            <QuickAction to="/dashboard/mes-informations"       icon={FolderOpen} color="#4f8eff"
               label="Mes informations"       desc="Photo, bio, liens sociaux" />
-            <QuickAction to="/gerer-mes-projets"      icon={FolderOpen} color="#8b5cf6"
+            <QuickAction to="/dashboard/gerer-mes-projets"      icon={FolderOpen} color="#8b5cf6"
               label="Gérer mes projets"      desc="Ajouter ou modifier vos projets" />
-            <QuickAction to="/gerer-mes-competences"  icon={Star}       color="#f59e0b"
+            <QuickAction to="/dashboard/gerer-mes-competences"  icon={Star}       color="#f59e0b"
               label="Mes compétences"        desc="Tech stack et niveaux" />
-            <QuickAction to="/modifier-mon-portfolio" icon={Rocket}     color="#4ade80"
+            <QuickAction to="/dashboard/modifier-mon-portfolio" icon={Rocket}     color="#4ade80"
               label="Personnaliser"          desc="Thème, couleurs, sections" />
           </div>
         </motion.div>
@@ -188,10 +189,10 @@ export default function DashboardPage() {
             </div>
             <div className={styles.completionList}>
               {[
-                { label: 'Photo de profil',  done: !!user?.avatar,           to: '/mes-informations'       },
-                { label: 'Bio renseignée',   done: !!user?.bio,              to: '/mes-informations'       },
-                { label: 'Projets ajoutés',  done: (stats?.projects_count > 0), to: '/gerer-mes-projets'  },
-                { label: 'Compétences',      done: (stats?.skills_count > 0),   to: '/gerer-mes-competences' },
+                { label: 'Photo de profil',  done: !!user?.avatar,           to: '/dashboard/mes-informations'       },
+                { label: 'Bio renseignée',   done: !!user?.bio,              to: '/dashboard/mes-informations'       },
+                { label: 'Projets ajoutés',  done: (stats?.projects_count > 0), to: '/dashboard/gerer-mes-projets'  },
+                { label: 'Compétences',      done: (stats?.skills_count > 0),   to: '/dashboard/gerer-mes-competences' },
               ].map(item => (
                 <div key={item.label} className={styles.completionItem}>
                   <div className={`${styles.completionDot} ${item.done ? styles.completionDotDone : ''}`}>
