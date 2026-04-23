@@ -36,14 +36,13 @@ const ProjectCard = ({ project, index = 0, onView }) => {
       {/* ── Thumbnail ── */}
       <div
         className={styles.thumbnail}
-        onClick={() => onView?.(project)}
         role="button"
         tabIndex={0}
         aria-label={`Voir ${project.title}`}
         onKeyDown={(e) => e.key === 'Enter' && onView?.(project)}
       >
         {hasPhotos ? (
-          <div className={styles.carousel}>
+          <div className={styles.carousel} onClick={(e) => e.stopPropagation()}>
             {/* Image active */}
             <AnimatePresence mode="wait">
               <motion.img
@@ -95,7 +94,7 @@ const ProjectCard = ({ project, index = 0, onView }) => {
             <div className={styles.photoBadge}>📷 {images.length}</div>
 
             {/* Hover overlay */}
-            <div className={styles.overlay}>
+            <div className={styles.overlay}  onClick={() => onView?.(project)}>
               <span className={styles.overlayText}>Découvrir →</span>
             </div>
           </div>
