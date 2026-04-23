@@ -94,9 +94,9 @@ const ProjectCard = ({ project, index = 0, onView }) => {
             <div className={styles.photoBadge}>📷 {images.length}</div>
 
             {/* Hover overlay */}
-            <div className={styles.overlay}  onClick={() => onView?.(project)}>
+            {/*<div className={styles.overlay}  onClick={() => onView?.(project)}>
               <span className={styles.overlayText}>Découvrir →</span>
-            </div>
+            </div>*/}
           </div>
         ) : (
           /* ── Emoji fallback ── */
