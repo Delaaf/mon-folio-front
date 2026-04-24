@@ -5,6 +5,7 @@ import { CodeOutlined } from '@ant-design/icons'
 import { motion } from 'framer-motion'
 import { useAuth } from '../../contexts/AuthContext'
 import styles from './PortfolioNavbar.module.css'
+import monfolio_logo from '../../assets/monfolio_logo.png'
 
 /**
  * PortfolioNavbar — navbar publique du portfolio d'un utilisateur
@@ -37,7 +38,7 @@ const PortfolioNavbar = ({ profile }) => {
       <NavLink to={base} className={styles.logo}>
         {profile?.avatar
           ? <img src={profile.avatar} alt={profile.name} className={styles.logoAvatar} />
-          : <div className={styles.logoIcon}><CodeOutlined /></div>
+          : <div className={styles.logoIcon}> <img src={monfolio_logo} alt="" className={styles.panelLogoImgage} /></div>
         }
         <span>{profile?.name ?? 'Portfolio'}</span>
       </NavLink>

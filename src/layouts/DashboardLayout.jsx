@@ -299,8 +299,8 @@ export default function DashboardLayout() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}>
+            <EmailVerificationBanner />
           <Outlet />
-          <EmailVerificationBanner />
         </motion.div>
       </div>
     </div>

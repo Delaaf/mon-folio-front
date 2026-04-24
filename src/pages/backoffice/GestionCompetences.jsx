@@ -259,7 +259,7 @@ const handleSkillCreate = async () => {
         </span>}
         okText={editing ? 'Enregistrer' : 'Ajouter'}
         cancelText="Annuler" width={480} centered>
-        <Form form={form} layout="vertical" requiredMark={false} style={{ marginTop: 16 }}>
+        <Form form={form} layout="vertical" requiredMark={true} style={{ marginTop: 16 }}>
           <Form.Item name="name" label="Nom de la compétence" rules={[{ required: true }]}>
             <Input placeholder="Ex: React / Next.js" />
           </Form.Item>
@@ -287,7 +287,7 @@ const handleSkillCreate = async () => {
         onOk={handleCategoryCreate}
         title="Nouvelle catégorie"
       >
-        <Form form={catForm} layout="vertical">
+        <Form form={catForm} layout="vertical" requiredMark={true}>
           <Form.Item
             name="name"
             label="Nom de la catégorie"

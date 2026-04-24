@@ -126,7 +126,7 @@ export default function GestionProjets() {
       key: 'infos',
       label: 'Informations',
       children: (
-        <Form form={form} layout="vertical" requiredMark={false} style={{ marginTop: 16 }}>
+        <Form form={form} layout="vertical" requiredMark={true} style={{ marginTop: 16 }}>
           <div className={s.formGrid}>
             <Form.Item name="title" label="Titre" rules={[{ required: true }]}><Input placeholder="Mon projet" /></Form.Item>
             <Form.Item name="emoji" label="Emoji" initialValue="🚀"><Input /></Form.Item>
@@ -231,7 +231,7 @@ export default function GestionProjets() {
       {/* Modal catégorie */}
       <Modal open={catModal} onCancel={() => setCatModal(false)} onOk={handleCategoryCreate}
         title="Nouvelle catégorie" okText="Créer" cancelText="Annuler">
-        <Form form={catForm} layout="vertical">
+        <Form form={catForm} layout="vertical" requiredMark={true}>
           <Form.Item name="label" label="Nom de la catégorie" rules={[{ required: true }]}>
             <Input placeholder="Ex: SaaS, Mobile..." />
           </Form.Item>
