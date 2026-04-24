@@ -9,7 +9,7 @@ import AddCard      from '../../components/AddCard'
 import { CaseStudyModal, ProjectFormModal } from '../../components/Modal'
 import { useModal } from '../../hooks/useModal'
 import { ProjectService } from '../../services/index'
-import { CATEGORIES } from '../../data/projects'
+import { CATEGORIES, PROJECTS } from '../../data/projects'
 
 import styles from './ProjectsPage.module.css'
 
@@ -52,9 +52,13 @@ const ProjectsPage = ({ externalAddModal }) => {
       }
       //setMeta(res.meta ?? {})
     } catch {
-      // Fallback to static data if API not connected
-      const { PROJECTS } = await import('../../data/projects')
-      const filtered = filter === 'Tout' ? PROJECTS : PROJECTS.filter(p => p.category === filter)
+      console.error("API Error, using fallback data", err)
+      
+      // 2. Remplace le bloc 'await import' par l'utilisation directe de PROJECTS
+      const filtered = filter === 'Tout' 
+        ? PROJECTS 
+        : PROJECTS.filter(p => p.category === filter)
+      
       setProjects(filtered)
     } finally {
       setLoading(false)
