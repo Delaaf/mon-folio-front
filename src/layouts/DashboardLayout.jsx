@@ -11,6 +11,7 @@ import {
 import { CodeOutlined } from '@ant-design/icons'
 import { useAuth } from '../contexts/AuthContext'
 import styles from './DashboardLayout.module.css'
+import monfolio_logo from '../assets/monfolio_logo.png'
 
 /* ── NAV STRUCTURE ──────────────────────────── */
 const NAV = [
@@ -75,7 +76,7 @@ function Sidebar({ collapsed, onToggle, mobile, onMobileClose }) {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.18 }}>
-                <div className={styles.brandIcon}><CodeOutlined /></div>
+                <div className={styles.brandIcon}><img src={monfolio_logo} alt="" style={styles.panelLogoImgage} /></div>
                 <span className={styles.brandName}>MonFolio</span>
               </motion.div>
             )}

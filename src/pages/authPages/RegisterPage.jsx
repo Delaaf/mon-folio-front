@@ -10,6 +10,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../../contexts/AuthContext'
 import styles from './AuthPages.module.css'
+import monfolio_logo from '../../assets/monfolio_logo.png'
 
 /* ── Password strength ─────────────────────────── */
 const getStrength = (pwd) => {
@@ -111,7 +112,7 @@ export default function RegisterPage() {
         <div className={styles.panelGrid}  />
 
         <Link to="/" className={styles.panelLogo}>
-          <div className={styles.panelLogoIcon}><CodeOutlined/> </div>
+          <div className={styles.panelLogoIcon}><img src={monfolio_logo} alt="" style={styles.panelLogoImgage} /> </div>
           <span>MonFolio</span>
         </Link>
 
