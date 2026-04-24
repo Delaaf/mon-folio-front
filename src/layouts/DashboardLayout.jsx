@@ -292,7 +292,6 @@ export default function DashboardLayout() {
           onMobileOpen={() => setMobileOpen(true)}
           pageTitle={pageTitle}
         />
-        <EmailVerificationBanner />
 
         <motion.div
           key={location.pathname}
@@ -301,6 +300,7 @@ export default function DashboardLayout() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}>
           <Outlet />
+          <EmailVerificationBanner />
         </motion.div>
       </div>
     </div>
