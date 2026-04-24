@@ -46,6 +46,10 @@
   text-decoration: none;
   flex-shrink: 0;
 }
+.panelLogoImgage{
+  height: 32px;
+  width: auto;
+}
 
 .navLogoIcon {
   width: 32px; height: 32px;

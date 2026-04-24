@@ -76,7 +76,7 @@ function Sidebar({ collapsed, onToggle, mobile, onMobileClose }) {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.18 }}>
-                <div className={styles.brandIcon}><img src={monfolio_logo} alt="" style={styles.panelLogoImgage} /></div>
+                <div className={styles.brandIcon}><img src={monfolio_logo} alt="" className={styles.panelLogoImgage} /></div>
                 <span className={styles.brandName}>MonFolio</span>
               </motion.div>
             )}

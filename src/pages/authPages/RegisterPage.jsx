@@ -112,7 +112,7 @@ export default function RegisterPage() {
         <div className={styles.panelGrid}  />
 
         <Link to="/" className={styles.panelLogo}>
-          <div className={styles.panelLogoIcon}><img src={monfolio_logo} alt="" style={styles.panelLogoImgage} /> </div>
+          <div className={styles.panelLogoIcon}><img src={monfolio_logo} alt="" className={styles.panelLogoImgage} /> </div>
           <span>MonFolio</span>
         </Link>
 

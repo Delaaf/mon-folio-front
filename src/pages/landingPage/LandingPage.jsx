@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion'
 import styles from './LandingPage.module.css'
 import {CodeOutlined} from '@ant-design/icons'
+import monfolio_logo from '../../assets/monfolio_logo.png'
 
 /* ─── DATA ─────────────────────────────────────── */
 const FEATURES = [
@@ -171,7 +172,7 @@ function LandingNavbar() {
       transition={{ duration: 0.5 }}>
       <div className={styles.navInner}>
         <Link to="/" className={styles.navLogo}>
-          <div className={styles.navLogoIcon}><CodeOutlined /></div>
+          <div className={styles.navLogoIcon}><img src={monfolio_logo} alt="" className={styles.panelLogoImgage} /></div>
           <span>MonFolio</span>
         </Link>
 
