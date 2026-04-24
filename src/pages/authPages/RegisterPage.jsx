@@ -61,7 +61,9 @@ export default function RegisterPage() {
         : ['prenom', 'nom', 'username']
       await form.validateFields(fields)
       setStep(s => s + 1)
-    } catch {}
+    } catch {
+      form.scrollToField(err.errorFields?.[0]?.name)
+    }
   }
 
   const handleSubmit = async () => {
@@ -160,7 +162,7 @@ export default function RegisterPage() {
             </div>
           </div>
           <div className={styles.previewUrl}>
-            monfolio.dev/<span>{username || 'monportfolio'}</span>
+            monfolio.net/public/<span>{username || 'monportfolio'}</span>
           </div>
         </motion.div>
       </motion.aside>
@@ -217,7 +219,22 @@ export default function RegisterPage() {
                   </Form.Item>
 
                   <Form.Item name="password" label="Mot de passe"
-                    rules={[{ required: true }, { min: 8, message: '8 caractères minimum' }]}>
+                    rules={[
+                     { required: true, message: 'Requis' },
+                     {
+                       validator: (_, value) => {
+                         if (!value) return Promise.reject('Requis')
+                         const valid =
+                           value.length >= 8 &&
+                           /[A-Z]/.test(value) &&
+                           /[0-9]/.test(value) &&
+                           /[^A-Za-z0-9]/.test(value)
+                         return valid
+                           ? Promise.resolve()
+                           : Promise.reject('Mot de passe trop faible')
+                       }
+                     }
+                   ]}>
                     <Input.Password
                       prefix={<LockOutlined className={styles.inputIcon} />}
                       placeholder="Créez un mot de passe fort"
@@ -280,11 +297,11 @@ export default function RegisterPage() {
                   <div className={styles.twoCol}>
                     <Form.Item name="prenom" label="Prénom" rules={[{ required: true, message: 'Requis' }]}>
                       <Input prefix={<UserOutlined className={styles.inputIcon} />}
-                        placeholder="Alex" size="large" className={styles.input} />
+                        placeholder="KOUAKOU" size="large" className={styles.input} />
                     </Form.Item>
                     <Form.Item name="nom" label="Nom" rules={[{ required: true, message: 'Requis' }]}>
                       <Input prefix={<UserOutlined className={styles.inputIcon} />}
-                        placeholder="Rivera" size="large" className={styles.input} />
+                        placeholder="Delafosse" size="large" className={styles.input} />
                     </Form.Item>
                   </div>
 
@@ -295,12 +312,12 @@ export default function RegisterPage() {
                     ]}
                     extra={
                       <span className={styles.urlPreview}>
-                        🌐 monfolio.dev/<strong>{username || '...'}</strong>
+                        🌐 monfolio.net/public/<strong>{username || '...'}</strong>
                       </span>
                     }>
                     <Input
                       prefix={<span className={styles.atPrefix}>@</span>}
-                      placeholder="alexrivera" size="large" className={styles.input}
+                      placeholder="noeldelafosse" size="large" className={styles.input}
                     />
                   </Form.Item>
 
@@ -324,12 +341,12 @@ export default function RegisterPage() {
                     </div>
                     <div className={styles.recapRow}>
                       <span className={styles.recapKey}>Nom</span>
-                      <span className={styles.recapVal}>{prenom} {nom}</span>
+                      <span className={styles.recapVal}>{form.getFieldValue('nom') || '--'} {form.getFieldValue('prenom') || '--'}</span>
                     </div>
                     <div className={styles.recapRow}>
                       <span className={styles.recapKey}>URL portfolio</span>
                       <span className={styles.recapVal} style={{ color: 'var(--accent)' }}>
-                        monfolio.dev/{username || '—'}
+                        monfolio.net/public/{form.getFieldValue('username') || '—'}
                       </span>
                     </div>
                   </div>
@@ -360,7 +377,7 @@ export default function RegisterPage() {
               )}
               {step < STEPS.length - 1 ? (
                 <Button type="primary" size="large" className={styles.btnSubmit}
-                  onClick={nextStep} style={{ flex: 1 }}>
+                  onClick={nextStep} style={{ flex: 1 }} >
                   Continuer →
                 </Button>
               ) : (

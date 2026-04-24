@@ -502,7 +502,7 @@ function Footer() {
       <div className={styles.footerInner}>
         <div className={styles.footerBrand}>
           <div className={styles.footerLogo}>
-            <div className={styles.navLogoIcon}><CodeOutlined /></div>
+            <div className={styles.navLogoIcon}><img src={monfolio_logo} alt="" className={styles.panelLogoImgage} /></div>
             <span>MonFolio</span>
           </div>
           <p className={styles.footerTagline}>
