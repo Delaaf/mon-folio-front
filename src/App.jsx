@@ -4,6 +4,7 @@ import { useModal } from './hooks/useModal'
 import { AuthProvider } from './contexts/AuthContext'
 import { ProtectedRoute, PublicOnlyRoute } from './components/ProtectedRoute'
 import EmailVerificationBanner from './components/EmailVerificationBanner/EmailVerificationBanner'
+import AnalyticsTracker from './components/AnalyticsTracker/AnalyticsTracker'
 
 import Navbar  from './components/Navbar'
 import Footer  from './components/Footer'
@@ -49,20 +50,10 @@ import ParametresCompte      from './pages/backoffice/ParametresCompte'
 import AideSupport           from './pages/backoffice/AideSupport'
 
 
-const WithLayout = ({ children }) => {
-  const addModal = useModal()
-  return (
-  <>
-  <Navbar onAddProject={addModal.open} />
-  <EmailVerificationBanner />
-  {children}
-  <Footer />
-  </>
-  )
-}
-
 const App = () => (
   <BrowserRouter>
+
+    <AnalyticsTracker/>
     <AuthProvider>
       <Routes>
         {/* Auth (sans layout, redirige si déjà connecté) */}
@@ -76,7 +67,7 @@ const App = () => (
         <Route path="/" element={<LandingPage/>}/>
 
         {/* ── Portfolio PUBLIC d'un utilisateur ── */}
-        {/* Accessible sans connexion : /portfolio/alexrivera */}
+        {/* exemple : /portfolio/alexrivera */}
         <Route path="/public/:username" element={<PortfolioLayout />}>
           <Route index              element={<PortfolioHome />} />
           <Route path="projets"     element={<PortfolioProjets />} />
@@ -84,6 +75,7 @@ const App = () => (
           <Route path="contact"     element={<PortfolioContact />} />
         </Route>
 
+        {/* ── espace admin ── */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index              element={<DashboardPage />} />
           <Route path="mes-informations"     element={<ProtectedRoute><MesInformations /></ProtectedRoute>} />
@@ -94,20 +86,6 @@ const App = () => (
           <Route path="parametres-du-compte"     element={<ProtectedRoute><ParametresCompte /></ProtectedRoute>} />
           <Route path="aide-et-support"     element={<ProtectedRoute><AideSupport /></ProtectedRoute>} />
         </Route>
-
-        {/* Backoffice (authentification requise) 
-        <Route path="/mes-informations"       element={<ProtectedRoute><WithLayout><MesInformations /></WithLayout></ProtectedRoute>} />
-        <Route path="/modifier-mon-portfolio" element={<ProtectedRoute><WithLayout><ModificationPortfolio /></WithLayout></ProtectedRoute>} />
-        <Route path="/gerer-mes-projets"      element={<ProtectedRoute><WithLayout><GestionProjets /></WithLayout></ProtectedRoute>} />
-        <Route path="/gerer-mes-competences"  element={<ProtectedRoute><WithLayout><GestionCompetences /></WithLayout></ProtectedRoute>} />
-        <Route path="/gerer-autres"           element={<ProtectedRoute><WithLayout><GestionAutres /></WithLayout></ProtectedRoute>} />
-        <Route path="/parametres-du-compte"   element={<ProtectedRoute><WithLayout><ParametresCompte /></WithLayout></ProtectedRoute>} />
-        <Route path="/aide-et-support"        element={<ProtectedRoute><WithLayout><AideSupport /></WithLayout></ProtectedRoute>} />
-        <Route path="/accueil"                element={<ProtectedRoute><WithLayout><DashboardPage /></WithLayout></ProtectedRoute>} />
-        <Route path="/projets"                element={<ProtectedRoute><WithLayout><ProjectsPage /></WithLayout></ProtectedRoute>} />
-        <Route path="/a-propos"               element={<ProtectedRoute><WithLayout><AboutPage /></WithLayout></ProtectedRoute>} />
-        <Route path="/contact"                element={<ProtectedRoute><WithLayout><ContactPage /></WithLayout></ProtectedRoute>} />
-*/}
 
       </Routes>
     </AuthProvider>
