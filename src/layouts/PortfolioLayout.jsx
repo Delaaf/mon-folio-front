@@ -5,6 +5,7 @@ import api from '../services/api'
 import {ProjectService, ProfileService} from '../services/index'
 import PortfolioNavbar from '../pages/portfolio/PortfolioNavbar'
 import styles from './PortfolioLayout.module.css'
+import EmailVerificationBanner from '../components/EmailVerificationBanner/EmailVerificationBanner'
 
 /* ── Context partagé entre toutes les sous-pages ── */
 const PortfolioContext = createContext(null)
@@ -62,6 +63,7 @@ export default function PortfolioLayout() {
     <PortfolioContext.Provider value={{ profile, projects, username, loading }}>
       <div className={styles.root}>
         <PortfolioNavbar profile={profile} />
+        <EmailVerificationBanner />
         <main className={styles.main}>
           <Outlet />
         </main>

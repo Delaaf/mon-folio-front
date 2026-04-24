@@ -12,6 +12,7 @@ import { CodeOutlined } from '@ant-design/icons'
 import { useAuth } from '../contexts/AuthContext'
 import styles from './DashboardLayout.module.css'
 import monfolio_logo from '../assets/monfolio_logo.png'
+import EmailVerificationBanner from '../components/EmailVerificationBanner/EmailVerificationBanner'
 
 /* ── NAV STRUCTURE ──────────────────────────── */
 const NAV = [
@@ -291,6 +292,7 @@ export default function DashboardLayout() {
           onMobileOpen={() => setMobileOpen(true)}
           pageTitle={pageTitle}
         />
+        <EmailVerificationBanner />
 
         <motion.div
           key={location.pathname}
