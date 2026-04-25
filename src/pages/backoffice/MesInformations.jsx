@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Form, Input, Button, Upload, Avatar, notification, Switch, Tag, Spin } from 'antd'
-import { UserOutlined, MailOutlined, CameraOutlined, LockOutlined, GlobalOutlined, LinkedinOutlined, GithubOutlined, TwitterOutlined, SaveOutlined, CheckCircleOutlined, AtDirectOutlined } from '@ant-design/icons'
+import { UserOutlined, MailOutlined, CameraOutlined, LockOutlined, GlobalOutlined, LinkedinOutlined, GithubOutlined, TwitterOutlined, SaveOutlined, CheckCircleOutlined} from '@ant-design/icons'
 import { motion } from 'framer-motion'
 import { useAuth } from '../../contexts/AuthContext'
 import { useApi, useMutation } from '../../hooks/useApi'
@@ -75,7 +75,7 @@ export default function MesInformations() {
                 <Form.Item name="nom"        label="Nom"     rules={[{required:true}]}><Input prefix={<UserOutlined/>}/></Form.Item>
                 <Form.Item name="email"      label="Email"   rules={[{required:true,type:'email'}]}><Input prefix={<MailOutlined/>}/></Form.Item>
                 <Form.Item name="role_title" label="Titre / Rôle"><Input/></Form.Item>
-                <Form.Item name="username" label="Username"><Input prefix={<AtDirectOutlined/>}/></Form.Item>
+                <Form.Item name="username" label="Username"><Input prefix="@"/></Form.Item>
                 <Form.Item name="location"   label="Ville"><Input prefix={<GlobalOutlined/>}/></Form.Item>
                 <Form.Item name="is_available" label="Disponible pour des projets" valuePropName="checked"><Switch checkedChildren="Oui" unCheckedChildren="Non"/></Form.Item>
                 <Form.Item name="bio" label="Bio" className={s.formGridFull}><TextArea rows={3}/></Form.Item>
