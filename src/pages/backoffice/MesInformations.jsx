@@ -20,7 +20,7 @@ export default function MesInformations() {
 
   const { data: profile, loading, execute: fetchProfile } = useApi(ProfileService.get)
   useEffect(() => { fetchProfile() }, [])
-  useEffect(() => { if (profile) form.setFieldsValue({ prenom:profile.prenom, nom:profile.nom, email:profile.email, role_title:profile.role_title, bio:profile.bio, location:profile.location, is_available:profile.is_available, github_url:profile.github_url, linkedin_url:profile.linkedin_url, twitter_url:profile.twitter_url, website:profile.website }) }, [profile])
+  useEffect(() => { if (profile) form.setFieldsValue({ prenom:profile.prenom, nom:profile.nom, email:profile.email, role_title:profile.role_title, username: profile.username , bio:profile.bio, location:profile.location, is_available:profile.is_available, github_url:profile.github_url, linkedin_url:profile.linkedin_url, twitter_url:profile.twitter_url, website:profile.website }) }, [profile])
 
   const updateMutation = useMutation(ProfileService.update,   { successMessage:'✅ Profil mis à jour !', onSuccess:(d)=>updateUser(d) })
   const avatarMutation = useMutation(ProfileService.uploadAvatar, { successMessage:'✅ Photo mise à jour.', onSuccess:(d)=>updateUser({avatar:d.avatar_url}) })
@@ -75,6 +75,7 @@ export default function MesInformations() {
                 <Form.Item name="nom"        label="Nom"     rules={[{required:true}]}><Input prefix={<UserOutlined/>}/></Form.Item>
                 <Form.Item name="email"      label="Email"   rules={[{required:true,type:'email'}]}><Input prefix={<MailOutlined/>}/></Form.Item>
                 <Form.Item name="role_title" label="Titre / Rôle"><Input/></Form.Item>
+                <Form.Item name="username" label="Username"><Input /></Form.Item>
                 <Form.Item name="location"   label="Ville"><Input prefix={<GlobalOutlined/>}/></Form.Item>
                 <Form.Item name="is_available" label="Disponible pour des projets" valuePropName="checked"><Switch checkedChildren="Oui" unCheckedChildren="Non"/></Form.Item>
                 <Form.Item name="bio" label="Bio" className={s.formGridFull}><TextArea rows={3}/></Form.Item>
