@@ -1,11 +1,4 @@
-/**
- * useApi — hook générique pour les appels API
- * Gère automatiquement : loading, error, data, notification d'erreur
- *
- * Usage :
- *   const { data, loading, execute } = useApi(ProjectService.list)
- *   useEffect(() => { execute() }, [])
- */
+
 import { useState, useCallback, useRef } from 'react'
 import { notification } from 'antd'
 
@@ -82,7 +75,7 @@ export function useMutation(fn, options = {}) {
       const result = await fn(...args)
 
       if (successMessage) {
-        notification.success({ message: successMessage, placement: 'bottomRight', duration: 3, style: { color:'#fff',} })
+        notification.success({ message: successMessage, placement: 'bottomRight', duration: 3, style: { color:'#fff !important',} })
       }
 
       onSuccess?.(result)
@@ -92,7 +85,7 @@ export function useMutation(fn, options = {}) {
       setError({ message, errors: err.response?.data?.errors ?? null })
 
       if (showErrorNotif) {
-        notification.error({ message, placement: 'bottomRight', duration: 4, style: { color:'#fff',} })
+        notification.error({ message, placement: 'bottomRight', duration: 4, style: { color:'#fff !important',} })
       }
 
       onError?.(err)

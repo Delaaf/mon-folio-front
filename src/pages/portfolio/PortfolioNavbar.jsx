@@ -72,7 +72,7 @@ const PortfolioNavbar = ({ profile }) => {
         </div>
         {isOwner ? (
           <Button type="primary" className={styles.btnEdit}
-            href="/dashboard/modifier-mon-portfolio">
+            href="/dashboard">
             Modifier mon portfolio
           </Button>
         ) : (

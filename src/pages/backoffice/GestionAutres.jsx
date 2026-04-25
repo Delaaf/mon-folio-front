@@ -62,21 +62,6 @@ export default function GestionAutres() {
           </div>
         </motion.div>
 
-        {/* ── Disponibilité ── */}
-        <motion.div className={s.card} {...fadeUp(0.07)}>
-          <div className={s.cardHeader}>
-            <div className={s.cardTitle}><span className={s.cardIcon}><TeamOutlined /></span>Statut de disponibilité</div>
-          </div>
-          <div className={`${s.cardBody} ${ls.availRow}`}>
-            <div>
-              <div className={ls.availTitle}>Ouvert aux opportunités</div>
-              <div className={ls.availSub}>Votre badge "Disponible" sur la page d'accueil</div>
-            </div>
-            <Switch checked={openToWork} onChange={setOtw} checkedChildren="Disponible" unCheckedChildren="Indisponible" />
-          </div>
-          <div className={s.saveBar}><Button type="primary" icon={<SaveOutlined />} onClick={save}>Sauvegarder</Button></div>
-        </motion.div>
-
         {/* ── Certifications ── */}
         <motion.div className={s.card} {...fadeUp(0.11)}>
           <div className={s.cardHeader}>
