@@ -228,6 +228,11 @@
   line-height: 1.65;
   margin: 0;
   flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* nombre de lignes */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  
 }
 
 /* Actions */

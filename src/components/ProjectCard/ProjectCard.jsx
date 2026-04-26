@@ -117,7 +117,7 @@ const ProjectCard = ({ project, index = 0, onView }) => {
 
         <h3 className={styles.title}>{project.title}</h3>
 
-        <p className={styles.desc}>{truncateWords(project.short_description, 12)}</p>
+        <p className={styles.desc}>{project.short_description}</p>
 
         <div className={styles.actions}>
           <Button type="primary" className={styles.btnStudy} onClick={() => onView?.(project)} block>

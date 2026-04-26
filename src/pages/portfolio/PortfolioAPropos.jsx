@@ -148,7 +148,7 @@ const groupedSkills = (profile?.skills || []).reduce((acc, skill) => {
 
           {Object.entries(groupedSkills).map(([category, skills]) => (
             <div key={category} className={styles.skillCategory}>
-            <h3 className={styles.skillCategoryTitle}>{category}</h3>
+            <p className={styles.skillCategoryTitle}>{category}</p>
 
             <div className={styles.skillsGrid}>
             {skills.map(skill => (
