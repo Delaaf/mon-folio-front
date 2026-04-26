@@ -64,7 +64,7 @@ export default function GestionAutres() {
     setCertsL(true)
     try{
       const data = await OtherService.getCertifications()
-      setCerts(data.map(c=>({...c, _key:c.id ?? Date.now + Math.random()})))
+      setCerts(data.map(c=>({...c, _key:c.id ?? Date.now() + Math.random()})))
     }catch{
       notifApi.error({message:'Erreur lors du chargement des certifications', placement:'bottomRight'})
     }finally{
@@ -76,7 +76,7 @@ export default function GestionAutres() {
     setLangsL(true)
     try{
       const data = await OtherService.getLanguages()
-      setCerts(data.map(l=>({...l, _key:l.id ?? Date.now + Math.random()})))
+      setLangs(data.map(l=>({...l, _key:l.id ?? Date.now() + Math.random()})))
     }catch{
       notifApi.error({message:'Erreur lors du chargement des langues', placement:'bottomRight'})
     }finally{
@@ -133,13 +133,13 @@ export default function GestionAutres() {
     }catch{
       notifApi.error({message:'Erreur lors de la sauvegarde', placement:'bottomRight'})
     }finally{
-      setCertsS(false)
+      setLangsS(false)
     }
   }
 
   //Interests 
   const saveInterests = async () => {
-    const list = interests.split(',').map(i => i.trim().filter(Boolean))
+    const list = interests.split(',').map(i => i.trim()).filter(Boolean)
     if(!list.length) {
       notifApi.warning({message: 'Ajoutez au moins un interêt', placement:'bottomRight'}); return
     }
@@ -189,7 +189,7 @@ export default function GestionAutres() {
             ): (
               <div className={ls.certList}>
               {certs.map((c, i) => (
-                <motion.div key={_key} className={ls.certRow}
+                <motion.div key={c._key} className={ls.certRow}
                   initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}>
                   <div className={ls.certIcon}><TrophyOutlined /></div>
@@ -231,7 +231,7 @@ export default function GestionAutres() {
               {langs.map((l, i) => (
                 <motion.div key={l._key} className={ls.langRow} initial= {{opacity:0, x:-10}} animate={{opacity:1, x:0}} transition={{delay: i * 0.04}}>
                   <Input placeholder="Langue" value={l.name} onChange={e => updLang(l._key,'name',e.target.value)} style={{ flex: 1 }} />
-                  <Select value={l.level} onChange={val => updLang(l.id,'level',val)} style={{ width: 160 }}>
+                  <Select value={l.level} onChange={val => updLang(l._key,'level',val)} style={{ width: 160 }}>
                     {LEVELS.map(lv => <Option key={lv} value={lv}>{lv}</Option>)}
                   </Select>
                   <Button type="text" icon={<DeleteOutlined />} danger onClick={() => delLang(l._key)} className={ls.deleteBtn} />
