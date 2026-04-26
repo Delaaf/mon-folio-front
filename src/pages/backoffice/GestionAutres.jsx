@@ -10,7 +10,7 @@ import { OtherService, ProfileService } from '../../services'
 
 import s from './backoffice.module.css'
 import ls from './GestionAutres.module.css'
-import { div } from 'framer-motion/client'
+
 
 const { TextArea } = Input
 const { Option }   = Select
@@ -166,7 +166,7 @@ export default function GestionAutres() {
             <h1 className={s.pageTitle}>Gestion <em>autres</em></h1>
             <p className={s.pageSubtitle}>Certifications, langues, intérêts et autres sections de votre portfolio.</p>
           </div>
-          <Button icon={ReloadOutlined} onClick={loadAll}>Actualiser</Button>
+          <Button icon={<ReloadOutlined />} onClick={loadAll}>Actualiser</Button>
         </motion.div>
 
         {/* ── Certifications ── */}
@@ -196,7 +196,7 @@ export default function GestionAutres() {
                   <div className={ls.certFields}>
                     <Input placeholder="Nom de la certification" value={c.name} onChange={e => updCert(c._key,'name',e.target.value)} />
                     <div className={ls.certMeta}>
-                      <Input placeholder="Organisme" value={c.org} onChange={e => updCert(c._key,'organization',e.target.value)} style={{flex:1}} />
+                      <Input placeholder="Organisme" value={c.organization} onChange={e => updCert(c._key,'organization',e.target.value)} style={{flex:1}} />
                       <Input placeholder="Année" value={c.year} onChange={e => updCert(c._key,'year',e.target.value)} style={{ width: 88 }} maxLength={4} />
                       <Input placeholder="URL (optionnel)" value={c.url} onChange={e => updCert(c._key,'url',e.target.value)}style={{flex:1}} />
                     </div>
