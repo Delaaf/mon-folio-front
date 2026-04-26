@@ -52,7 +52,6 @@ export default function GestionAutres() {
   const [intLoading, setIntL] = useState(true) 
   const [intSaving, setIntS] = useState(false)
 
-  const [langs, setLangs]    = useState(INIT_LANGS)
   const [form]               = Form.useForm()
   const [intForm]            = Form.useForm()
   const [openToWork, setOtw] = useState(true)
