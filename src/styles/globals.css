@@ -87,5 +87,4 @@ body::after {
   background: var(--bg-card) !important;
   border: 1px solid var(--border-hover) !important;
   border-radius: var(--radius-sm) !important;
-  color: white;
 }
