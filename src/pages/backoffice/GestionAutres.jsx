@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Form, Input, notification, Switch, Select, Spin } from 'antd'
+import { Button, Form, Input, notification, Switch, Select, } from 'antd'
 import {
   PlusOutlined, DeleteOutlined, SaveOutlined,
   TrophyOutlined, ReadOutlined, TeamOutlined,
@@ -257,7 +257,7 @@ export default function GestionAutres() {
                 <p className={ls.interestsHint}>
                   Séparez chaque intérêt par une virgule. Ils apparaîtront sous forme de tags sur votre portfolio
                 </p>
-                <Textarea rows={3} placeholder="Open-source, Musique, Randonnée, Design, Photographie..." value={interests} onChange={e => setInterests(e.target.value)} />
+                <TextArea rows={3} placeholder="Open-source, Musique, Randonnée, Design, Photographie..." value={interests} onChange={e => setInterests(e.target.value)} />
                   {interests.trim() && (
                     <div className={ls.tagsPreview}>
                       {interests.split(',').map(i => i.trim()).filter(Boolean).map((tag, i) => (
