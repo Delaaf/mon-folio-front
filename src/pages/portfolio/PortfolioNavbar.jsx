@@ -35,7 +35,7 @@ const PortfolioNavbar = ({ profile }) => {
       transition={{ duration: 0.4, ease: 'easeOut' }}
     >
       {/* Logo / nom du portfolio */}
-      <NavLink to={base} end={link.end} className={styles.logo}>
+      <NavLink to={base}  className={styles.logo}>
         {profile?.avatar
           ? <img src={profile.avatar} alt={profile.name} className={styles.logoAvatar} />
           : <div className={styles.logoIcon}> <img src={monfolio_logo} alt="" className={styles.panelLogoImgage} /></div>
@@ -49,6 +49,7 @@ const PortfolioNavbar = ({ profile }) => {
           <li key={link.path}>
             <NavLink
               to={link.path}
+              end={link.end}
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
                 `${styles.link} ${isActive ? styles.active : ''}`
