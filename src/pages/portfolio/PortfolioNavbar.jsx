@@ -21,7 +21,7 @@ const PortfolioNavbar = ({ profile }) => {
   const base = `/public/${username}`
 
   const NAV_LINKS = [
-    { label: 'Accueil',   path: base },
+    { label: 'Accueil',   path: base, end: true },
     { label: 'Projets',   path: `${base}/projets`    },
     { label: 'À propos',  path: `${base}/a-propos`   },
     { label: 'Contact',   path: `${base}/contact`    },
@@ -35,7 +35,7 @@ const PortfolioNavbar = ({ profile }) => {
       transition={{ duration: 0.4, ease: 'easeOut' }}
     >
       {/* Logo / nom du portfolio */}
-      <NavLink to={base} className={styles.logo}>
+      <NavLink to={base} end={link.end} className={styles.logo}>
         {profile?.avatar
           ? <img src={profile.avatar} alt={profile.name} className={styles.logoAvatar} />
           : <div className={styles.logoIcon}> <img src={monfolio_logo} alt="" className={styles.panelLogoImgage} /></div>
