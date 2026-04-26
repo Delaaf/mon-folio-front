@@ -107,7 +107,15 @@ export default function GestionAutres() {
     }
     setCertsS(true)
     try {
-      await OtherService.syncCertifications(certs.map(c => ({name: c.name.trim(), organization: c.organization?.trim() ?? '', year: c.year?.trim() ?? '', url: c.url?.trim() ?? ''})))
+      await OtherService.syncCertifications({
+        certifications: certs.map(c => ({
+          name: c.name.trim(),
+          organization: c.organization?.trim() ?? '',
+          year: c.year?.trim() ?? '',
+          url: c.url?.trim() ?? ''
+        }))
+      })
+        
       notifApi.success({message: 'Certification(s) sauvegardée(s) !', placement:'bottomRight'})
       loadCerts()
     }catch{
@@ -127,7 +135,12 @@ export default function GestionAutres() {
     }
     setLangsS(true)
     try {
-      await OtherService.syncLanguages(langs.map(l => ({name: l.name.trim(), level: l.level})))
+      await OtherService.syncLanguages({
+        languages: langs.map(l => ({
+          name: l.name.trim(),
+          level: l.level
+        }))
+      })
       notifApi.success({message: 'Langue(s) sauvegardée(s) !', placement:'bottomRight'})
       loadLangs()
     }catch{
@@ -145,7 +158,7 @@ export default function GestionAutres() {
     }
     setIntS(true)
     try{
-      await OtherService.syncInterests(list)
+      await OtherService.syncInterests({interests: list})
       notifApi.success({message: 'Intérêt(s) sauvegardé(s) !', placement:'bottomRight'})
     }catch{
       notifApi.error({message:'Erreur lors de la sauvegarde', placement:'bottomRight'})
