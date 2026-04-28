@@ -78,7 +78,10 @@ export default function MesInformations() {
                 <Form.Item name="username" label="Username"><Input prefix="@"/></Form.Item>
                 <Form.Item name="location"   label="Ville"><Input prefix={<GlobalOutlined/>}/></Form.Item>
                 <Form.Item name="is_available" label="Disponible pour des projets" valuePropName="checked"><Switch checkedChildren="Oui" unCheckedChildren="Non"/></Form.Item>
-                <Form.Item name="bio" label="Bio" className={s.formGridFull}><TextArea rows={3}/></Form.Item>
+                <Form.Item name="bio" label="Bio" className={s.formGridFull} rules={[
+                  { max: 500, message: "Maximum 500 caractères" }
+                  ]}><TextArea rows={3}     maxLength={500} showCount placeholder="Décris-toi en quelques mots (max 500 caractères)..."/>
+                 </Form.Item>
               </div>
             </Form>
           </div>
