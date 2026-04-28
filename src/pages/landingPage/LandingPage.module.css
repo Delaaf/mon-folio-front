@@ -956,6 +956,11 @@
 }
 
 @media (max-width: 580px) {
+  .navInner { padding: 0 16px; gap: 12px;}
+  .navActions { gap: 6px; }
+
+  .navBtnGhost,
+  .navBtnPrimary { padding: 6px 10px; font-size: 12px; }
   .featGrid { grid-template-columns: 1fr; }
   .stepsWrap { grid-template-columns: 1fr; }
   .heroCTA { flex-direction: column; width: 100%; }
