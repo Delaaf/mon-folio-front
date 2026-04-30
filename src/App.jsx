@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom'
 import { useModal } from './hooks/useModal'
 import { AuthProvider } from './contexts/AuthContext'
-import { ProtectedRoute, PublicOnlyRoute } from './components/ProtectedRoute'
+import { ProtectedRoute, PublicOnlyRoute } from './routes/ProtectedRoute'
 import EmailVerificationBanner from './components/EmailVerificationBanner/EmailVerificationBanner'
 import AnalyticsTracker from './components/AnalyticsTracker/AnalyticsTracker'
 

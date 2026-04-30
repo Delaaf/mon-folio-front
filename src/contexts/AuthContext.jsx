@@ -12,6 +12,7 @@ export function AuthProvider({ children }) {
   const navigate               = useNavigate()
   const [user, setUser]        = useState(null)
   const [loading, setLoading]  = useState(true)   // initial hydration
+  const [initialized, setInitialized] = useState(false)
   const [notifApi, notifCtx]   = notification.useNotification()
 
   /**
@@ -19,7 +20,11 @@ export function AuthProvider({ children }) {
    */
   useEffect(() => {
     const hydrate = async () => {
-      if (!getToken()) { setLoading(false); return }
+      if (!getToken()) {
+         setLoading(false)
+         setInitialized(true)
+          return 
+        }
       try {
         const me = await AuthService.me()
         setUser(me)
@@ -28,6 +33,7 @@ export function AuthProvider({ children }) {
         setUser(null)
       } finally {
         setLoading(false)
+        setInitialized(true)
       }
     }
     hydrate()
@@ -92,6 +98,7 @@ const loginWithGithub = useCallback(async () => {
   const value = {
     user,
     loading,
+    initialized,
     isAuthenticated: Boolean(user),
     register,
     login,

@@ -8,7 +8,7 @@ import { useAuth } from '../contexts/AuthContext'
  * Affiche un loader pendant l'hydration initiale
  */
 export function ProtectedRoute({ children }) {
-  const { isAuthenticated, loading } = useAuth()
+  const { isAuthenticated, loading, initialized} = useAuth()
   const location = useLocation()
 
   if (loading) {
@@ -23,6 +23,19 @@ export function ProtectedRoute({ children }) {
         <Spin size="large" />
       </div>
     )
+  }
+
+  if (!initialized || loading) {
+    return (
+      <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          background: 'var(--bg-primary)',
+      }}>
+          <Spin size="large" />
+      </div>)
   }
 
   if (!isAuthenticated) {
