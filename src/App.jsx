@@ -76,15 +76,15 @@ const App = () => (
         </Route>
 
         {/* ── espace admin ── */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route path="/dashboard" element={<ProtectedRoute> <DashboardLayout /> </ProtectedRoute>}>
           <Route index              element={<DashboardPage />} />
-          <Route path="mes-informations"     element={<ProtectedRoute><MesInformations /></ProtectedRoute>} />
-          <Route path="modifier-mon-portfolio"    element={<ProtectedRoute><ModificationPortfolio /></ProtectedRoute>} />
-          <Route path="gerer-mes-projets"     element={<ProtectedRoute><GestionProjets /></ProtectedRoute>} />
-          <Route path="gerer-mes-competences"     element={<ProtectedRoute><GestionCompetences /></ProtectedRoute>} />
-          <Route path="gerer-autres"     element={<ProtectedRoute><GestionAutres /></ProtectedRoute>} />
-          <Route path="parametres-du-compte"     element={<ProtectedRoute><ParametresCompte /></ProtectedRoute>} />
-          <Route path="aide-et-support"     element={<ProtectedRoute><AideSupport /></ProtectedRoute>} />
+          <Route path="mes-informations"     element={<MesInformations />} />
+          <Route path="modifier-mon-portfolio"    element={<ModificationPortfolio />} />
+          <Route path="gerer-mes-projets"     element={<GestionProjets />} />
+          <Route path="gerer-mes-competences"     element={<GestionCompetences />} />
+          <Route path="gerer-autres"     element={<GestionAutres />} />
+          <Route path="parametres-du-compte"     element={<ParametresCompte />} />
+          <Route path="aide-et-support"     element={<AideSupport />} />
         </Route>
 
       </Routes>
