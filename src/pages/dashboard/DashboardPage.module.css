@@ -210,10 +210,9 @@
   align-items: start;
 }
 
-@media (max-width: 900px) { .cols { grid-template-columns: 1fr; } }
-
-
-.header {
+@media (max-width: 900px) {
+  
+  .header {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -230,7 +229,10 @@
     width: 100%;
     justify-content: center;
   }
-  
+  .cols { grid-template-columns: 1fr; }
+
+}
+
 .rightCol {
   display: flex;
   flex-direction: column;
