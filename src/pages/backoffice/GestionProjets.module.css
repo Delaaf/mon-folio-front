@@ -211,4 +211,6 @@
 @media (max-width: 640px) {
   .statsRow { grid-template-columns: repeat(2, 1fr); }
   .projTitle { max-width: 120px; }
+  .btnDiv { gap: 12px}
+  .reloadIcon {display: none;}
 }
