@@ -187,8 +187,8 @@ export default function GestionProjets() {
             <h1 className={s.pageTitle}>Gestion des <em>projets</em></h1>
             <p className={s.pageSubtitle}>{projects?.length ?? 0} projets · {published} publiés</p>
           </div>
-          <Space className={s.btnDiv}>
-            <Button icon={<ReloadOutlined />} onClick={fetchProjects} loading={loading} className={s.reloadIcon}/>
+          <Space className={ls.btnDiv}>
+            <Button icon={<ReloadOutlined />} onClick={fetchProjects} loading={loading} className={ls.reloadIcon}/>
             <Button onClick={() => setCatModal(true)}>Nouvelle catégorie</Button>
             <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>Nouveau projet</Button>
           </Space>
