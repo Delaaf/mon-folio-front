@@ -213,7 +213,7 @@ export default function GestionProjets() {
             <div className={s.cardTitle}><span className={s.cardIcon}><ProjectOutlined /></span>Liste des projets</div>
             <Input prefix={<SearchOutlined style={{ color: 'var(--text-muted)' }} />} placeholder="Rechercher..." value={search} onChange={e => setSearch(e.target.value)} style={{ width: 220 }} />
           </div>
-          <Table dataSource={projects} columns={columns} rowKey="id" loading={loading} pagination={{ pageSize: 8, size: 'small' }} className={ls.table} size="middle" />
+          <Table dataSource={projects} columns={columns} rowKey="id" loading={loading} pagination={{ pageSize: 8, size: 'small' }} className={ls.table} size="middle" scroll={{ x: true }} />
         </motion.div>
       </div>
 

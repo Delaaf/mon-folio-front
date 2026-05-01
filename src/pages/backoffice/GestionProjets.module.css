@@ -39,6 +39,10 @@
   color: rgba(232,232,240,0.8) !important;
 }
 
+.table :global(.ant-table-content) {
+  overflow-x: auto;
+}
+
 .table :global(.ant-table-thead > tr > th) {
   background: rgba(255,255,255,0.03) !important;
   border-color: rgba(255,255,255,0.06) !important;
