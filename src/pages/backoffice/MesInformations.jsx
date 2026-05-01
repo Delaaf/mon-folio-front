@@ -17,6 +17,11 @@ export default function MesInformations() {
   const [form]                = Form.useForm()
   const [passForm]            = Form.useForm()
   const [notifApi, notifCtx]  = notification.useNotification()
+  
+  const urlRule = {
+    type: 'url',
+    message: 'Veuillez entrer une URL valide (https://...)'
+  }
 
   const { data: profile, loading, execute: fetchProfile } = useApi(ProfileService.get)
   useEffect(() => { fetchProfile() }, [])
@@ -96,10 +101,10 @@ export default function MesInformations() {
           <div className={s.cardBody}>
             <Form form={form} layout="vertical" requiredMark={false}>
               <div className={s.formGrid}>
-                <Form.Item name="github_url"   label="GitHub"><Input prefix={<GithubOutlined/>}/></Form.Item>
-                <Form.Item name="linkedin_url" label="LinkedIn"><Input prefix={<LinkedinOutlined/>}/></Form.Item>
-                <Form.Item name="twitter_url"  label="Twitter / X"><Input prefix={<TwitterOutlined/>}/></Form.Item>
-                <Form.Item name="website"      label="Site web"><Input prefix={<GlobalOutlined/>}/></Form.Item>
+                <Form.Item name="github_url"   label="GitHub" rules={[urlRule]}><Input prefix={<GithubOutlined/>} placeholder="https://github.com/username"/></Form.Item>
+                <Form.Item name="linkedin_url" label="LinkedIn" rules={[urlRule]}><Input prefix={<LinkedinOutlined/>} placeholder="https://linkedin.com/in/username"/></Form.Item>
+                <Form.Item name="twitter_url"  label="Twitter / X" rules={[urlRule]}><Input prefix={<TwitterOutlined/>} placeholder="https://x.com/username"/></Form.Item>
+                <Form.Item name="website"      label="Site web" rules={[urlRule]}><Input prefix={<GlobalOutlined/>} placeholder="https://monsite.com"/></Form.Item>
               </div>
             </Form>
           </div>
