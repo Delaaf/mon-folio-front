@@ -201,7 +201,7 @@ function Hero() {
   const navigate = useNavigate()
   const { scrollY } = useScroll()
   const y = useTransform(scrollY, [0, 400], [0, 80])
-  const opacity = useTransform(scrollY, [0, 400], [1, 0])
+  const opacity = useTransform(scrollY, [0, 500], [1, 0])
 
   return (
     <section className={styles.hero}>
