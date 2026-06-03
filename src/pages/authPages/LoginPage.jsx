@@ -84,7 +84,7 @@ export default function LoginPage() {
             </Form.Item>
             <div className={styles.formRow}>
               <Form.Item name="remember" valuePropName="checked" noStyle><Checkbox className={styles.checkbox}>Se souvenir de moi</Checkbox></Form.Item>
-              <Link to="/forgot-password" className={styles.forgotLink}>Mot de passe oublié ?</Link>
+              <Link to="/mot-de-passe-oublie" className={styles.forgotLink}>Mot de passe oublié ?</Link>
             </div>
             <Form.Item style={{ marginTop: 8 }}>
               <Button type="primary" htmlType="submit" size="large" loading={loading} block className={styles.btnSubmit}>
