@@ -52,7 +52,7 @@ const TESTIMONIALS = [
     role: 'Designer professionnel',
     avatar: 'BY',
     color: '#4f8eff',
-    text: "J'ai décroché mon poste chez Stripe 3 semaines après avoir publié mon portfolio MonFolio. Le design m'a démarqué de centaines de candidats.",
+    text: "J'ai décroché mon poste chez BNI 3 semaines après avoir publié mon portfolio MonFolio. Le design m'a démarqué de centaines de candidats.",
   },
   {
     name: 'Dagbo Phanuel',
@@ -201,7 +201,7 @@ function Hero() {
   const navigate = useNavigate()
   const { scrollY } = useScroll()
   const y = useTransform(scrollY, [0, 400], [0, 80])
-  const opacity = useTransform(scrollY, [0, 300], [1, 0])
+  const opacity = useTransform(scrollY, [0, 400], [1, 0])
 
   return (
     <section className={styles.hero}>
