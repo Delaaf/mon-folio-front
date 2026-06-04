@@ -5,6 +5,7 @@ import { LockOutlined, CheckCircleOutlined, EyeInvisibleOutlined, EyeTwoTone } f
 import { motion } from 'framer-motion'
 import api from '../../services/api'
 import fp from './ForgotPassword.module.css'
+import monfolio_logo from '../../assets/monfolio_logo.png'
 
 export default function ResetPasswordPage() {
   const [form]             = Form.useForm()
@@ -27,7 +28,7 @@ export default function ResetPasswordPage() {
         password_confirmation: values.confirm,
       })
       setDone(true)
-      setTimeout(() => navigate('/login?password_reset=1'), 2500)
+      setTimeout(() => navigate('/connexion?password_reset=1'), 2500)
     } catch (err) {
       const msg = err.response?.data?.message ?? 'Lien invalide ou expiré.'
       notifApi.error({ message: msg, placement: 'bottomRight', duration: 4 })
@@ -41,7 +42,9 @@ export default function ResetPasswordPage() {
       {ctx}
       <motion.div className={fp.box} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
         <Link to="/" className={fp.logo}>
-          <div className={fp.logoIcon}>&lt;/&gt;</div>
+          <div className={styles.panelLogoIcon}>
+            <img src={monfolio_logo} alt="" className={styles.panelLogoImage} /> 
+          </div>
           <span>MonFolio</span>
         </Link>
 
@@ -84,7 +87,7 @@ export default function ResetPasswordPage() {
           </motion.div>
         )}
 
-        <Link to="/login" className={fp.backLink}>← Retour à la connexion</Link>
+        <Link to="/connexion" className={fp.backLink}>Retour à la connexion</Link>
       </motion.div>
     </div>
   )

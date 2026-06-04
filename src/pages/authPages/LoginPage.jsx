@@ -37,7 +37,7 @@ export default function LoginPage() {
       {ctx}
       <motion.aside className={styles.panel} initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
         <div className={styles.panelGlow1} /><div className={styles.panelGlow2} /><div className={styles.panelGrid} />
-        <Link to="/" className={styles.panelLogo}><div className={styles.panelLogoIcon}> <img src={monfolio_logo} alt="" className={styles.panelLogoImgage} /> </div><span>MonFolio</span></Link>
+        <Link to="/" className={styles.panelLogo}><div className={styles.panelLogoIcon}> <img src={monfolio_logo} alt="" className={styles.panelLogoImage} /> </div><span>MonFolio</span></Link>
         <div className={styles.panelHero}>
           <motion.h2 className={styles.panelTitle} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
             Votre portfolio,<br /><span className={styles.panelAccent}>votre identité.</span>
@@ -93,7 +93,7 @@ export default function LoginPage() {
             </Form.Item>
           </Form>
 
-          <p className={styles.switchText}>Pas encore de compte ? <Link to="/inscription" className={styles.switchLink}>Créer un compte gratuit →</Link></p>
+          <p className={styles.switchText}>Pas encore de compte ? <Link to="/inscription" className={styles.switchLink}>Créer un compte gratuit</Link></p>
         </div>
       </motion.main>
     </div>

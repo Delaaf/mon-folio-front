@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import api from '../../services/api'
 import styles from './AuthPages.module.css'
 import fp from './ForgotPassword.module.css'
+import monfolio_logo from '../../assets/monfolio_logo.png'
 
 export default function ForgotPasswordPage() {
   const [form]              = Form.useForm()
@@ -40,7 +41,9 @@ export default function ForgotPasswordPage() {
       >
         {/* Logo */}
         <Link to="/" className={fp.logo}>
-          <div className={fp.logoIcon}>&lt;/&gt;</div>
+          <div className={styles.panelLogoIcon}>
+            <img src={monfolio_logo} alt="" className={styles.panelLogoImgage} /> 
+          </div>
           <span>MonFolio</span>
         </Link>
 
@@ -91,7 +94,7 @@ export default function ForgotPasswordPage() {
           </motion.div>
         )}
 
-        <Link to="/login" className={fp.backLink}>
+        <Link to="/connexion" className={fp.backLink}>
           <ArrowLeftOutlined /> Retour à la connexion
         </Link>
       </motion.div>

@@ -114,7 +114,7 @@ export default function RegisterPage() {
         <div className={styles.panelGrid}  />
 
         <Link to="/" className={styles.panelLogo}>
-          <div className={styles.panelLogoIcon}><img src={monfolio_logo} alt="" className={styles.panelLogoImgage} /> </div>
+          <div className={styles.panelLogoIcon}><img src={monfolio_logo} alt="" className={styles.panelLogoImage} /> </div>
           <span>MonFolio</span>
         </Link>
 
@@ -378,7 +378,7 @@ export default function RegisterPage() {
               {step < STEPS.length - 1 ? (
                 <Button type="primary" size="large" className={styles.btnSubmit}
                   onClick={nextStep} style={{ flex: 1 }} >
-                  Continuer →
+                  Continuer
                 </Button>
               ) : (
                 <Button type="primary" size="large" loading={loading}
@@ -391,7 +391,7 @@ export default function RegisterPage() {
 
           <p className={styles.switchText}>
             Déjà un compte ?{' '}
-            <Link to="/connexion" className={styles.switchLink}>Se connecter →</Link>
+            <Link to="/connexion" className={styles.switchLink}>Se connecter</Link>
           </p>
         </div>
       </motion.main>

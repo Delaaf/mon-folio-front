@@ -36,7 +36,7 @@ export const clearToken = ()      => localStorage.removeItem(TOKEN_KEY)
 api.interceptors.request.use(
   (config) => {
     const token = getToken()
-    if (token) {
+    if (token) {                        
       config.headers.Authorization = `Bearer ${token}`
     }
     return config
