@@ -42,7 +42,7 @@ export default function ForgotPasswordPage() {
         {/* Logo */}
         <Link to="/" className={fp.logo}>
           <div className={styles.panelLogoIcon}>
-            <img src={monfolio_logo} alt="" className={styles.panelLogoImgage} /> 
+            <img src={monfolio_logo} alt="" className={styles.panelLogoImage} /> 
           </div>
           <span>MonFolio</span>
         </Link>

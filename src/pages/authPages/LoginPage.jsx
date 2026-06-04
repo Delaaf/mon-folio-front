@@ -9,7 +9,7 @@ import monfolio_logo from '../../assets/monfolio_logo.png'
 
 const FEATURES = [
   { icon: '🚀', text: 'Portfolio en ligne en quelques minutes' },
-  { icon: '🎨', text: "Thèmes personnalisables à l'infini" },
+  { icon: '🎨', text: "Thèmes personnalisables" },
   { icon: '📊', text: 'Analytics et statistiques de vues' },
   { icon: '🌐', text: 'Domaine personnalisé inclus' },
 ]
@@ -56,8 +56,8 @@ export default function LoginPage() {
         <motion.div className={styles.testimonial} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.72 }}>
           <img src="https://i.pravatar.cc/40?img=12" alt="" className={styles.testimonialAvatar} />
           <div>
-            <p className={styles.testimonialText}>"MonFolio m'a aidé à décrocher mon poste chez Stripe en 3 semaines !"</p>
-            <p className={styles.testimonialAuthor}>— Sarah K., Senior Engineer</p>
+            <p className={styles.testimonialText}>"MonFolio m'a aidé à décrocher mon poste dans une banque en 3 semaines !"</p>
+            <p className={styles.testimonialAuthor}>— Yasmine B., Ingénieure cybersécurité</p>
           </div>
         </motion.div>
       </motion.aside>

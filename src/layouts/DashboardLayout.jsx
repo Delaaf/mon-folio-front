@@ -216,13 +216,13 @@ function Topbar({ onMobileOpen, pageTitle }) {
       </div>
 
       <div className={styles.topbarRight}>
-        <button className={styles.topbarAction}>
+        {/*<button className={styles.topbarAction}>
           <Search size={17} />
         </button>
         <button className={styles.topbarAction}>
           <Bell size={17} />
           <span className={styles.bellDot} />
-        </button>
+        </button>*/}
         <div className={styles.topbarDivider} />
         <Avatar
           src={user?.avatar}
