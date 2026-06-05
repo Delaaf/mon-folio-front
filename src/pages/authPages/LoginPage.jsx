@@ -54,7 +54,7 @@ export default function LoginPage() {
           ))}
         </ul>
         <motion.div className={styles.testimonial} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.72 }}>
-          <img src="https://i.pravatar.cc/40?img=12" alt="" className={styles.testimonialAvatar} />
+          <img src="https://gravatar.com/images/homepage/avatar-09.png" alt="" className={styles.testimonialAvatar} />
           <div>
             <p className={styles.testimonialText}>"MonFolio m'a aidé à décrocher mon poste dans une banque en 3 semaines !"</p>
             <p className={styles.testimonialAuthor}>— Yasmine B., Ingénieure cybersécurité</p>
