@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Modal, Button } from 'antd'
 import { GithubOutlined, LinkOutlined, CloseOutlined } from '@ant-design/icons'
 import { motion } from 'framer-motion'
 import Tag from '../Tag'
 import styles from './CaseStudyModal.module.css'
+
 
 /**
  * CaseStudyModal — modale de détail d'un projet
@@ -12,7 +13,15 @@ import styles from './CaseStudyModal.module.css'
  * @param {Function} onClose  — fermeture
  */
 const CaseStudyModal = ({ project, open, onClose }) => {
+  const [activeImg, setActiveImg] = useState(0)
+
+  useEffect(() => {
+    setActiveImg(0)
+  }, [project])
+
   if (!project) return null
+
+  const images = project.images || []
 
   return (
     <Modal
@@ -23,13 +32,62 @@ const CaseStudyModal = ({ project, open, onClose }) => {
       closeIcon={<CloseOutlined style={{ color: 'var(--text-secondary)' }} />}
       centered
     >
-      {/* Thumbnail */}
-      <div
-        className={styles.thumbnail}
-        style={{ background: project.gradient }}
-      >
-        <span className={styles.emoji}>{project.emoji}</span>
-      </div>
+              {images.length > 0 ? (
+          <div className={styles.gallery}>
+            <img
+              src={images[activeImg].url}
+              alt={project.title}
+              className={styles.mainImage}
+            />
+
+            {images.length > 1 && (
+              <>
+                <button
+                  className={`${styles.navBtn} ${styles.prevBtn}`}
+                  onClick={() =>
+                    setActiveImg(
+                      (activeImg - 1 + images.length) % images.length
+                    )
+                  }
+                >
+                  ‹
+                </button>
+                
+                <button
+                  className={`${styles.navBtn} ${styles.nextBtn}`}
+                  onClick={() =>
+                    setActiveImg(
+                      (activeImg + 1) % images.length
+                    )
+                  }
+                >
+                  ›
+                </button>
+                
+                <div className={styles.thumbnails}>
+                  {images.map((img, index) => (
+                    <img
+                      key={img.id || index}
+                      src={img.url}
+                      alt=""
+                      className={`${styles.thumb} ${
+                        index === activeImg ? styles.thumbActive : ''
+                      }`}
+                      onClick={() => setActiveImg(index)}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+        ) : (
+          <div
+            className={styles.thumbnail}
+            style={{ background: project.gradient }}
+          >
+            <span className={styles.emoji}>{project.emoji}</span>
+          </div>
+        )}
 
       {/* Content */}
       <div className={styles.content}>
@@ -68,7 +126,7 @@ const CaseStudyModal = ({ project, open, onClose }) => {
 
         {/* Actions */}
         <div className={styles.actions}>
-          {project.liveUrl && (
+          {project.live_url && (
             <Button
               type="primary"
               icon={<LinkOutlined />}
@@ -79,7 +137,7 @@ const CaseStudyModal = ({ project, open, onClose }) => {
               Live Demo
             </Button>
           )}
-          {project.githubUrl && (
+          {project.github_url && (
             <Button
               icon={<GithubOutlined />}
               href={project.githubUrl}

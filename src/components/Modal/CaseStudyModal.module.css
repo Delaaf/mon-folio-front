@@ -125,3 +125,65 @@
   border-color: var(--accent) !important;
   color: var(--accent) !important;
 }
+
+/* Ajout du carousel */ 
+
+.gallery {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.mainImage {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.navBtn {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  font-size: 20px;
+}
+
+.prevBtn {
+  left: 12px;
+}
+
+.nextBtn {
+  right: 12px;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  overflow-x: auto;
+}
+
+.thumb {
+  width: 70px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  opacity: .6;
+  border: 2px solid transparent;
+}
+
+.thumb:hover {
+  opacity: 1;
+}
+
+.thumbActive {
+  opacity: 1;
+  border-color: var(--primary-color);
+}

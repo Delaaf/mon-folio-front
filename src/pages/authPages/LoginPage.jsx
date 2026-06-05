@@ -43,7 +43,7 @@ export default function LoginPage() {
             Votre portfolio,<br /><span className={styles.panelAccent}>votre identité.</span>
           </motion.h2>
           <motion.p className={styles.panelSub} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.32, duration: 0.5 }}>
-            Rejoignez +12 000 développeurs qui présentent leur travail avec MonFolio.
+            Rejoignez les professionnels qui présentent leur travail avec MonFolio.
           </motion.p>
         </div>
         <ul className={styles.featureList}>
