@@ -1,50 +1,137 @@
+/* ══════════════════════════════════════
+   MODIFICATION PORTFOLIO — module CSS
+   ══════════════════════════════════════ */
+
+/* ── Presets ── */
 .presetGrid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 12px;
 }
 
-@media (max-width: 640px) { .presetGrid { grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 900px) { .presetGrid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 500px) { .presetGrid { grid-template-columns: repeat(2, 1fr); } }
 
 .presetCard {
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  background: transparent; border: 1px solid var(--border); border-radius: 10px;
-  padding: 12px 8px; cursor: pointer; transition: all 0.22s;
+  position: relative;
+  background: rgba(255,255,255,0.03);
+  border: 1.5px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 
-.presetCard:hover { border-color: var(--border-hover); }
-.presetActive     { border-color: var(--accent) !important; background: var(--accent-glow); }
+.presetCard:hover {
+  border-color: rgba(255,255,255,0.2);
+  transform: translateY(-2px);
+}
+
+.presetActive {
+  border-color: #4f8eff !important;
+  box-shadow: 0 0 0 1px #4f8eff33, 0 6px 20px rgba(79,142,255,0.2);
+}
 
 .presetPreview {
-  width: 48px; height: 48px; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  border: 1px solid rgba(255,255,255,0.07);
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.presetDot { width: 16px; height: 16px; border-radius: 50%; }
+.presetDot {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  box-shadow: 0 0 12px currentColor;
+  z-index: 2;
+}
 
-.presetName { font-size: 11px; color: var(--text-secondary); font-weight: 500; text-align: center; }
+.presetLines {
+  position: absolute;
+  bottom: 8px; left: 8px; right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.presetLines > div {
+  height: 3px;
+  border-radius: 2px;
+  width: 100%;
+}
+
+.presetName {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: rgba(232,232,240,0.65);
+  padding: 8px 10px;
+  text-align: center;
+}
+
+.presetCheck {
+  position: absolute;
+  top: 6px; right: 7px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: #4f8eff;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── Couleurs ── */
+.overrideHint {
+  font-size: 11.5px;
+  color: rgba(232,232,240,0.3);
+  font-style: italic;
+}
 
 .colorRow {
-  display: flex; align-items: center; gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.colorPreview {
-  width: 36px; height: 36px; border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.1);
+.colorSwatch {
+  width: 32px; height: 32px;
+  border-radius: 8px;
   flex-shrink: 0;
 }
 
-.toggleList { display: flex; flex-direction: column; gap: 0; }
+/* ── Toggles sections ── */
+.toggleList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
 
 .toggleRow {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 14px 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  gap: 16px;
 }
 
 .toggleRow:last-child { border-bottom: none; }
 
 .toggleLabel {
-  font-size: 14px; color: var(--text-primary); font-weight: 500;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: rgba(232,232,240,0.8);
+  margin-bottom: 2px;
+}
+
+.toggleDesc {
+  font-size: 12px;
+  color: rgba(232,232,240,0.35);
 }
