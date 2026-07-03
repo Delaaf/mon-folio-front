@@ -26,7 +26,7 @@ const NAV = [
     group: 'Mon Portfolio',
     items: [
       { to: '/dashboard/mes-informations',       icon: User,       label: 'Mes informations'      },
-    /*  { to: '/dashboard/modifier-mon-portfolio', icon: Palette,    label: 'Personnalisation'       },*/
+      { to: '/dashboard/modifier-mon-portfolio', icon: Palette,    label: 'Personnalisation'       },
       { to: '/dashboard/gerer-mes-projets',      icon: FolderOpen, label: 'Projets'               },
       { to: '/dashboard/gerer-mes-competences',  icon: Star,       label: 'Compétences'           },
       { to: '/dashboard/gerer-autres',           icon: Layers,     label: 'Autres'                },
