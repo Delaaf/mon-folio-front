@@ -113,7 +113,7 @@ export default function ModificationPortfolio() {
     setShowStack(DEFAULTS.show_tech_stack)
     setShowAvail(DEFAULTS.show_availability_badge)
     setActivePreset(DEFAULTS.theme_preset)
-    notifApi.info({ message: 'Paramètres réinitialisés.', placement: 'bottomRight' })
+    notifApi.info({ message: 'Paramètres réinitialisés. Veuillez sauvegarder !', placement: 'bottomRight' })
   }
 
   const save = async () => {
