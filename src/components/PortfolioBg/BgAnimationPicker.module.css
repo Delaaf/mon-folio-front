@@ -1,0 +1,65 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+
+.card {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s;
+  text-align: left;
+}
+
+.card:hover {
+  border-color: rgba(255,255,255,0.18);
+  transform: translateY(-2px);
+}
+
+.cardActive {
+  border-color: var(--accent, #4f8eff) !important;
+  box-shadow: 0 0 0 1px rgba(79,142,255,0.2);
+}
+
+.preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #0a0a0f;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+}
+
+.check {
+  position: absolute;
+  top: 6px; right: 7px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--accent, #4f8eff);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10;
+}
+
+.label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(232,232,240,0.8);
+  padding: 8px 10px 2px;
+}
+
+.desc {
+  font-size: 11px;
+  color: rgba(232,232,240,0.35);
+  padding: 0 10px 9px;
+}
