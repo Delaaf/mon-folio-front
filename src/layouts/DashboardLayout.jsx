@@ -110,7 +110,7 @@ function Sidebar({ collapsed, onToggle, mobile, onMobileClose }) {
                 )}
               </AnimatePresence>
 
-              {group.items.map(({ to, icon: Icon, label }) => {
+              {group.items.map(({ to, icon: Icon, label, badge }) => {
                 const active = location.pathname === to
                 return (
                   <Tooltip
@@ -141,7 +141,7 @@ function Sidebar({ collapsed, onToggle, mobile, onMobileClose }) {
                         {badge}
                       </motion.span>
                       )}
-                      
+
                       {active && (
                         <motion.span className={styles.navActiveDot}
                           layoutId="activeDot" transition={{ type: 'spring', stiffness: 400, damping: 30 }} />
