@@ -67,21 +67,26 @@ export default function ModificationPortfolio() {
   useEffect(() => {
     const load = async () => {
       try {
-        const { data } = await PortfolioService.getSettings()
-        const d = data ?? {}
-        setAccent(d.accent_color            ?? DEFAULTS.accent_color)
-        setBg(d.background_color            ?? DEFAULTS.background_color)
-        setFont(d.font_display              ?? DEFAULTS.font_display)
-        setLayout(d.layout                  ?? DEFAULTS.layout)
-        setRadius(d.border_radius           ?? DEFAULTS.border_radius)
-        setAnim(d.animations_enabled        ?? DEFAULTS.animations_enabled)
-        setDark(d.dark_mode                 ?? DEFAULTS.dark_mode)
-        setShowBio(d.show_bio               ?? DEFAULTS.show_bio)
-        setShowStack(d.show_tech_stack      ?? DEFAULTS.show_tech_stack)
-        setShowAvail(d.show_availability_badge ?? DEFAULTS.show_availability_badge)
-        setActivePreset(d.theme_preset      ?? DEFAULTS.theme_preset)
-      } catch {
-        notifApi.error({ message: 'Erreur chargement des paramètres.', placement: 'bottomRight' })
+        const response = await PortfolioService.getSettings()
+        // La réponse est : { data: { accent_color, ... } }
+        // PortfolioService fait déjà `const { data } = await api.get(...); return data`
+        // donc response = { data: { accent_color, ... } }
+        const d = response.data  // ← le vrai objet settings
+      
+        setAccent(d.accent_color                ?? DEFAULTS.accent_color)
+        setBg(d.background_color                ?? DEFAULTS.background_color)
+        setFont(d.font_display                  ?? DEFAULTS.font_display)
+        setLayout(d.layout                      ?? DEFAULTS.layout)
+        setRadius(d.border_radius               ?? DEFAULTS.border_radius)
+        setAnim(d.animations_enabled            ?? DEFAULTS.animations_enabled)
+        setDark(d.dark_mode                     ?? DEFAULTS.dark_mode)
+        setShowBio(d.show_bio                   ?? DEFAULTS.show_bio)
+        setShowStack(d.show_tech_stack          ?? DEFAULTS.show_tech_stack)
+        setShowAvail(d.show_availability_badge  ?? DEFAULTS.show_availability_badge)
+        setActivePreset(d.theme_preset          ?? DEFAULTS.theme_preset)
+      } catch (err) {
+        console.error(err)
+        notifApi.error({ message: 'Erreur chargement des paramètres.', placement:    'bottomRight' })
       } finally {
         setLoading(false)
       }
@@ -153,7 +158,7 @@ export default function ModificationPortfolio() {
             <h1 className={s.pageTitle}>Modifier mon <em>portfolio</em></h1>
             <p className={s.pageSubtitle}>Personnalisez l'apparence et les sections de votre portfolio public.</p>
           </div>
-          <a href={`/portfolio/${user?.username}`} target="_blank" rel="noopener noreferrer">
+          <a href={`/public/${user?.username}`} target="_blank" rel="noopener noreferrer">
             <Button icon={<EyeOutlined />}>Voir mon portfolio</Button>
           </a>
         </motion.div>
