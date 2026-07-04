@@ -9,6 +9,7 @@ import { PortfolioService } from '../../services/index'
 import { useAuth } from '../../contexts/AuthContext'
 import s from './backoffice.module.css'
 import ls from './ModificationPortfolio.module.css'
+import BgAnimationPicker from '../../components/PortfolioBg/BgAnimationPicker'
 
 const fadeUp = (d = 0) => ({
   initial: { opacity: 0, y: 18 },
@@ -49,6 +50,8 @@ export default function ModificationPortfolio() {
   const [notifApi, notifCtx] = notification.useNotification()
   const [loading, setLoading]   = useState(true)
   const [saving, setSaving]     = useState(false)
+  const [bgAnimation, setBgAnim] = useState('grid')
+
 
   // Settings state
   const [accentColor, setAccent]  = useState(DEFAULTS.accent_color)
@@ -84,6 +87,7 @@ export default function ModificationPortfolio() {
         setShowStack(d.show_tech_stack          ?? DEFAULTS.show_tech_stack)
         setShowAvail(d.show_availability_badge  ?? DEFAULTS.show_availability_badge)
         setActivePreset(d.theme_preset          ?? DEFAULTS.theme_preset)
+        setBgAnim(d.bg_animation ?? 'grid')
       } catch (err) {
         console.error(err)
         notifApi.error({ message: 'Erreur chargement des paramètres.', placement:    'bottomRight' })
@@ -113,7 +117,7 @@ export default function ModificationPortfolio() {
     setShowStack(DEFAULTS.show_tech_stack)
     setShowAvail(DEFAULTS.show_availability_badge)
     setActivePreset(DEFAULTS.theme_preset)
-    notifApi.info({ message: 'Paramètres réinitialisés.', placement: 'bottomRight' })
+    notifApi.info({ message: 'Paramètres réinitialisés. Veuillez sauvegarder !', placement: 'bottomRight' })
   }
 
   const save = async () => {
@@ -131,8 +135,9 @@ export default function ModificationPortfolio() {
         show_tech_stack:         showStack,
         show_availability_badge: showAvail,
         theme_preset:            activePreset,
+        bg_animation: bgAnimation,
       })
-      notifApi.success({ message: '✅ Portfolio mis à jour !', placement: 'bottomRight', duration: 3 })
+      notifApi.success({ message: 'Portfolio mis à jour !', placement: 'bottomRight', duration: 3 })
     } catch {
       notifApi.error({ message: 'Erreur lors de la sauvegarde.', placement: 'bottomRight' })
     } finally {
@@ -188,6 +193,15 @@ export default function ModificationPortfolio() {
                 </button>
               ))}
             </div>
+          </div>
+        </motion.div>
+
+        <motion.div className={s.card} {...fadeUp(0.09)}>
+          <div className={s.cardHeader}>
+            <div className={s.cardTitle}><span className={s.cardIcon}>🎬</span>Animation du fond</div>
+          </div>
+          <div className={s.cardBody}>
+            <BgAnimationPicker value={bgAnimation} onChange={setBgAnim} accent={accentColor} />
           </div>
         </motion.div>
 
