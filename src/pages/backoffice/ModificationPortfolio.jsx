@@ -71,7 +71,7 @@ export default function ModificationPortfolio() {
         // La réponse est : { data: { accent_color, ... } }
         // PortfolioService fait déjà `const { data } = await api.get(...); return data`
         // donc response = { data: { accent_color, ... } }
-        const d = response.data  // ← le vrai objet settings
+        const d = response  // ← le vrai objet settings
       
         setAccent(d.accent_color                ?? DEFAULTS.accent_color)
         setBg(d.background_color                ?? DEFAULTS.background_color)
