@@ -32,6 +32,7 @@ function applyTheme(settings) {
   // Dériver automatiquement les couleurs de text/border depuis accent + bg
   root.style.setProperty('--accent-glow',    hexToRgba(settings.accent_color ?? '#4f8eff', 0.12))
   root.style.setProperty('--accent-border',  hexToRgba(settings.accent_color ?? '#4f8eff', 0.3))
+  root.style.setProperty('--bg-primary',  settings.background_color ?? '#0a0a0f')
 
   // Border radius
   const r = settings.border_radius ?? 14
@@ -109,7 +110,7 @@ export default function PortfolioLayout() {
     // Nettoyage : retire les CSS vars au démontage (retour au dashboard)
     return () => {
       const root = document.documentElement
-      ;['--accent','--bg','--font-display','--accent-glow','--accent-border',
+      ;['--accent','--bg','--bg-primary','--font-display','--accent-glow','--accent-border',
         '--radius','--radius-sm','--radius-lg'].forEach(v => root.style.removeProperty(v))
       root.removeAttribute('data-theme')
     }
@@ -131,9 +132,10 @@ export default function PortfolioLayout() {
       <div
         className={styles.root}
         style={{
-          '--accent':       settings?.accent_color     ?? '#4f8eff',
-          '--bg':           settings?.background_color ?? '#0a0a0f',
-          '--radius':       `${settings?.border_radius ?? 14}px`,
+          '--bg':          settings?.background_color ?? '#0a0a0f',
+          '--bg-primary':  settings?.background_color ?? '#0a0a0f',  // ← ajouter ça
+          '--accent':      settings?.accent_color     ?? '#4f8eff',
+          '--radius':      `${settings?.border_radius ?? 14}px`,
           '--font-display': `"${settings?.font_display ?? 'Syne'}", system-ui, sans-serif`,
         }}
       >
