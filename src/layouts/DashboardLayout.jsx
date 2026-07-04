@@ -26,7 +26,7 @@ const NAV = [
     group: 'Mon Portfolio',
     items: [
       { to: '/dashboard/mes-informations',       icon: User,       label: 'Mes informations'      },
-      { to: '/dashboard/modifier-mon-portfolio', icon: Palette,    label: 'Personnalisation'       },
+      { to: '/dashboard/modifier-mon-portfolio', icon: Palette,    label: 'Personnalisation', badge: 'New'     },
       { to: '/dashboard/gerer-mes-projets',      icon: FolderOpen, label: 'Projets'               },
       { to: '/dashboard/gerer-mes-competences',  icon: Star,       label: 'Compétences'           },
       { to: '/dashboard/gerer-autres',           icon: Layers,     label: 'Autres'                },
@@ -132,6 +132,16 @@ function Sidebar({ collapsed, onToggle, mobile, onMobileClose }) {
                           </motion.span>
                         )}
                       </AnimatePresence>
+
+                      {badge && (!collapsed || mobile) && (
+                      <motion.span
+                        className={styles.navBadge}
+                        animate={{ scale: [1, 1.15, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}>
+                        {badge}
+                      </motion.span>
+                      )}
+                      
                       {active && (
                         <motion.span className={styles.navActiveDot}
                           layoutId="activeDot" transition={{ type: 'spring', stiffness: 400, damping: 30 }} />
